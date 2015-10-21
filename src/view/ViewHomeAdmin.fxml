@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="704.0" prefWidth="928.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.HomeAdminViewController">
+   <children>
+      <Button layoutX="478.0" layoutY="420.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="374.0" text="Apri Contratto" />
+      <Button layoutX="478.0" layoutY="531.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="374.0" text="Chiudi Contratto" />
+      <Button layoutX="69.0" layoutY="294.0" mnemonicParsing="false" text="Aggiungi Agenzia" />
+      <Button layoutX="246.0" layoutY="294.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="121.0" text="Rimuovi Agenzia" />
+      <Button layoutX="479.0" layoutY="294.0" mnemonicParsing="false" text="Aggiungi Auto" />
+      <Button layoutX="613.0" layoutY="294.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="102.0" text="Rimuovi Auto" />
+      <Button layoutX="746.0" layoutY="294.0" mnemonicParsing="false" text="Manutenzione Auto" />
+      <Button layoutX="49.0" layoutY="645.0" mnemonicParsing="false" text="Aggiungi Dipendente" />
+      <Button layoutX="247.0" layoutY="645.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="141.0" text="Rimuovi Dipendente" />
+      <TableView fx:id="tblAgenzie" layoutX="21.0" layoutY="51.0" prefHeight="220.0" prefWidth="400.0">
+        <columns>
+          <TableColumn prefWidth="84.0" text="P. IVA" />
+          <TableColumn prefWidth="111.0" text="Nome" />
+            <TableColumn prefWidth="75.0" text="Citta" />
+            <TableColumn prefWidth="76.0" text="Via" />
+            <TableColumn prefWidth="54.0" text="Civico" />
+        </columns>
+      </TableView>
+      <TableView fx:id="tblAuto" layoutX="450.0" layoutY="51.0" prefHeight="220.0" prefWidth="458.0">
+         <columns>
+            <TableColumn fx:id="colTarga" prefWidth="93.0" text="Targa" />
+            <TableColumn fx:id="colFascia" prefWidth="50.0" text="Fascia" />
+            <TableColumn fx:id="colModello" prefWidth="97.0" text="Modello" />
+            <TableColumn fx:id="colAgenzia" prefWidth="65.0" text="Agenzia" />
+            <TableColumn fx:id="colStato" prefWidth="54.0" text="Stato" />
+            <TableColumn fx:id="colKm" prefWidth="95.0" text="Chilometri" />
+         </columns>
+      </TableView>
+      <TableView fx:id="tblDipendenti" layoutX="18.0" layoutY="400.0" prefHeight="220.0" prefWidth="400.0">
+         <columns>
+            <TableColumn prefWidth="72.0" text="Agenzia" />
+            <TableColumn prefWidth="75.0" text="Nome" />
+            <TableColumn prefWidth="90.0" text="Cognome" />
+            <TableColumn prefWidth="84.0" text="Telefono" />
+            <TableColumn prefWidth="78.0" text="Username" />
+         </columns>
+      </TableView>
+      <Label layoutX="166.0" layoutY="357.0" text="Dipendenti">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Label>
+      <Label layoutX="183.0" layoutY="14.0" text="Agenzie">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Label>
+      <Label layoutX="642.0" layoutY="14.0" text="Auto">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Label>
+      <Separator layoutX="8.0" layoutY="344.0" prefHeight="3.0" prefWidth="428.0" />
+      <Separator layoutX="434.0" layoutY="47.0" orientation="VERTICAL" prefHeight="631.0" prefWidth="5.0" />
+   </children>
+</AnchorPane>
