@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.AggiungiAutoViewController">
+   <children>
+      <TextField fx:id="targaTF" layoutX="65.0" layoutY="94.0" prefHeight="25.0" prefWidth="181.0" promptText="Inserisci la targa..." />
+      <TextField fx:id="modelloTF" layoutX="65.0" layoutY="167.0" prefHeight="25.0" prefWidth="181.0" promptText="Inserisci il modello..." />
+      <TextField fx:id="chilometraggioTF" layoutX="65.0" layoutY="239.0" prefHeight="25.0" prefWidth="181.0" promptText="Inserisci il chilometraggio..." />
+      <Text layoutX="65.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Targa" />
+      <Text layoutX="65.0" layoutY="227.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Chilometraggio" />
+      <Text layoutX="65.0" layoutY="156.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modello" />
+      <Button fx:id="aggiungiAutoButton" layoutX="150.0" layoutY="314.0" mnemonicParsing="false" onAction="#aggiungiAuto" prefHeight="43.0" prefWidth="300.0" text="Aggiungi Auto">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Text layoutX="358.0" layoutY="227.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Stato" />
+      <Text layoutX="358.0" layoutY="156.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Agenzia" />
+      <Text layoutX="358.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fascia" />
+      <ChoiceBox fx:id="fasciaCB" layoutX="358.0" layoutY="94.0" prefHeight="26.0" prefWidth="181.0" />
+      <ChoiceBox fx:id="agenziaCB" layoutX="358.0" layoutY="167.0" prefHeight="26.0" prefWidth="181.0" />
+      <ChoiceBox fx:id="statoCB" layoutX="358.0" layoutY="239.0" prefHeight="26.0" prefWidth="181.0" />
+   </children>
+</AnchorPane>

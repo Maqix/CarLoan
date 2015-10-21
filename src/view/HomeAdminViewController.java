@@ -1,12 +1,19 @@
 package view;
 
+import java.io.IOException;
+
 import application.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import model.Auto;
 import model.DAO;
 
@@ -44,6 +51,7 @@ public class HomeAdminViewController
 	private void configuraTabellaAuto()
 	{
 		listaAuto = DAO.getListaAuto();
+		
 		if (!listaAuto.isEmpty())
 		{
 			tblAuto.setItems(listaAuto);
@@ -56,6 +64,50 @@ public class HomeAdminViewController
 		}
 	}
 	
+	@FXML
+	private void aggiungiAuto()
+	{
+		try {
+	        // Load the fxml file and create a new stage for the popup dialog.
+	        FXMLLoader loader = new FXMLLoader();
+	        loader.setLocation(HomeAdminViewController.class.getResource("ViewAggiungiAuto.fxml"));
+	        AnchorPane page = (AnchorPane) loader.load();
+
+	        // Create the dialog Stage.
+	        Stage dialogStage = new Stage();
+	        dialogStage.setTitle("Aggiungi Auto");
+	        dialogStage.initModality(Modality.APPLICATION_MODAL);
+	        dialogStage.initOwner(mainApp.primaryStage);
+	        Scene scene = new Scene(page);
+	        dialogStage.setScene(scene);
+
+	        
+	        AggiungiAutoViewController controller =  loader.getController();
+	        controller.setDialogStage(dialogStage);
+	        controller.setListaAuto(listaAuto);
+	        
+	        // Show the dialog and wait until the user closes it
+	        dialogStage.showAndWait();
+	      
+	        
+	        return;
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        return;
+	    }
+	}
+	
+	@FXML
+	private void eliminaAuto()
+	{
+		
+	}
+	
+	@FXML
+	private void manutenzioneAuto()
+	{
+		
+	}
 	
 	public Main getMainApp() {
 		return mainApp;

@@ -231,10 +231,11 @@ public class DAO {
     	 ResultSet rs = null;
     	 String comando = "SELECT * FROM auto";
     	 rs = DAO.getResultSet(comando);
-    	 Auto tempAuto = new Auto();
     	 try {
 			while (rs.next())
 			 {
+				 Auto tempAuto = new Auto();
+				
 				 String targa = rs.getString("Targa");
 				 int fascia = rs.getInt("Fascia");
 				 String modello = rs.getString("Modello");
