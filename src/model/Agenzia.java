@@ -9,7 +9,7 @@ public class Agenzia {
 
 	private final StringProperty 	partitaIva;
 	private final StringProperty 	nome;
-	private final StringProperty 	citt‡;
+	private final StringProperty 	citta;
 	private final StringProperty 	provincia;
 	private final StringProperty 	via;
 	private final IntegerProperty 	civico;
@@ -18,7 +18,7 @@ public class Agenzia {
 	{
 		this.partitaIva = new SimpleStringProperty("");
 		this.nome = new SimpleStringProperty("");
-		this.citt‡ = new SimpleStringProperty("");
+		this.citta = new SimpleStringProperty("");
 		this.provincia = new SimpleStringProperty("");
 		this.via = new SimpleStringProperty("");
 		this.civico = new SimpleIntegerProperty(0);
@@ -32,8 +32,8 @@ public class Agenzia {
 		return nome;
 	}
 	
-	public StringProperty getCitt‡Property() {
-		return citt‡;
+	public StringProperty getCittaProperty() {
+		return citta;
 	}
 	
 	public StringProperty getProvinciaProperty() {
@@ -58,9 +58,9 @@ public class Agenzia {
 	        this.nome.set(nome);
 	}
 	
-	public void setCitt‡(String citta) 
+	public void setCitta(String citta) 
 	{
-	        this.citt‡.set(citta);
+	        this.citta.set(citta);
 	}
 
 	public void setProvincia(String provincia) 
@@ -88,9 +88,9 @@ public class Agenzia {
 		return nome.get();
 	}
 
-	public String getCitt‡()
+	public String getCitta()
 	{
-		return citt‡.get();
+		return citta.get();
 	}
 	
 	public String getProvincia()

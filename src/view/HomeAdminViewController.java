@@ -43,7 +43,7 @@ public class HomeAdminViewController
 	TableView<Agenzia> tblAgenzie;
 	
 	@FXML
-	TableColumn<Agenzia, String> colPartitaIva, colNome, colCittà, colProvincia, colVia;
+	TableColumn<Agenzia, String> colPartitaIva, colNome, colCitta, colProvincia, colVia;
 	
 	@FXML
 	TableColumn<Agenzia, Integer> colCivico;
@@ -102,7 +102,7 @@ public class HomeAdminViewController
 			tblAgenzie.setItems(listaAgenzie);
 			colPartitaIva.setCellValueFactory(cellData -> cellData.getValue().getPartitaIvaProperty());
 			colNome.setCellValueFactory(cellData -> cellData.getValue().getNomeProperty());
-			colCittà.setCellValueFactory(cellData -> cellData.getValue().getCittàProperty());
+			colCitta.setCellValueFactory(cellData -> cellData.getValue().getCittaProperty());
 			colProvincia.setCellValueFactory(cellData -> cellData.getValue().getProvinciaProperty());
 			colVia.setCellValueFactory(cellData -> cellData.getValue().getViaProperty());
 			colCivico.setCellValueFactory(cellData -> cellData.getValue().getCivicoProperty().asObject());
