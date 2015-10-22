@@ -25,7 +25,7 @@ public class DAO {
 
 		try{
                 Class.forName("com.mysql.jdbc.Driver");
-                connessione =DriverManager.getConnection("jdbc:mysql://localhost:3306/carloan", "root", "");
+                connessione = DriverManager.getConnection("jdbc:mysql://localhost:3306/carloan", "root", "");
                 return connessione;
                 }
                 catch (ClassNotFoundException | SQLException e) {
@@ -270,16 +270,16 @@ public class DAO {
 			 {
 				 Agenzia tempAgenzia = new Agenzia();
 				
-				 String partitaIva = rs.getString("PartitaIva");
+				 String partitaIva = rs.getString("PartitaIVA");
 				 String nome = rs.getString("Nome");
-				 String citt‡ = rs.getString("Citt‡");
+				 String citta = rs.getString("Citt√†");
 				 String provincia = rs.getString("Provincia");
 				 String via = rs.getString("Via");
-				 int civico = rs.getInt("#civico");
+				 int civico = rs.getInt("#Civico");
 				 
 				 tempAgenzia.setPartitaIva(partitaIva);
 				 tempAgenzia.setNome(nome);
-				 tempAgenzia.setCitt‡(citt‡);
+				 tempAgenzia.setCitta(citta);
 				 tempAgenzia.setProvincia(provincia);
 				 tempAgenzia.setVia(via);
 				 tempAgenzia.setCivico(civico);
