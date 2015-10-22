@@ -18,7 +18,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.Agenzia;
 import model.Auto;
+import model.Dipendente;
 import model.DAO;
 
 public class HomeAdminViewController 
@@ -35,7 +37,19 @@ public class HomeAdminViewController
 	TableView<Auto>  tblAuto;
 	
 	@FXML
-	TableView tblAgenzie, tblDipendenti;
+	TableView<Dipendente> tblDipendenti;
+	
+	@FXML
+	TableView<Agenzia> tblAgenzie;
+	
+	@FXML
+	TableColumn<Agenzia, String> colPartitaIva, colNome, colCittà, colProvincia, colVia;
+	
+	@FXML
+	TableColumn<Agenzia, Integer> colCivico;
+	
+	@FXML
+	TableColumn<Dipendente, String> colUsername, colAgenziaDip, colNomeDip, colCognome, colTelefono;
 	
 	@FXML
 	TableColumn<Auto, String> colTarga, colModello, colAgenzia, colStato;
@@ -45,11 +59,22 @@ public class HomeAdminViewController
 	
 	//La lista di auto
 	private ObservableList<Auto> listaAuto = FXCollections.observableArrayList();
+	
+	//La lista di agenzie
+	private ObservableList<Agenzia> listaAgenzie = FXCollections.observableArrayList();
+	
+	//La lista di dipendenti
+	private ObservableList<Dipendente> listaDipendenti = FXCollections.observableArrayList();
+	
+
 
 	@FXML
     private void initialize() 
 	{
 		configuraTabellaAuto();
+		configuraTabellaAgenzie();
+		configuraTabellaDipendenti();
+
     }
 	
 	private void configuraTabellaAuto()
@@ -67,6 +92,39 @@ public class HomeAdminViewController
 			colStato.setCellValueFactory(cellData -> cellData.getValue().getStatoStringProperty());
 		}
 	}
+	
+	private void configuraTabellaAgenzie()
+	{
+		listaAgenzie = DAO.getListaAgenzie();
+		
+		if (!listaAgenzie.isEmpty())
+		{
+			tblAgenzie.setItems(listaAgenzie);
+			colPartitaIva.setCellValueFactory(cellData -> cellData.getValue().getPartitaIvaProperty());
+			colNome.setCellValueFactory(cellData -> cellData.getValue().getNomeProperty());
+			colCittà.setCellValueFactory(cellData -> cellData.getValue().getCittàProperty());
+			colProvincia.setCellValueFactory(cellData -> cellData.getValue().getProvinciaProperty());
+			colVia.setCellValueFactory(cellData -> cellData.getValue().getViaProperty());
+			colCivico.setCellValueFactory(cellData -> cellData.getValue().getCivicoProperty().asObject());
+		}
+	}
+	
+	private void configuraTabellaDipendenti()
+	{
+		listaDipendenti = DAO.getListaDipendenti();
+		
+		if (!listaDipendenti.isEmpty())
+		{
+			tblDipendenti.setItems(listaDipendenti);
+			colUsername.setCellValueFactory(cellData -> cellData.getValue().getUsernameProperty());
+			colAgenziaDip.setCellValueFactory(cellData -> cellData.getValue().getAgenziaProperty());
+			colNomeDip.setCellValueFactory(cellData -> cellData.getValue().getNomeProperty());
+			colCognome.setCellValueFactory(cellData -> cellData.getValue().getCognomeProperty());
+			colTelefono.setCellValueFactory(cellData -> cellData.getValue().getTelefonoProperty());
+		}
+	}
+	
+
 	
 	@FXML
 	private void aggiungiAuto()

@@ -224,6 +224,7 @@ public class DAO {
 
          
      public static ObservableList<Auto> getListaAuto()
+
      {
     	 ObservableList<Auto> listaAuto = FXCollections.observableArrayList();
     	 ResultSet rs = null;
@@ -257,6 +258,75 @@ public class DAO {
     	 return listaAuto;
      }
      
+
+     public static ObservableList<Agenzia> getListaAgenzie()
+     {
+    	 ObservableList<Agenzia> listaAgenzie = FXCollections.observableArrayList();
+    	 ResultSet rs = null;
+    	 String comando = "SELECT * FROM agenzia";
+    	 rs = DAO.getResultSet(comando);
+    	 try {
+			while (rs.next())
+			 {
+				 Agenzia tempAgenzia = new Agenzia();
+				
+				 String partitaIva = rs.getString("PartitaIva");
+				 String nome = rs.getString("Nome");
+				 String città = rs.getString("Città");
+				 String provincia = rs.getString("Provincia");
+				 String via = rs.getString("Via");
+				 int civico = rs.getInt("#civico");
+				 
+				 tempAgenzia.setPartitaIva(partitaIva);
+				 tempAgenzia.setNome(nome);
+				 tempAgenzia.setCittà(città);
+				 tempAgenzia.setProvincia(provincia);
+				 tempAgenzia.setVia(via);
+				 tempAgenzia.setCivico(civico);
+				 
+				 listaAgenzie.add(tempAgenzia);
+			 }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    	 
+    	 return listaAgenzie;
+     }
+     
+     public static ObservableList<Dipendente> getListaDipendenti()
+     {
+    	 ObservableList<Dipendente> listaDipendenti = FXCollections.observableArrayList();
+    	 ResultSet rs = null;
+    	 String comando = "SELECT * FROM dipendente";
+    	 rs = DAO.getResultSet(comando);
+    	 try {
+			while (rs.next())
+			 {
+				 Dipendente tempDipendente = new Dipendente();
+				
+				 String username = rs.getString("Username");
+				 String agenzia = rs.getString("Agenzia");
+				 String nome = rs.getString("Nome");
+				 String cognome = rs.getString("Cognome");
+				 String telefono = rs.getString("Telefono");
+				 
+				 tempDipendente.setUsername(username);
+				 tempDipendente.setAgenzia(agenzia);
+				 tempDipendente.setNome(nome);
+				 tempDipendente.setCognome(cognome);
+				 tempDipendente.setTelefono(telefono);
+				
+				 
+				 listaDipendenti.add(tempDipendente);
+			 }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    	 
+    	 return listaDipendenti;
+     }
+
+
      
      public static ArrayList<Integer> getListaInteri(String tabella, String colonna)
      {

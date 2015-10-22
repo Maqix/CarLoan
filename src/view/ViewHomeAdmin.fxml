@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="704.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.HomeAdminViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="704.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.HomeAdminViewController">
    <children>
       <Button layoutX="543.0" layoutY="420.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="374.0" text="Apri Contratto" />
       <Button layoutX="543.0" layoutY="531.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="374.0" text="Chiudi Contratto" />
@@ -19,11 +19,12 @@
       <Button layoutX="264.0" layoutY="645.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="141.0" text="Rimuovi Dipendente" />
       <TableView fx:id="tblAgenzie" layoutX="21.0" layoutY="51.0" prefHeight="220.0" prefWidth="426.0">
         <columns>
-          <TableColumn prefWidth="84.0" text="P. IVA" />
-          <TableColumn prefWidth="111.0" text="Nome" />
-            <TableColumn prefWidth="75.0" text="Citta" />
-            <TableColumn prefWidth="103.0" text="Via" />
-            <TableColumn prefWidth="51.0" text="Civico" />
+          <TableColumn fx:id="colPartitaIva" prefWidth="79.0" text="P. IVA" />
+          <TableColumn fx:id="colNome" prefWidth="76.0" text="Nome" />
+            <TableColumn fx:id="colCittà" prefWidth="89.0" text="Citta" />
+            <TableColumn fx:id="colProvincia" prefWidth="61.0" text="Prov" />
+            <TableColumn fx:id="colVia" prefWidth="74.0" text="Via" />
+            <TableColumn fx:id="colCivico" prefWidth="46.0" text="Civico" />
         </columns>
       </TableView>
       <TableView fx:id="tblAuto" layoutX="479.0" layoutY="51.0" prefHeight="220.0" prefWidth="501.0">
@@ -38,11 +39,11 @@
       </TableView>
       <TableView fx:id="tblDipendenti" layoutX="18.0" layoutY="400.0" prefHeight="220.0" prefWidth="426.0">
          <columns>
-            <TableColumn prefWidth="70.0" text="Agenzia" />
-            <TableColumn prefWidth="90.0" text="Nome" />
-            <TableColumn prefWidth="95.0" text="Cognome" />
-            <TableColumn prefWidth="93.0" text="Telefono" />
-            <TableColumn prefWidth="74.0" text="Username" />
+            <TableColumn fx:id="colAgenziaDip" prefWidth="70.0" text="Agenzia" />
+            <TableColumn fx:id="colNomeDip" prefWidth="90.0" text="Nome" />
+            <TableColumn fx:id="colCognome" prefWidth="95.0" text="Cognome" />
+            <TableColumn fx:id="colTelefono" prefWidth="93.0" text="Telefono" />
+            <TableColumn fx:id="colUsername" prefWidth="74.0" text="Username" />
          </columns>
       </TableView>
       <Label layoutX="179.0" layoutY="357.0" text="Dipendenti">

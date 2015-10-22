@@ -120,7 +120,7 @@ public class AggiungiAutoViewController {
 		fasciaCB.getSelectionModel().selectFirst();
 		
 		
-		ArrayList<String> listaAgenziePresenti = DAO.getListaString("agenzia", "Nome");
+		ArrayList<String> listaAgenziePresenti = DAO.getListaString("agenzia", "Nome, Città");
 		for (String agenzia: listaAgenziePresenti)
 		{
 			agenzie.add(agenzia);
