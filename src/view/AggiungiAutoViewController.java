@@ -1,5 +1,8 @@
 package view;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 import application.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,7 +25,7 @@ public class AggiungiAutoViewController {
 	@FXML
 	private TextField chilometraggioTF;
 	@FXML
-	private ChoiceBox<String> fasciaCB;
+	private ChoiceBox<Integer> fasciaCB;
 	@FXML
 	private ChoiceBox<String> agenziaCB;
 	@FXML
@@ -30,7 +33,7 @@ public class AggiungiAutoViewController {
 	@FXML
 	private Button aggiungiAutoButton;
 	
-	private ObservableList<String> fasce = FXCollections.observableArrayList();
+	private ObservableList<Integer> fasce = FXCollections.observableArrayList();
 	private ObservableList<String> agenzie = FXCollections.observableArrayList();
 	private ObservableList<String> stati = FXCollections.observableArrayList();
 	
@@ -39,33 +42,48 @@ public class AggiungiAutoViewController {
 	@FXML
 	private void aggiungiAuto()
 	{
-		if (verificaForm())
+		if (formRiempito())
 		{
+			//Ottengo i dati inseriti
 			 String targa = targaTF.getText();
-			 int fascia = Integer.parseInt(fasce.get(fasciaCB.getSelectionModel().getSelectedIndex()));
+			 int fascia = fasce.get(fasciaCB.getSelectionModel().getSelectedIndex());
 			 String modello = modelloTF.getText();
-			 String agenzia = agenzie.get(agenziaCB.getSelectionModel().getSelectedIndex());
-			 int stato = Integer.parseInt(stati.get(statoCB.getSelectionModel().getSelectedIndex()));
+			 String agenziaNome = agenzie.get(agenziaCB.getSelectionModel().getSelectedIndex());
+			 String agenzia = "";
+			 try { agenzia = DAO.cercaS("SELECT PartitaIVA FROM agenzia WHERE Nome = '" + agenziaNome + "'");
+			 } catch (SQLException e) {e.printStackTrace();}
+			 int stato = statoStringToInt(stati.get(statoCB.getSelectionModel().getSelectedIndex()));
 			 int km = Integer.parseInt(chilometraggioTF.getText());
 			 
-			 String comando = String.format("INSERT INTO `auto` (`Targa`, `Fascia`, `Modello`, `Agenzia`, `Stato`, `Chilometraggio`) VALUES ('%s', %d, '%s', '%s', %d, %d)", targa,fascia,modello,agenzia,stato,km);
-			 if (DAO.esegui(comando))
-			 {
-				 Main.lanciaInfo("Nuova Auto", "Auto aggiunta!");
-				 Auto tempAuto = new Auto();
-				 tempAuto.setTarga(targa);
-				 tempAuto.setFascia(fascia);
-				 tempAuto.setModello(modello);
-				 tempAuto.setAgenzia(agenzia);
-				 tempAuto.setStato(stato);
-				 tempAuto.setChilometraggio(km);
-				 listaAuto.add(tempAuto);
-				 dialogStage.close();
-			 }else
-			 {
-				 Main.lanciaWarning("Nuova Auto", "Auto NON aggiunta!");
-				 dialogStage.close();
-			 }
+			 //Creo l'auto da aggiungere
+			 Auto tempAuto = new Auto();
+			 tempAuto.setTarga(targa);
+			 tempAuto.setFascia(fascia);
+			 tempAuto.setModello(modello);
+			 tempAuto.setAgenzia(agenzia);
+			 tempAuto.setStato(stato);
+			 tempAuto.setChilometraggio(km);
+			 
+			 //Se i dati sono corretti
+			if (tempAuto.verificaAuto().equals(""))
+			{
+				 String comando = String.format("INSERT INTO `auto` (`Targa`, `Fascia`, `Modello`, `Agenzia`, `Stato`, `Chilometraggio`) VALUES ('%s', %d, '%s', '%s', %d, %d)", targa,fascia,modello,agenzia,stato,km);
+				 if (DAO.esegui(comando))
+				 {
+					 Main.lanciaInfo("Nuova Auto", "Auto aggiunta!");
+					 listaAuto.add(tempAuto);
+					 dialogStage.close();
+				 }else
+				 {
+					 Main.lanciaWarning("Nuova Auto", "Auto NON aggiunta!");
+				 }
+			}else
+			{
+				Main.lanciaWarning("Impossibile aggiungere auto", tempAuto.verificaAuto());
+			}
+		}else
+		{
+			Main.lanciaWarning("Impossibile aggiungere auto", "Compilare correttamente tutti i campi del form");
 		}
 	}
 	
@@ -75,32 +93,69 @@ public class AggiungiAutoViewController {
 		configuraPicker();
     }
 	
-	private boolean verificaForm()
+	private boolean formRiempito()
 	{
-		return true;
+		boolean risposta = false;
+		
+		try {
+			Integer.parseInt(chilometraggioTF.getText());
+			risposta = true;
+		} catch (NumberFormatException e) 
+		{
+			risposta = false;
+		}
+		
+		return risposta;
 	}
 	
 	private void configuraPicker()
 	{
 		
-		fasce.add("1");
-		fasce.add("2");
-		fasce.add("3");
-		fasce.add("4");
+		ArrayList<Integer> listaFascePresenti = DAO.getListaInteri("fascia", "idFascia");
+		for (Integer fascia: listaFascePresenti)
+		{
+			fasce.add(fascia);
+		}
 		fasciaCB.setItems(fasce);	
+		fasciaCB.getSelectionModel().selectFirst();
 		
 		
-		agenzie.add("1");
-		agenzie.add("2");
-		agenzie.add("3");
-		agenzie.add("4");
+		ArrayList<String> listaAgenziePresenti = DAO.getListaString("agenzia", "Nome");
+		for (String agenzia: listaAgenziePresenti)
+		{
+			agenzie.add(agenzia);
+		}
 		agenziaCB.setItems(agenzie);
+		agenziaCB.getSelectionModel().selectFirst();
 		
 		
-		stati.add("1");
-		stati.add("2");
-		stati.add("3");
+		stati.add("Libera");
+		stati.add("In uso");
+		stati.add("Manutenzione");
 		statoCB.setItems(stati);
+		statoCB.getSelectionModel().selectFirst();
+	}
+	
+	private int statoStringToInt(String stato)
+	{
+		int risultato = 99;
+		
+		switch (stato) {
+		case "Libera":
+			risultato = 1;
+			break;
+		case "In uso":
+			risultato = 2;
+			break;
+		case "Manutenzione":
+			risultato = 3;
+			break;
+
+		default:
+			break;
+		}
+		
+		return risultato;
 	}
 	
     public void setDialogStage(Stage dialogStage) 

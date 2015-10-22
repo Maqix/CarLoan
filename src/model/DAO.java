@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import model.Auto;
-
 public class DAO {
 	private static Connection connessione;
 
@@ -257,6 +255,47 @@ public class DAO {
 		}
     	 
     	 return listaAuto;
+     }
+     
+     
+     public static ArrayList<Integer> getListaInteri(String tabella, String colonna)
+     {
+    	 ArrayList<Integer> lista = new ArrayList<Integer>();
+    	 
+    	 String comando = String.format("SELECT %s FROM %s", colonna,tabella);
+    	 ResultSet rs = DAO.getResultSet(comando);
+    	 if (rs != null)
+    	 {
+    		 try {
+				while (rs.next())
+				 {
+					 lista.add(rs.getInt(1));
+				 }
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+    	 }
+    	 return lista;
+     }
+     
+     public static ArrayList<String> getListaString(String tabella, String colonna)
+     {
+    	 ArrayList<String> lista = new ArrayList<String>();
+    	 
+    	 String comando = String.format("SELECT %s FROM %s", colonna,tabella);
+    	 ResultSet rs = DAO.getResultSet(comando);
+    	 if (rs != null)
+    	 {
+    		 try {
+				while (rs.next())
+				 {
+					 lista.add(rs.getString(1));
+				 }
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+    	 }
+    	 return lista;
      }
 
 

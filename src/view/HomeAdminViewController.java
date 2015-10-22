@@ -38,10 +38,10 @@ public class HomeAdminViewController
 	TableView tblAgenzie, tblDipendenti;
 	
 	@FXML
-	TableColumn<Auto, String> colTarga, colModello, colAgenzia;
+	TableColumn<Auto, String> colTarga, colModello, colAgenzia, colStato;
 	
 	@FXML
-	TableColumn<Auto, Integer> colKm, colFascia, colStato;
+	TableColumn<Auto, Integer> colKm, colFascia;
 	
 	//La lista di auto
 	private ObservableList<Auto> listaAuto = FXCollections.observableArrayList();
@@ -62,9 +62,9 @@ public class HomeAdminViewController
 			colTarga.setCellValueFactory(cellData -> cellData.getValue().getTargaProperty());
 			colFascia.setCellValueFactory(cellData -> cellData.getValue().getFasciaProperty().asObject());
 			colModello.setCellValueFactory(cellData -> cellData.getValue().getModelloProperty());
-			colAgenzia.setCellValueFactory(cellData -> cellData.getValue().getAgenziaProperty());
+			colAgenzia.setCellValueFactory(cellData -> cellData.getValue().getAgenziaNomeStringProperty());
 			colKm.setCellValueFactory(cellData -> cellData.getValue().getChilometraggioProperty().asObject());
-			colStato.setCellValueFactory(cellData -> cellData.getValue().getStatoProperty().asObject());
+			colStato.setCellValueFactory(cellData -> cellData.getValue().getStatoStringProperty());
 		}
 	}
 	
