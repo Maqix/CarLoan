@@ -21,7 +21,7 @@
         <columns>
           <TableColumn fx:id="colPartitaIva" prefWidth="79.0" text="P. IVA" />
           <TableColumn fx:id="colNome" prefWidth="76.0" text="Nome" />
-            <TableColumn fx:id="colCittà" prefWidth="89.0" text="Citta" />
+            <TableColumn fx:id="colCitta" prefWidth="89.0" text="Citta" />
             <TableColumn fx:id="colProvincia" prefWidth="61.0" text="Prov" />
             <TableColumn fx:id="colVia" prefWidth="74.0" text="Via" />
             <TableColumn fx:id="colCivico" prefWidth="46.0" text="Civico" />

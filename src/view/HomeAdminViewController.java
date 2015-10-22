@@ -102,7 +102,7 @@ public class HomeAdminViewController
 			tblAgenzie.setItems(listaAgenzie);
 			colPartitaIva.setCellValueFactory(cellData -> cellData.getValue().getPartitaIvaProperty());
 			colNome.setCellValueFactory(cellData -> cellData.getValue().getNomeProperty());
-			//colCitta.setCellValueFactory(cellData -> cellData.getValue().getCittaProperty());
+			colCitta.setCellValueFactory(cellData -> cellData.getValue().getCittaProperty());
 			colProvincia.setCellValueFactory(cellData -> cellData.getValue().getProvinciaProperty());
 			colVia.setCellValueFactory(cellData -> cellData.getValue().getViaProperty());
 			colCivico.setCellValueFactory(cellData -> cellData.getValue().getCivicoProperty().asObject());

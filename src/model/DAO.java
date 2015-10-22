@@ -272,13 +272,16 @@ public class DAO {
 				
 				 String partitaIva = rs.getString("PartitaIVA");
 				 String nome = rs.getString("Nome");
-				 String citta = rs.getString("Citt√†");
+				 String citta = rs.getString("Citt‡");
 				 String provincia = rs.getString("Provincia");
 				 String via = rs.getString("Via");
 				 int civico = rs.getInt("#Civico");
 				 
 				 tempAgenzia.setPartitaIva(partitaIva);
 				 tempAgenzia.setNome(nome);
+
+				// tempAgenzia.setCitta(citt‡);
+
 				 tempAgenzia.setCitta(citta);
 				 tempAgenzia.setProvincia(provincia);
 				 tempAgenzia.setVia(via);
