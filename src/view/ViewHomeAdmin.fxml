@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="704.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.HomeAdminViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="704.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.HomeAdminViewController">
    <children>
       <Button layoutX="543.0" layoutY="420.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="374.0" text="Apri Contratto" />
       <Button layoutX="543.0" layoutY="531.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="374.0" text="Chiudi Contratto" />
@@ -23,8 +23,8 @@
           <TableColumn fx:id="colNome" prefWidth="76.0" text="Nome" />
             <TableColumn fx:id="colCitta" prefWidth="89.0" text="Citta" />
             <TableColumn fx:id="colProvincia" prefWidth="61.0" text="Prov" />
-            <TableColumn fx:id="colVia" prefWidth="74.0" text="Via" />
-            <TableColumn fx:id="colCivico" prefWidth="46.0" text="Civico" />
+            <TableColumn fx:id="colVia" prefWidth="68.0" text="Via" />
+            <TableColumn fx:id="colCivico" prefWidth="50.0" text="Civico" />
         </columns>
       </TableView>
       <TableView fx:id="tblAuto" layoutX="479.0" layoutY="51.0" prefHeight="220.0" prefWidth="501.0">

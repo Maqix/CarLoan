@@ -274,7 +274,7 @@ public class HomeAdminViewController
 					autoCorrente.setStato(stato);
 				}
 			}
-			//Aggiorno la tabell
+			//Aggiorno la tabella
 			tblAuto.refresh();
 		}else
 		{
