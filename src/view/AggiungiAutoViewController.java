@@ -32,7 +32,8 @@ public class AggiungiAutoViewController {
 	private ChoiceBox<String> statoCB;
 	@FXML
 	private Button aggiungiAutoButton;
-	
+	@FXML
+	private Button annullaButton;
 	private ObservableList<Integer> fasce = FXCollections.observableArrayList();
 	private ObservableList<String> agenzie = FXCollections.observableArrayList();
 	private ObservableList<String> stati = FXCollections.observableArrayList();
@@ -88,6 +89,12 @@ public class AggiungiAutoViewController {
 	}
 	
 	@FXML
+	private void premutAnnulla()
+	{
+		 dialogStage.close();
+	}
+	
+	@FXML
 	private void initialize() 
 	{
 		configuraPicker();
@@ -120,7 +127,7 @@ public class AggiungiAutoViewController {
 		fasciaCB.getSelectionModel().selectFirst();
 		
 		
-		ArrayList<String> listaAgenziePresenti = DAO.getListaString("agenzia", "Nome, Città");
+		ArrayList<String> listaAgenziePresenti = DAO.getListaString("agenzia", "Nome");
 		for (String agenzia: listaAgenziePresenti)
 		{
 			agenzie.add(agenzia);
