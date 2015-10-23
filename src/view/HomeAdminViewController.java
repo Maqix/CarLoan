@@ -44,10 +44,9 @@ public class HomeAdminViewController
 	TableView<Agenzia> tblAgenzie;
 	
 	@FXML
-	TableColumn<Agenzia, String> colPartitaIva, colNome, colCitta, colProvincia, colVia;
+	TableColumn<Agenzia, String> colPartitaIva, colNome, colCitta, colProvincia, colVia, colCivico;
 	
-	@FXML
-	TableColumn<Agenzia, Integer> colCivico;
+	
 	
 	@FXML
 	TableColumn<Dipendente, String> colUsername, colAgenziaDip, colNomeDip, colCognome, colTelefono;
@@ -106,7 +105,7 @@ public class HomeAdminViewController
 			colCitta.setCellValueFactory(cellData -> cellData.getValue().getCittaProperty());
 			colProvincia.setCellValueFactory(cellData -> cellData.getValue().getProvinciaProperty());
 			colVia.setCellValueFactory(cellData -> cellData.getValue().getViaProperty());
-			colCivico.setCellValueFactory(cellData -> cellData.getValue().getCivicoProperty().asObject());
+			colCivico.setCellValueFactory(cellData -> cellData.getValue().getCivicoProperty());
 		}
 	}
 	
@@ -283,6 +282,94 @@ public class HomeAdminViewController
 		
 
 	}
+	
+	@FXML
+	private void aggiungiAgenzia()
+	{
+		try {
+	        // Load the fxml file and create a new stage for the popup dialog.
+	        FXMLLoader loader = new FXMLLoader();
+	        loader.setLocation(HomeAdminViewController.class.getResource("ViewAggiungiAgenzia.fxml"));
+	        AnchorPane page = (AnchorPane) loader.load();
+
+	        // Create the dialog Stage.
+	        Stage dialogStage = new Stage();
+	        dialogStage.setTitle("Aggiungi Agenzia");
+	        dialogStage.initModality(Modality.APPLICATION_MODAL);
+	        dialogStage.initOwner(mainApp.primaryStage);
+	        Scene scene = new Scene(page);
+	        dialogStage.setScene(scene);
+
+	        
+	        AggiungiAgenziaViewController controller =  loader.getController();
+	        controller.setDialogStage(dialogStage);
+	        controller.setListaAgenzie(listaAgenzie);
+	        
+	        // Show the dialog and wait until the user closes it
+	        dialogStage.showAndWait();
+	      
+	        
+	        return;
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        return;
+	    }
+	}
+	
+	
+	@FXML
+	private void eliminaAgenzia()
+	{
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Elimina Agenzia");
+		alert.setHeaderText("Attenzione!");
+		alert.setContentText("Sei sicuro di voler eliminare quest'agenzia?");
+
+		//Ottengo l'agenzia selezionata
+		Agenzia agenziaSelezionata = tblAgenzie.getSelectionModel().getSelectedItem();
+		
+		//Se ho selezionato veramente un'agenzia
+		if (agenziaSelezionata != null)
+		{
+			//Se l'utente conferma di voler eliminare l'auto
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() == ButtonType.OK)
+			{
+				//Elimino l'agenzia dal DB
+				String comando = String.format("DELETE FROM `agenzia` WHERE `PartitaIVA` IN ('%s')", agenziaSelezionata.getPartitaIva());
+				
+				//Se l'operazione sul DB va a buon fine
+				if (DAO.esegui(comando))
+				{
+					//Elimino l'agenzia dalla lista
+					listaAgenzie.remove(agenziaSelezionata);
+					//Avviso l'utente
+					Alert alert3 = new Alert(AlertType.INFORMATION);
+					alert3.setTitle("Elimina Agenzia");
+					alert3.setHeaderText("Agenzia eliminata");
+					alert3.setContentText(null);
+					alert3.showAndWait();
+				}else
+				{
+					//Avviso l'utente che l'operazione non ├и andata a buon fine
+					Alert alert4 = new Alert(AlertType.WARNING);
+					alert4.setTitle("Elimina Agenzia");
+					alert4.setHeaderText("Nessuna agenzia eliminata");
+					alert4.setContentText("C'ши stato un problema col Database, contattare l'amministratore");
+					alert4.showAndWait();
+				}
+			}
+			
+		}else
+		{
+			Alert alert2 = new Alert(AlertType.WARNING);
+			alert2.setTitle("Elimina Agenzia");
+			alert2.setHeaderText("Nessuna agenzia selezionata");
+			alert2.setContentText("Seleziona un'agenzia nell'elenco per eliminarla");
+			alert2.showAndWait();
+		}
+	}
+
 	
 	public Main getMainApp() {
 		return mainApp;

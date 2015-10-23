@@ -16,6 +16,13 @@ public class Verificatore {
 			"^[a-zA-Z]{2}[0-9]{3,4}[a-zA-Z]{2}$";
 
 
+	private static final String PARTITAIVA_PATTERN = 
+			"^[0-9]{11}$";
+	
+	private static final String PROVINCIA_PATTERN = 
+			"^[a-zA-Z]{2}$";
+	
+	
 	public static boolean controllaeMail(final String hex) 
 	{
 		pattern = Pattern.compile(EMAIL_PATTERN);
@@ -29,6 +36,21 @@ public class Verificatore {
 		pattern = Pattern.compile(TARGA_PATTERN);
 		matcher = pattern.matcher(hex);
 		return matcher.matches();
+    }
+	
+	public static boolean controllaPartitaIva(final String hex) 
+	{
+		pattern = Pattern.compile(PARTITAIVA_PATTERN);
+		matcher = pattern.matcher(hex);
+		return matcher.matches();
+    }
+	
+	public static boolean controllaProvincia(final String hex) 
+	{
+		pattern = Pattern.compile(PROVINCIA_PATTERN);
+		matcher = pattern.matcher(hex);
+		return matcher.matches();
+    }
+	
 
-	}
 }

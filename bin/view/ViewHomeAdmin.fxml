@@ -10,8 +10,8 @@
    <children>
       <Button layoutX="543.0" layoutY="420.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="374.0" text="Apri Contratto" />
       <Button layoutX="543.0" layoutY="531.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="374.0" text="Chiudi Contratto" />
-      <Button layoutX="86.0" layoutY="294.0" mnemonicParsing="false" text="Aggiungi Agenzia" />
-      <Button layoutX="263.0" layoutY="294.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="121.0" text="Rimuovi Agenzia" />
+      <Button layoutX="86.0" layoutY="294.0" mnemonicParsing="false" onAction="#aggiungiAgenzia" text="Aggiungi Agenzia" />
+      <Button layoutX="263.0" layoutY="294.0" mnemonicParsing="false" onAction="#eliminaAgenzia" prefHeight="26.0" prefWidth="121.0" text="Rimuovi Agenzia" />
       <Button layoutX="530.0" layoutY="294.0" mnemonicParsing="false" onAction="#aggiungiAuto" text="Aggiungi Auto" />
       <Button layoutX="664.0" layoutY="294.0" mnemonicParsing="false" onAction="#eliminaAuto" prefHeight="26.0" prefWidth="102.0" text="Rimuovi Auto" />
       <Button layoutX="797.0" layoutY="294.0" mnemonicParsing="false" onAction="#manutenzioneAuto" text="Manutenzione Auto" />

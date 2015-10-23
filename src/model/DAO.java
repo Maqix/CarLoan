@@ -275,7 +275,7 @@ public class DAO {
 				 String citta = rs.getString("Citta");
 				 String provincia = rs.getString("Provincia");
 				 String via = rs.getString("Via");
-				 int civico = rs.getInt("#Civico");
+				 String civico = rs.getString("Civico");
 				 
 				 tempAgenzia.setPartitaIva(partitaIva);
 				 tempAgenzia.setNome(nome);
