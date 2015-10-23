@@ -173,33 +173,39 @@ public class HomeAdminViewController
 		//Se ho selezionato veramente una Auto
 		if (autoSelezionata != null)
 		{
-			//Se l'utente conferma di voler eliminare l'auto
-			Optional<ButtonType> result = alert.showAndWait();
-			if (result.get() == ButtonType.OK)
+			if (autoSelezionata.getStato() != 2)
 			{
-				//Elimino l'auto dal DB
-				String comando = String.format("DELETE FROM `auto` WHERE `Targa` IN ('%s')", autoSelezionata.getTarga());
-				
-				//Se l'operazione sul DB va a buon fine
-				if (DAO.esegui(comando))
+				//Se l'utente conferma di voler eliminare l'auto
+				Optional<ButtonType> result = alert.showAndWait();
+				if (result.get() == ButtonType.OK)
 				{
-					//Elimino l'auto dalla lista
-					listaAuto.remove(autoSelezionata);
-					//Avviso l'utente
-					Alert alert3 = new Alert(AlertType.INFORMATION);
-					alert3.setTitle("Elimina Auto");
-					alert3.setHeaderText("Auto eliminata");
-					alert3.setContentText(null);
-					alert3.showAndWait();
-				}else
-				{
-					//Avviso l'utente che l'operazione non è andata a buon fine
-					Alert alert4 = new Alert(AlertType.WARNING);
-					alert4.setTitle("Elimina Auto");
-					alert4.setHeaderText("Nessuna auto eliminata");
-					alert4.setContentText("C'è stato un problema col Database, contattare l'amministratore");
-					alert4.showAndWait();
+					//Elimino l'auto dal DB
+					String comando = String.format("DELETE FROM `auto` WHERE `Targa` IN ('%s')", autoSelezionata.getTarga());
+					
+					//Se l'operazione sul DB va a buon fine
+					if (DAO.esegui(comando))
+					{
+						//Elimino l'auto dalla lista
+						listaAuto.remove(autoSelezionata);
+						//Avviso l'utente
+						Alert alert3 = new Alert(AlertType.INFORMATION);
+						alert3.setTitle("Elimina Auto");
+						alert3.setHeaderText("Auto eliminata");
+						alert3.setContentText(null);
+						alert3.showAndWait();
+					}else
+					{
+						//Avviso l'utente che l'operazione non è andata a buon fine
+						Alert alert4 = new Alert(AlertType.WARNING);
+						alert4.setTitle("Elimina Auto");
+						alert4.setHeaderText("Nessuna auto eliminata");
+						alert4.setContentText("C'è stato un problema col Database, contattare l'amministratore");
+						alert4.showAndWait();
+					}
 				}
+			}else
+			{
+				Main.lanciaWarning("Elimina Auto", "Impossibile eliminare un'Auto in uso");
 			}
 			
 		}else
