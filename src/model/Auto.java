@@ -124,7 +124,10 @@ public class Auto
 			risultato.set("In uso");
 			break;
 		case 3:
-			risultato.set("Manutenzione");
+			risultato.set("Ordinaria");
+			break;
+		case 4:
+			risultato.set("Straordinaria");
 			break;
 
 		default:
@@ -197,19 +200,6 @@ public class Auto
 			return false;
 		}
 	}
-	
-	/*
-	private boolean fasciaEsistente()
-	{
-		String comando = String.format("SELECT idFascia FROM fascia WHERE Fascia = '%d'", this.getFascia());
-		try {
-			return DAO.cerca(comando);
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
-	*/
 	
 }
 

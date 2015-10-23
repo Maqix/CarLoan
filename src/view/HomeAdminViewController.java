@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -20,8 +21,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Agenzia;
 import model.Auto;
-import model.Dipendente;
 import model.DAO;
+import model.Dipendente;
 
 public class HomeAdminViewController 
 {
@@ -221,7 +222,66 @@ public class HomeAdminViewController
 	@FXML
 	private void manutenzioneAuto()
 	{
+		//Ottengo l'auto selezionata
+		Auto autoSelezionata = tblAuto.getSelectionModel().getSelectedItem();
+		//Se ho selezionato veramente un auto
+		if (autoSelezionata != null)
+		{
+			//Se l'auto non è in uso
+			if (autoSelezionata.getStato() != 2)
+			{
+				Alert alert = new Alert(AlertType.CONFIRMATION);
+				alert.setTitle("Manutenzione Auto");
+				alert.setHeaderText("Seleziona un nuovo stato per l'Auto");
+				alert.setContentText("Choose your option.");
+
+				ButtonType buttonTypeOne = new ButtonType("Libera");
+				ButtonType buttonTypeTwo = new ButtonType("Ordinaria");
+				ButtonType buttonTypeThree = new ButtonType("Straordinaria");
+				ButtonType buttonTypeCancel = new ButtonType("Annulla", ButtonData.CANCEL_CLOSE);
+
+				alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeThree, buttonTypeCancel);
+
+				Optional<ButtonType> result = alert.showAndWait();
+				if (result.get() == buttonTypeOne){
+				    settaManutenzioneAuto(autoSelezionata.getTarga(), 1);
+				} else if (result.get() == buttonTypeTwo) {
+					settaManutenzioneAuto(autoSelezionata.getTarga(), 3);
+				} else if (result.get() == buttonTypeThree) {
+					settaManutenzioneAuto(autoSelezionata.getTarga(), 4);
+				}
+			}else
+			{
+				Main.lanciaWarning("Manutenzione Auto", "L'Auto è attualmente in uso");
+			}
+		}else
+		{
+			Main.lanciaWarning("Manutenzione Auto", "Seleziona una auto per la manutenzione");
+		}
+	}
+	
+	private void settaManutenzioneAuto(String targa, int stato)
+	{
+		//Aggiorno l'auto nel DB
+		String comando = String.format("UPDATE `auto` SET `Stato` = '%d' WHERE `Targa` = '%s';", stato,targa);
+		if (DAO.esegui(comando))
+		{
+			//Cambio lo stato nella lista in ram
+			for (Auto autoCorrente: listaAuto)
+			{
+				if (autoCorrente.getTarga().equals(targa))
+				{
+					autoCorrente.setStato(stato);
+				}
+			}
+			//Aggiorno la tabell
+			tblAuto.refresh();
+		}else
+		{
+			Main.lanciaWarning("Impossibile aggiornare l'auto", "Problemi col database");
+		}
 		
+
 	}
 	
 	public Main getMainApp() {
