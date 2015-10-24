@@ -123,10 +123,10 @@ public class Agenzia {
 
 									risposta = "";
 								} else {
-									risposta = "Un'agenzia con questa partita iva è già  presente";
+									risposta = "Un'agenzia con questa Partita IVA e' gia' presente";
 								}
 							} else {
-								risposta = "La Via non può essere vuoto";
+								risposta = "La Via non puo' essere vuota";
 							}
 						} else {
 							risposta = "La Provincia deve essere composta da 2 sole lettere";
@@ -135,16 +135,16 @@ public class Agenzia {
 					} else
 
 					{
-						risposta = "La Citta non può essere vuota";
+						risposta = "La Citta non puo' essere vuota";
 					}
 				} else {
-					risposta = "Il Nome non può essere vuota";
+					risposta = "Il Nome non puo' essere vuoto";
 				}
 			} else {
-				risposta = "La partita iva deve contenere solo cifre";
+				risposta = "La Partita IVA deve contenere solo cifre";
 			}
 		} else {
-			risposta = "La partita iva deve essere di 11 caratteri";
+			risposta = "La Partita IVA deve essere di 11 caratteri";
 		}
 
 		return risposta;

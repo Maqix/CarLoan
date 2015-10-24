@@ -1,17 +1,13 @@
 package view;
 
-import java.sql.SQLException;
-
 import application.Main;
-import model.Agenzia;
-import model.Auto;
-import model.DAO;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.Agenzia;
+import model.DAO;
 
 public class AggiungiAgenziaViewController {
 	
