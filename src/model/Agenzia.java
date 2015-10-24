@@ -2,11 +2,9 @@ package model;
 
 import java.sql.SQLException;
 
-import utility.Verificatore;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import utility.Verificatore;
 
 public class Agenzia {
 
