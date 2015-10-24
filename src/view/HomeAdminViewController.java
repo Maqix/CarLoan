@@ -117,7 +117,7 @@ public class HomeAdminViewController
 		{
 			tblDipendenti.setItems(listaDipendenti);
 			colUsername.setCellValueFactory(cellData -> cellData.getValue().getUsernameProperty());
-			colAgenziaDip.setCellValueFactory(cellData -> cellData.getValue().getAgenziaProperty());
+			colAgenziaDip.setCellValueFactory(cellData -> cellData.getValue().getAgenziaNomeStringProperty());
 			colNomeDip.setCellValueFactory(cellData -> cellData.getValue().getNomeProperty());
 			colCognome.setCellValueFactory(cellData -> cellData.getValue().getCognomeProperty());
 			colTelefono.setCellValueFactory(cellData -> cellData.getValue().getTelefonoProperty());
@@ -355,7 +355,7 @@ public class HomeAdminViewController
 					Alert alert4 = new Alert(AlertType.WARNING);
 					alert4.setTitle("Elimina Agenzia");
 					alert4.setHeaderText("Nessuna agenzia eliminata");
-					alert4.setContentText("C'è¨ stato un problema col Database, contattare l'amministratore");
+					alert4.setContentText("C'ï¿½ stato un problema col Database, contattare l'amministratore");
 					alert4.showAndWait();
 				}
 			}
@@ -370,6 +370,44 @@ public class HomeAdminViewController
 		}
 	}
 
+	@FXML
+	private void aggiungiDipendente()
+	{
+		try {
+	        // Load the fxml file and create a new stage for the popup dialog.
+	        FXMLLoader loader = new FXMLLoader();
+	        loader.setLocation(HomeAdminViewController.class.getResource("ViewAggiungiDipendente.fxml"));
+	        AnchorPane page = (AnchorPane) loader.load();
+
+	        // Create the dialog Stage.
+	        Stage dialogStage = new Stage();
+	        dialogStage.setTitle("Aggiungi Dipendente");
+	        dialogStage.initModality(Modality.APPLICATION_MODAL);
+	        dialogStage.initOwner(mainApp.primaryStage);
+	        Scene scene = new Scene(page);
+	        dialogStage.setScene(scene);
+
+	        
+	        AggiungiDipendenteViewController controller =  loader.getController();
+	        controller.setDialogStage(dialogStage);
+	        controller.setListaDipendenti(listaDipendenti);
+	        
+	        // Show the dialog and wait until the user closes it
+	        dialogStage.showAndWait();
+	      
+	        
+	        return;
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        return;
+	    }
+	}
+	
+	@FXML
+	private void eliminaDipendente()
+	{
+		
+	}
 	
 	public Main getMainApp() {
 		return mainApp;

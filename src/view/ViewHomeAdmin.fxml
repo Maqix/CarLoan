@@ -15,8 +15,8 @@
       <Button layoutX="673.0" layoutY="87.0" mnemonicParsing="false" onAction="#aggiungiAuto" prefHeight="26.0" prefWidth="140.0" text="Aggiungi Auto" />
       <Button layoutX="673.0" layoutY="127.0" mnemonicParsing="false" onAction="#eliminaAuto" prefHeight="26.0" prefWidth="140.0" text="Rimuovi Auto" />
       <Button layoutX="673.0" layoutY="168.0" mnemonicParsing="false" onAction="#manutenzioneAuto" prefWidth="140.0" text="Manutenzione Auto" />
-      <Button layoutX="676.0" layoutY="504.0" mnemonicParsing="false" prefWidth="140.0" text="Aggiungi Dipendente" />
-      <Button layoutX="676.0" layoutY="544.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="140.0" text="Rimuovi Dipendente" />
+      <Button layoutX="676.0" layoutY="504.0" mnemonicParsing="false" onAction="#aggiungiDipendente" prefWidth="140.0" text="Aggiungi Dipendente" />
+      <Button layoutX="676.0" layoutY="544.0" mnemonicParsing="false" onAction="#eliminaDipendente" prefHeight="26.0" prefWidth="140.0" text="Rimuovi Dipendente" />
       <TableView fx:id="tblAgenzie" layoutX="33.0" layoutY="258.0" prefHeight="152.0" prefWidth="619.0">
         <columns>
           <TableColumn fx:id="colPartitaIva" prefWidth="104.72525024414062" text="P. IVA" />

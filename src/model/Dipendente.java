@@ -1,5 +1,7 @@
 package model;
 
+import java.sql.SQLException;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -20,6 +22,19 @@ public class Dipendente {
 		this.telefono = new SimpleStringProperty("");
 	}
 	
+	public StringProperty getAgenziaNomeStringProperty()
+	{
+		StringProperty risultato = new SimpleStringProperty("");
+		
+		try {
+			String nomeAgenzia = DAO.cercaS("SELECT Nome FROM agenzia WHERE PartitaIVA = '" + this.agenzia.get() + "'");
+			risultato.set(nomeAgenzia);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return risultato;
+	}
 	
 	
 	public StringProperty getUsernameProperty() {
