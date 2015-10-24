@@ -137,7 +137,6 @@ public class AggiungiAutoViewController {
 		
 		
 		stati.add("Libera");
-		stati.add("In uso");
 		stati.add("Manutenzione");
 		statoCB.setItems(stati);
 		statoCB.getSelectionModel().selectFirst();
