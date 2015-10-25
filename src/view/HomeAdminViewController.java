@@ -27,46 +27,31 @@ import model.Dipendente;
 public class HomeAdminViewController 
 {
 	private Main mainApp;
-	
 	@FXML
 	Button btnAggiungiAgenzia, btnRimuoviAgenzia, btnAggiungiDipendente, btnRimuoviDipendente, btnAggiungiAuto, btnRimuoviAuto;
-	
 	@FXML
 	Button btnManutenzioneAuto, btnApriContratto, btnChiudiContratto;
-	
 	@FXML
 	TableView<Auto>  tblAuto;
-	
 	@FXML
 	TableView<Dipendente> tblDipendenti;
-	
 	@FXML
 	TableView<Agenzia> tblAgenzie;
-	
 	@FXML
 	TableColumn<Agenzia, String> colPartitaIva, colNome, colCitta, colProvincia, colVia, colCivico;
-	
-	
-	
 	@FXML
 	TableColumn<Dipendente, String> colUsername, colAgenziaDip, colNomeDip, colCognome, colTelefono;
-	
 	@FXML
 	TableColumn<Auto, String> colTarga, colModello, colAgenzia, colStato;
-	
 	@FXML
 	TableColumn<Auto, Integer> colKm, colFascia;
 	
 	//La lista di auto
 	private ObservableList<Auto> listaAuto = FXCollections.observableArrayList();
-	
 	//La lista di agenzie
 	private ObservableList<Agenzia> listaAgenzie = FXCollections.observableArrayList();
-	
 	//La lista di dipendenti
 	private ObservableList<Dipendente> listaDipendenti = FXCollections.observableArrayList();
-	
-
 
 	@FXML
     private void initialize() 
@@ -123,8 +108,6 @@ public class HomeAdminViewController
 			colTelefono.setCellValueFactory(cellData -> cellData.getValue().getTelefonoProperty());
 		}
 	}
-	
-
 	
 	@FXML
 	private void aggiungiAuto()
@@ -406,7 +389,54 @@ public class HomeAdminViewController
 	@FXML
 	private void eliminaDipendente()
 	{
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Elimina Dipendente");
+		alert.setHeaderText("Attenzione!");
+		alert.setContentText("Sei sicuro di voler eliminare questo dipendente?");
+
+		//Ottengo l'auto selezionata
+		Dipendente dipendenteSelezionato = tblDipendenti.getSelectionModel().getSelectedItem();
 		
+		//Se ho selezionato veramente una Auto
+		if (dipendenteSelezionato != null)
+		{
+				//Se l'utente conferma di voler eliminare il dipendente
+				Optional<ButtonType> result = alert.showAndWait();
+				if (result.get() == ButtonType.OK)
+				{
+					//Elimino il dipendente dal DB
+					String comando = String.format("DELETE FROM `dipendente` WHERE `Username` IN ('%s')", dipendenteSelezionato.getUsername());
+					
+					//Se l'operazione sul DB va a buon fine
+					if (DAO.esegui(comando))
+					{
+						//Elimino il dipendente dalla lista
+						listaDipendenti.remove(dipendenteSelezionato);
+						//Avviso l'utente
+						Alert alert3 = new Alert(AlertType.INFORMATION);
+						alert3.setTitle("Elimina Dipendente");
+						alert3.setHeaderText("Dipendente eliminato");
+						alert3.setContentText(null);
+						alert3.showAndWait();
+					}else
+					{
+						//Avviso l'utente che l'operazione non è andata a buon fine
+						Alert alert4 = new Alert(AlertType.WARNING);
+						alert4.setTitle("Elimina Dipendente");
+						alert4.setHeaderText("Nessuna dipendente eliminato");
+						alert4.setContentText("C'è stato un problema col Database, contattare l'amministratore");
+						alert4.showAndWait();
+					}
+				}
+			
+		}else
+		{
+			Alert alert2 = new Alert(AlertType.WARNING);
+			alert2.setTitle("Elimina Dipendente");
+			alert2.setHeaderText("Nessuna dipendente selezionato");
+			alert2.setContentText("Seleziona un dipendente nell'elenco per eliminarlo");
+			alert2.showAndWait();
+		}
 	}
 	
 	public Main getMainApp() {
