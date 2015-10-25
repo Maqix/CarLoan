@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import model.DAO;
+import utility.Crittografia;
 
 public class RegistraAdminViewController 
 {
@@ -32,8 +33,9 @@ public class RegistraAdminViewController
 			{
 				String username = usernameTF.getText();
 				String pswd = pswdTF.getText();
+				String enPswd = Crittografia.encrypt(pswd);
 				//Registro l'utente nel DB
-				String comando = String.format("INSERT INTO `admin` (Username,PASSWORD) VALUES ('%s','%s')", username,pswd);
+				String comando = String.format("INSERT INTO `admin` (Username,PASSWORD) VALUES ('%s','%s')", username,enPswd);
 				boolean registrato = DAO.esegui(comando);
 				
 				if (registrato)

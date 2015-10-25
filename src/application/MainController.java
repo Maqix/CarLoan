@@ -13,6 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.DAO;
+import utility.Crittografia;
 import view.DialogVerificaViewController;
 import view.HomeAdminViewController;
 import view.RegistraAdminViewController;
@@ -155,9 +156,9 @@ public class MainController {
 	private boolean isAdmin(String nome, String pswd)
 	{
 		boolean risposta = false;
-		
+		String enPswd = Crittografia.encrypt(pswd);
 		//Cerco se nel DB è presente già un admin con questo nome
-		String comando = String.format("SELECT Username FROM admin WHERE Username = '%s' AND Password = '%s'", nome,pswd);
+		String comando = String.format("SELECT Username FROM admin WHERE Username = '%s' AND Password = '%s'", nome,enPswd);
 		try {
 			//DAO.connetti();
 			risposta = DAO.cerca(comando);
@@ -171,9 +172,9 @@ public class MainController {
 	private boolean isDipendente(String nome, String pswd)
 	{
 		boolean risposta = false;
-		
+		String enPswd = Crittografia.encrypt(pswd);
 		//Cerco se nel DB è presente già un dipendente con questo nome
-		String comando = String.format("SELECT Username FROM dipendente WHERE Username = '%s' AND Password = '%s'", nome,pswd);
+		String comando = String.format("SELECT Username FROM dipendente WHERE Username = '%s' AND Password = '%s'", nome,enPswd);
 		try {
 			//DAO.connetti();
 			risposta = DAO.cerca(comando);
