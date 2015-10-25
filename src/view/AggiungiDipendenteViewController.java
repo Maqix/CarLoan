@@ -1,7 +1,9 @@
 package view;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
+import application.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.DAO;
 import model.Dipendente;
+import utility.Crittografia;
 
 public class AggiungiDipendenteViewController 
 {
@@ -43,7 +46,63 @@ public class AggiungiDipendenteViewController
 	@FXML
 	private void premutoAggiungi()
 	{
-		
+		if (formRiempito())
+		{
+			if (passUguali())
+			{
+				//Ottengo i dati inseriti
+				String nome = nomeTF.getText();
+				String cognome = cognomeTF.getText();
+				String telefono = telefonoTF.getText();
+				String username = usernameTF.getText();
+				String password = Crittografia.encrypt(passTF.getText());
+				String agenziaNome = agenziaCB.getSelectionModel().getSelectedItem();
+				String agenzia = "";
+				 try { agenzia = DAO.cercaS("SELECT PartitaIVA FROM agenzia WHERE Nome = '" + agenziaNome + "'");
+				 } catch (SQLException e) {e.printStackTrace();}
+				//Creo l'user da aggiungere
+				Dipendente dipendente = new Dipendente();
+				dipendente.setNome(nome);
+				dipendente.setCognome(cognome);
+				dipendente.setTelefono(telefono);
+				dipendente.setUsername(username);
+				dipendente.setPassword(password);
+				dipendente.setAgenzia(agenzia);
+				//Se i dati sono corretti
+				if (dipendente.verificaDipendente().equals(""))
+				{
+					 String comando = String.format("INSERT INTO `dipendente` (`Agenzia`, `Nome`, `Cognome`, `Telefono`, `Password`, `Username`) VALUES ('%s', '%s', '%s', '%s', '%s', '%s')",agenzia,nome,cognome,telefono,password,username);
+					 if (DAO.esegui(comando))
+					 {
+						 Main.lanciaInfo("Nuovo Dipendente", "Dipendente aggiunto!");
+						 listaDipendenti.add(dipendente);
+						 dialogStage.close();
+					 }
+				}else
+				{
+					Main.lanciaWarning("Aggiungi Dipendente", dipendente.verificaDipendente());
+				}
+			}else
+			{
+				Main.lanciaWarning("Aggiungi Dipendente","Le due password devono essere uguali");
+			}
+		}else
+		{
+			Main.lanciaWarning("Aggiungi Dipendente", "Riempi tutti i campi del form");
+		}
+	}
+	
+	private boolean passUguali()
+	{
+		return (passTF.getText().equals(repPassTF.getText()));
+	}
+	
+	private boolean formRiempito()
+	{
+		boolean risposta = !((nomeTF.getText().equals("")) && (cognomeTF.getText().equals("")));
+		risposta = risposta && !(usernameTF.getText().equals(""));
+		risposta = risposta && !(passTF.getText().equals("") && repPassTF.getText().equals(""));
+		return risposta;
 	}
 	
 	@FXML
@@ -51,7 +110,6 @@ public class AggiungiDipendenteViewController
 	{
 		dialogStage.close();
 	}
-	
 	
 	@FXML
 	public void initialize()

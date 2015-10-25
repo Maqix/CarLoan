@@ -23,12 +23,22 @@ public class Verificatore {
 			"^[a-zA-Z]{2}$";
 	
 	
+	private static final String TELEFONO_PATTERN = 
+			"^[0-9]{6,10}$";
+	
 	public static boolean controllaeMail(final String hex) 
 	{
 		pattern = Pattern.compile(EMAIL_PATTERN);
 		matcher = pattern.matcher(hex);
 		return matcher.matches();
 
+	}
+	
+	public static boolean controllaTel(final String hex)
+	{
+		pattern = Pattern.compile(TELEFONO_PATTERN);
+		matcher = pattern.matcher(hex);
+		return matcher.matches();
 	}
 	
 	public static boolean controllaTarga(final String hex) 
