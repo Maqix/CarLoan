@@ -6,7 +6,6 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import utility.Verificatore;
 
 public class Auto 
 {	
@@ -150,55 +149,7 @@ public class Auto
 		return risultato;
 	}
 	
-	public String verificaAuto()
-	{
-		String risposta = "Errore!";
-		
-		if (this.getTarga().length() == 7)
-		{
-			if (Verificatore.controllaTarga(this.getTarga()))
-			{
-				if (!targaEsistente())
-				{
-					if (this.getModello().length() > 0 && this.getModello().length() < 30)
-					{
-						if (chilometraggio.get() < 10000000)
-						{
-							risposta = "";
-						}else
-						{
-							risposta = "Non ci credo che hai fatto più di 10000000 chilometri!!!";
-						}
-					}else
-					{
-						risposta = "Il modello deve essere compreso tra 0 e 30 caratteri";
-					}
-				}else
-				{
-					risposta = "Un'auto con questa targa è già presente";
-				}
-			}else
-			{
-				risposta = "Targa non valida";
-			}
-		}else
-		{
-			risposta = "La targa deve essere di 7 caratteri";
-		}
-		
-		return risposta;
-	}
-	
-	private boolean targaEsistente()
-	{
-		String comando = String.format("SELECT Targa FROM auto WHERE Targa = '%s'", this.getTarga());
-		try {
-			return DAO.cerca(comando);
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
+
 	
 }
 

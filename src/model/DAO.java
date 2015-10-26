@@ -190,73 +190,9 @@ public class DAO {
 
         }
 	
-	
-	/**
-	 * Esegue una query sul database e restituisce il relativo tableModel da utilizzare in una JTable
-	 * @param queryTXT
-	 * @return AgroludosTableModel
-	 * 
-	 */
-    /*
-	public static AgroludosTableModel getTabella(String queryText)
-	{
-	
-		Statement enunciato;
-		try {
-			
-			//Crea uno statement per l'interrogazione del database
-			enunciato = connessione.createStatement( ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			
-			//Trace
-			System.out.println("Database -> Interrogazione SQL: " + queryText);		
-			
-			//Crea un ResultSet eseguendo l'interrogazione desiderata
-			ResultSet tabellina = enunciato.executeQuery(queryText);
-			
-			return new AgroludosTableModel(tabellina);
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		}
-		
-	}*/
 
          
-     public static ObservableList<Auto> getListaAuto()
 
-     {
-    	 ObservableList<Auto> listaAuto = FXCollections.observableArrayList();
-    	 ResultSet rs = null;
-    	 String comando = "SELECT * FROM auto";
-    	 rs = DAO.getResultSet(comando);
-    	 try {
-			while (rs.next())
-			 {
-				 Auto tempAuto = new Auto();
-				
-				 String targa = rs.getString("Targa");
-				 int fascia = rs.getInt("Fascia");
-				 String modello = rs.getString("Modello");
-				 String agenzia = rs.getString("Agenzia");
-				 int stato = rs.getInt("Stato");
-				 int km = rs.getInt("Chilometraggio");
-				 
-				 tempAuto.setTarga(targa);
-				 tempAuto.setFascia(fascia);
-				 tempAuto.setModello(modello);
-				 tempAuto.setAgenzia(agenzia);
-				 tempAuto.setStato(stato);
-				 tempAuto.setChilometraggio(km);
-				 
-				 listaAuto.add(tempAuto);
-			 }
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-    	 
-    	 return listaAuto;
-     }
      
 
      public static ObservableList<Agenzia> getListaAgenzie()

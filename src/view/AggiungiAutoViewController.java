@@ -3,6 +3,7 @@ package view;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import application.AutoController;
 import application.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -66,10 +67,9 @@ public class AggiungiAutoViewController {
 			 tempAuto.setChilometraggio(km);
 			 
 			 //Se i dati sono corretti
-			if (tempAuto.verificaAuto().equals(""))
+			if (AutoController.verificaAuto(tempAuto).equals(""))
 			{
-				 String comando = String.format("INSERT INTO `auto` (`Targa`, `Fascia`, `Modello`, `Agenzia`, `Stato`, `Chilometraggio`) VALUES ('%s', %d, '%s', '%s', %d, %d)", targa,fascia,modello,agenzia,stato,km);
-				 if (DAO.esegui(comando))
+				 if (AutoController.aggiungiAuto(tempAuto))
 				 {
 					 Main.lanciaInfo("Nuova Auto", "Auto aggiunta!");
 					 listaAuto.add(tempAuto);
@@ -80,7 +80,7 @@ public class AggiungiAutoViewController {
 				 }
 			}else
 			{
-				Main.lanciaWarning("Impossibile aggiungere auto", tempAuto.verificaAuto());
+				Main.lanciaWarning("Impossibile aggiungere auto", AutoController.verificaAuto(tempAuto));
 			}
 		}else
 		{

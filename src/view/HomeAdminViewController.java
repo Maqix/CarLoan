@@ -3,6 +3,7 @@ package view;
 import java.io.IOException;
 import java.util.Optional;
 
+import application.AutoController;
 import application.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -64,7 +65,7 @@ public class HomeAdminViewController
 	
 	private void configuraTabellaAuto()
 	{
-		listaAuto = DAO.getListaAuto();
+		listaAuto = AutoController.getListaAuto();
 		
 		if (!listaAuto.isEmpty())
 		{
@@ -163,27 +164,17 @@ public class HomeAdminViewController
 				if (result.get() == ButtonType.OK)
 				{
 					//Elimino l'auto dal DB
-					String comando = String.format("DELETE FROM `auto` WHERE `Targa` IN ('%s')", autoSelezionata.getTarga());
-					
 					//Se l'operazione sul DB va a buon fine
-					if (DAO.esegui(comando))
+					if (AutoController.eliminaAuto(autoSelezionata))
 					{
 						//Elimino l'auto dalla lista
 						listaAuto.remove(autoSelezionata);
 						//Avviso l'utente
-						Alert alert3 = new Alert(AlertType.INFORMATION);
-						alert3.setTitle("Elimina Auto");
-						alert3.setHeaderText("Auto eliminata");
-						alert3.setContentText(null);
-						alert3.showAndWait();
+						Main.lanciaInfo("Elimina Auto", "Auto eliminata");
 					}else
 					{
 						//Avviso l'utente che l'operazione non è andata a buon fine
-						Alert alert4 = new Alert(AlertType.WARNING);
-						alert4.setTitle("Elimina Auto");
-						alert4.setHeaderText("Nessuna auto eliminata");
-						alert4.setContentText("C'è stato un problema col Database, contattare l'amministratore");
-						alert4.showAndWait();
+						Main.lanciaWarning("Nessuna Auto eliminata", "C'è stato un problema col Database, contattare l'amministratore");
 					}
 				}
 			}else
@@ -193,11 +184,7 @@ public class HomeAdminViewController
 			
 		}else
 		{
-			Alert alert2 = new Alert(AlertType.WARNING);
-			alert2.setTitle("Elimina Auto");
-			alert2.setHeaderText("Nessuna auto selezionata");
-			alert2.setContentText("Seleziona una auto nell'elenco per eliminarla");
-			alert2.showAndWait();
+			Main.lanciaWarning("Nessuna Auto selezionata", "Seleziona un'Auto dall'elenco per eliminarla");
 		}
 	}
 	
@@ -223,15 +210,35 @@ public class HomeAdminViewController
 				ButtonType buttonTypeCancel = new ButtonType("Annulla", ButtonData.CANCEL_CLOSE);
 
 				alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeThree, buttonTypeCancel);
-
+				
+				int statoScelto = 0;
 				Optional<ButtonType> result = alert.showAndWait();
 				if (result.get() == buttonTypeOne){
-				    settaManutenzioneAuto(autoSelezionata.getTarga(), 1);
+				    if(AutoController.settaManutenzioneAuto(autoSelezionata, 1))
+				    {
+				    	statoScelto = 1;
+				    }else {Main.lanciaWarning("Impossibile aggiornare l'auto", "Problemi col database");}
 				} else if (result.get() == buttonTypeTwo) {
-					settaManutenzioneAuto(autoSelezionata.getTarga(), 3);
+				    if(AutoController.settaManutenzioneAuto(autoSelezionata, 3))
+				    {
+				    	statoScelto = 3;
+				    }else {Main.lanciaWarning("Impossibile aggiornare l'auto", "Problemi col database");}
 				} else if (result.get() == buttonTypeThree) {
-					settaManutenzioneAuto(autoSelezionata.getTarga(), 4);
+				    if(AutoController.settaManutenzioneAuto(autoSelezionata, 4))
+				    {
+				    	statoScelto = 4;
+				    }else {Main.lanciaWarning("Impossibile aggiornare l'auto", "Problemi col database");}
 				}
+				//Cambio lo stato nella lista in ram
+				for (Auto autoCorrente: listaAuto)
+				{
+					if (autoCorrente.getTarga().equals(autoSelezionata.getTarga()))
+					{
+						autoCorrente.setStato(statoScelto);
+					}
+				}
+				//Aggiorno la tabella
+				tblAuto.refresh();
 			}else
 			{
 				Main.lanciaWarning("Manutenzione Auto", "L'Auto è attualmente in uso");
@@ -241,30 +248,7 @@ public class HomeAdminViewController
 			Main.lanciaWarning("Manutenzione Auto", "Seleziona una auto per la manutenzione");
 		}
 	}
-	
-	private void settaManutenzioneAuto(String targa, int stato)
-	{
-		//Aggiorno l'auto nel DB
-		String comando = String.format("UPDATE `auto` SET `Stato` = '%d' WHERE `Targa` = '%s';", stato,targa);
-		if (DAO.esegui(comando))
-		{
-			//Cambio lo stato nella lista in ram
-			for (Auto autoCorrente: listaAuto)
-			{
-				if (autoCorrente.getTarga().equals(targa))
-				{
-					autoCorrente.setStato(stato);
-				}
-			}
-			//Aggiorno la tabella
-			tblAuto.refresh();
-		}else
-		{
-			Main.lanciaWarning("Impossibile aggiornare l'auto", "Problemi col database");
-		}
-		
 
-	}
 	
 	@FXML
 	private void aggiungiAgenzia()
