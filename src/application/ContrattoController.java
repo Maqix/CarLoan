@@ -1,5 +1,6 @@
 package application;
 
-public class ContrattoController {
-
+public class ContrattoController 
+{
+	//MAQIX
 }
