@@ -108,46 +108,6 @@ public class Agenzia {
 		return civico.get();
 	}
 	
-	public String verificaAgenzia() {
-		String risposta = "Errore!";
-
-		if (this.getPartitaIva().length() == 11) {
-			if (Verificatore.controllaPartitaIva(this.getPartitaIva())) {
-				if (this.getNome().length() > 0 && this.getNome().length() < 30) {
-					if (this.getCitta().length() > 0 && this.getCitta().length() < 20) {
-						if (Verificatore.controllaProvincia(this.getProvincia())) {
-							if (this.getVia().length() > 0 && this.getVia().length() < 30) {
-								if (!partitaIvaEsistente()) {
-
-									risposta = "";
-								} else {
-									risposta = "Un'agenzia con questa Partita IVA e' gia' presente";
-								}
-							} else {
-								risposta = "La Via non puo' essere vuota";
-							}
-						} else {
-							risposta = "La Provincia deve essere composta da 2 sole lettere";
-						}
-
-					} else
-
-					{
-						risposta = "La Citta non puo' essere vuota";
-					}
-				} else {
-					risposta = "Il Nome non puo' essere vuoto";
-				}
-			} else {
-				risposta = "La Partita IVA deve contenere solo cifre";
-			}
-		} else {
-			risposta = "La Partita IVA deve essere di 11 caratteri";
-		}
-
-		return risposta;
-	}
-	
 
 				
 private boolean partitaIvaEsistente()

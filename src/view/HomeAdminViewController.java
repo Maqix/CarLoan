@@ -3,6 +3,7 @@ package view;
 import java.io.IOException;
 import java.util.Optional;
 
+import application.AgenziaController;
 import application.AutoController;
 import application.Main;
 import javafx.collections.FXCollections;
@@ -81,7 +82,7 @@ public class HomeAdminViewController
 	
 	private void configuraTabellaAgenzie()
 	{
-		listaAgenzie = DAO.getListaAgenzie();
+		listaAgenzie = AgenziaController.getListaAgenzia();
 		
 		if (!listaAgenzie.isEmpty())
 		{
@@ -302,38 +303,24 @@ public class HomeAdminViewController
 			Optional<ButtonType> result = alert.showAndWait();
 			if (result.get() == ButtonType.OK)
 			{
-				//Elimino l'agenzia dal DB
-				String comando = String.format("DELETE FROM `agenzia` WHERE `PartitaIVA` IN ('%s')", agenziaSelezionata.getPartitaIva());
 				
 				//Se l'operazione sul DB va a buon fine
-				if (DAO.esegui(comando))
+				if (AgenziaController.eliminaAgenzia(agenziaSelezionata))
 				{
 					//Elimino l'agenzia dalla lista
 					listaAgenzie.remove(agenziaSelezionata);
 					//Avviso l'utente
-					Alert alert3 = new Alert(AlertType.INFORMATION);
-					alert3.setTitle("Elimina Agenzia");
-					alert3.setHeaderText("Agenzia eliminata");
-					alert3.setContentText(null);
-					alert3.showAndWait();
+					Main.lanciaInfo("Elimina Agenzia", "Agenzia eliminata");
 				}else
 				{
 					//Avviso l'utente che l'operazione non Ã¨ andata a buon fine
-					Alert alert4 = new Alert(AlertType.WARNING);
-					alert4.setTitle("Elimina Agenzia");
-					alert4.setHeaderText("Nessuna agenzia eliminata");
-					alert4.setContentText("C'ï¿½ stato un problema col Database, contattare l'amministratore");
-					alert4.showAndWait();
+					Main.lanciaWarning("Nessuna agenzia eliminata", "C'è stato un problema col Database, contattare l'amministratore");
 				}
 			}
 			
 		}else
 		{
-			Alert alert2 = new Alert(AlertType.WARNING);
-			alert2.setTitle("Elimina Agenzia");
-			alert2.setHeaderText("Nessuna agenzia selezionata");
-			alert2.setContentText("Seleziona un'agenzia nell'elenco per eliminarla");
-			alert2.showAndWait();
+			Main.lanciaWarning("Nessuna agenzia selezionata", "Seleziona un'agenzia nell'elenco per eliminarla");
 		}
 	}
 

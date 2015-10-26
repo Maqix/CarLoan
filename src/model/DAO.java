@@ -194,44 +194,6 @@ public class DAO {
          
 
      
-
-     public static ObservableList<Agenzia> getListaAgenzie()
-     {
-    	 ObservableList<Agenzia> listaAgenzie = FXCollections.observableArrayList();
-    	 ResultSet rs = null;
-    	 String comando = "SELECT * FROM agenzia";
-    	 rs = DAO.getResultSet(comando);
-    	 try {
-			while (rs.next())
-			 {
-				 Agenzia tempAgenzia = new Agenzia();
-				
-				 String partitaIva = rs.getString("PartitaIVA");
-				 String nome = rs.getString("Nome");
-				 String citta = rs.getString("Citta");
-				 String provincia = rs.getString("Provincia");
-				 String via = rs.getString("Via");
-				 String civico = rs.getString("Civico");
-				 
-				 tempAgenzia.setPartitaIva(partitaIva);
-				 tempAgenzia.setNome(nome);
-
-				// tempAgenzia.setCitta(citt�);
-
-				 tempAgenzia.setCitta(citta);
-				 tempAgenzia.setProvincia(provincia);
-				 tempAgenzia.setVia(via);
-				 tempAgenzia.setCivico(civico);
-				 
-				 listaAgenzie.add(tempAgenzia);
-			 }
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-    	 
-    	 return listaAgenzie;
-     }
-     
      public static ObservableList<Dipendente> getListaDipendenti()
      {
     	 ObservableList<Dipendente> listaDipendenti = FXCollections.observableArrayList();
