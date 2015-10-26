@@ -72,7 +72,7 @@ public class HomeAdminViewController
 			colTarga.setCellValueFactory(cellData -> cellData.getValue().getTargaProperty());
 			colFascia.setCellValueFactory(cellData -> cellData.getValue().getFasciaProperty().asObject());
 			colModello.setCellValueFactory(cellData -> cellData.getValue().getModelloProperty());
-			colAgenzia.setCellValueFactory(cellData -> cellData.getValue().getAgenziaNomeStringProperty());
+			colAgenzia.setCellValueFactory(cellData -> cellData.getValue().getNomeAgenziaProperty());
 			colKm.setCellValueFactory(cellData -> cellData.getValue().getChilometraggioProperty().asObject());
 			colStato.setCellValueFactory(cellData -> cellData.getValue().getStatoStringProperty());
 		}

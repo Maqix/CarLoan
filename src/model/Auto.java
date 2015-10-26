@@ -16,6 +16,7 @@ public class Auto
 	private final StringProperty 	agenzia;
 	private final IntegerProperty 	stato;
 	private final IntegerProperty 	chilometraggio;
+	private final StringProperty 	nomeAgenzia;
 	
 	public Auto()
 	{
@@ -25,7 +26,13 @@ public class Auto
 		this.fascia = new SimpleIntegerProperty(0);
 		this.stato = new SimpleIntegerProperty(0);
 		this.chilometraggio = new SimpleIntegerProperty(0);
+		this.nomeAgenzia = new SimpleStringProperty("");
 		
+	}
+	
+	public StringProperty getNomeAgenziaProperty()
+	{
+		return nomeAgenzia;
 	}
 
 	public StringProperty getTargaProperty() {
@@ -70,6 +77,12 @@ public class Auto
 	public void setAgenzia(String agenzia) 
 	{
 	        this.agenzia.set(agenzia);
+			try {
+				String nomeAgenzia = DAO.cercaS("SELECT Nome FROM agenzia WHERE PartitaIVA = '" + this.agenzia.get() + "'");
+				this.nomeAgenzia.set(nomeAgenzia);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 	}
 	
 	public void setStato(int stato) 
@@ -132,20 +145,6 @@ public class Auto
 
 		default:
 			break;
-		}
-		
-		return risultato;
-	}
-	
-	public StringProperty getAgenziaNomeStringProperty()
-	{
-		StringProperty risultato = new SimpleStringProperty("");
-		
-		try {
-			String nomeAgenzia = DAO.cercaS("SELECT Nome FROM agenzia WHERE PartitaIVA = '" + this.agenzia.get() + "'");
-			risultato.set(nomeAgenzia);
-		} catch (SQLException e) {
-			e.printStackTrace();
 		}
 		
 		return risultato;
