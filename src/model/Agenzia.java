@@ -1,7 +1,5 @@
 package model;
 
-import java.sql.SQLException;
-
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 

@@ -3,6 +3,7 @@ package view;
 import java.util.ArrayList;
 
 import application.AgenziaController;
+import application.ContrattoController;
 import application.FasciaController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,6 +12,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.Auto;
 
 public class ApriContrattoViewController 
 {
@@ -54,7 +56,12 @@ public class ApriContrattoViewController
 	@FXML
 	private void premutoGeneraContratto()
 	{
-		
+		//Devo valorizzare i dati del riepilogo
+		//Assegno una auto libera in base alla fascia e all'agenzia scelta
+		int fascia = fasciaCB.getSelectionModel().getSelectedIndex()+1;
+		String agenzia = AgenziaController.getPivaFromNome(rilascioCB.getSelectionModel().getSelectedItem());
+		Auto autoAssegnata = ContrattoController.getAuto(fascia, agenzia);
+		autoTF.setText(autoAssegnata.getModello() + " - " + autoAssegnata.getTarga());
 	}
 	
 	@FXML
@@ -111,7 +118,23 @@ public class ApriContrattoViewController
 		//TODO: Bisogna scrivere Cliente e ClienteController
 	}
 	
-    public void setDialogStage(Stage dialogStage) 
+	/*
+    private int ottieniFasciaIntFromString(String fascia)
+    {
+		String regex = "\\d+";	  
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(fascia);	
+		int fasciaInt = 0;
+		while (matcher.find())
+		{
+			String match = matcher.group();
+			fasciaInt = Integer.parseInt(match);
+		}
+		return fasciaInt;
+    }
+	*/
+	
+	public void setDialogStage(Stage dialogStage) 
     {
         this.dialogStage = dialogStage;
     }

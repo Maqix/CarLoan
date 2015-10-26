@@ -136,5 +136,39 @@ public class AutoController
 	   	 
 	   	 return listaAuto;
 	}
+	
+	public static Auto getAuto(int fasciaCerca, String agenziaCerca)
+	{
+		Auto auto = new Auto();
+		String comando = String.format("SELECT * FROM `auto` WHERE `Fascia` = '%d' AND `Stato` = '1' AND `Agenzia` = '%s'", fasciaCerca,agenziaCerca);
+		ResultSet rs = DAO.getResultSet(comando);
+	   	 try {
+				while (rs.next())
+				 {
+					 Auto tempAuto = new Auto();
+					
+					 String targa = rs.getString("Targa");
+					 int fascia = rs.getInt("Fascia");
+					 String modello = rs.getString("Modello");
+					 String agenzia = rs.getString("Agenzia");
+					 int stato = rs.getInt("Stato");
+					 int km = rs.getInt("Chilometraggio");
+					 
+					 tempAuto.setTarga(targa);
+					 tempAuto.setFascia(fascia);
+					 tempAuto.setModello(modello);
+					 tempAuto.setAgenzia(agenzia);
+					 tempAuto.setStato(stato);
+					 tempAuto.setChilometraggio(km);
+					 
+					 auto = tempAuto;
+					 //Mi basta la prima auto che trovo
+					 break;
+				 }
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		return auto;
+	}
 
 }
