@@ -112,6 +112,44 @@ public class HomeAdminViewController
 	}
 	
 	@FXML
+	private void apriContratto()
+	{
+		try {
+	        // Load the fxml file and create a new stage for the popup dialog.
+	        FXMLLoader loader = new FXMLLoader();
+	        loader.setLocation(HomeAdminViewController.class.getResource("ViewApriContratto.fxml"));
+	        AnchorPane page = (AnchorPane) loader.load();
+
+	        // Create the dialog Stage.
+	        Stage dialogStage = new Stage();
+	        dialogStage.setTitle("Apri Contratto");
+	        dialogStage.initModality(Modality.APPLICATION_MODAL);
+	        dialogStage.initOwner(mainApp.primaryStage);
+	        Scene scene = new Scene(page);
+	        dialogStage.setScene(scene);
+
+	        
+	        ApriContrattoViewController controller =  loader.getController();
+	        controller.setDialogStage(dialogStage);
+	        
+	        // Show the dialog and wait until the user closes it
+	        dialogStage.showAndWait();
+	      
+	        
+	        return;
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        return;
+	    }
+	}
+	
+	@FXML
+	private void chiudiContratto()
+	{
+		
+	}
+	
+	@FXML
 	private void aggiungiAuto()
 	{
 		try {
@@ -314,7 +352,7 @@ public class HomeAdminViewController
 				}else
 				{
 					//Avviso l'utente che l'operazione non Ã¨ andata a buon fine
-					Main.lanciaWarning("Nessuna agenzia eliminata", "C'è stato un problema col Database, contattare l'amministratore");
+					Main.lanciaWarning("Nessuna agenzia eliminata", "C'ï¿½ stato un problema col Database, contattare l'amministratore");
 				}
 			}
 			

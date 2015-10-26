@@ -8,8 +8,8 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="741.0" prefWidth="851.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.HomeAdminViewController">
    <children>
-      <Button layoutX="142.0" layoutY="654.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="247.0" text="Apri Contratto" />
-      <Button layoutX="463.0" layoutY="654.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="247.0" text="Chiudi Contratto" />
+      <Button layoutX="142.0" layoutY="654.0" mnemonicParsing="false" onAction="#apriContratto" prefHeight="46.0" prefWidth="247.0" text="Apri Contratto" />
+      <Button layoutX="463.0" layoutY="654.0" mnemonicParsing="false" onAction="#chiudiContratto" prefHeight="46.0" prefWidth="247.0" text="Chiudi Contratto" />
       <Button layoutX="677.0" layoutY="290.0" mnemonicParsing="false" onAction="#aggiungiAgenzia" prefHeight="26.0" prefWidth="140.0" text="Aggiungi Agenzia" />
       <Button layoutX="676.0" layoutY="330.0" mnemonicParsing="false" onAction="#eliminaAgenzia" prefHeight="26.0" prefWidth="140.0" text="Rimuovi Agenzia" />
       <Button layoutX="673.0" layoutY="87.0" mnemonicParsing="false" onAction="#aggiungiAuto" prefHeight="26.0" prefWidth="140.0" text="Aggiungi Auto" />
