@@ -430,11 +430,6 @@ public class HomeAdminViewController
 			
 		}else
 		{
-			Alert alert2 = new Alert(AlertType.WARNING);
-			alert2.setTitle("Elimina Dipendente");
-			alert2.setHeaderText("Nessuna dipendente selezionato");
-			alert2.setContentText("Seleziona un dipendente nell'elenco per eliminarlo");
-			alert2.showAndWait();
 			Main.lanciaWarning("Nessun dipendente eliminato", "Seleziona un dipendente nell'elenco per eliminarlo");
 		}
 	}
