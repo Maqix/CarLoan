@@ -102,7 +102,7 @@ public class HomeAdminViewController
 		{
 			tblDipendenti.setItems(listaDipendenti);
 			colUsername.setCellValueFactory(cellData -> cellData.getValue().getUsernameProperty());
-			colAgenziaDip.setCellValueFactory(cellData -> cellData.getValue().getAgenziaNomeStringProperty());
+			colAgenziaDip.setCellValueFactory(cellData -> cellData.getValue().getAgenziaNomeProperty());
 			colNomeDip.setCellValueFactory(cellData -> cellData.getValue().getNomeProperty());
 			colCognome.setCellValueFactory(cellData -> cellData.getValue().getCognomeProperty());
 			colTelefono.setCellValueFactory(cellData -> cellData.getValue().getTelefonoProperty());

@@ -14,6 +14,7 @@ public class Dipendente {
 	private final StringProperty 	cognome;
 	private final StringProperty 	telefono;
 	private final StringProperty 	password;
+	private final StringProperty 	nomeAgenzia;
 	
 	public String verificaDipendente()
 	{
@@ -72,20 +73,12 @@ public class Dipendente {
 		this.cognome = new SimpleStringProperty("");
 		this.telefono = new SimpleStringProperty("");
 		this.password = new SimpleStringProperty("");
+		this.nomeAgenzia = new SimpleStringProperty("");
 	}
 	
-	public StringProperty getAgenziaNomeStringProperty()
+	public StringProperty getAgenziaNomeProperty()
 	{
-		StringProperty risultato = new SimpleStringProperty("");
-		
-		try {
-			String nomeAgenzia = DAO.cercaS("SELECT Nome FROM agenzia WHERE PartitaIVA = '" + this.agenzia.get() + "'");
-			risultato.set(nomeAgenzia);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return risultato;
+		return nomeAgenzia;
 	}
 
 	public StringProperty getUsernameProperty() {
@@ -141,6 +134,12 @@ public class Dipendente {
 	public void setAgenzia(String agenzia) 
 	{
 	        this.agenzia.set(agenzia);
+			try {
+				String nomeAgenzia = DAO.cercaS("SELECT Nome FROM agenzia WHERE PartitaIVA = '" + this.agenzia.get() + "'");
+				this.nomeAgenzia.set(nomeAgenzia);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 	}
 	
 	public void setNome(String nome) 
