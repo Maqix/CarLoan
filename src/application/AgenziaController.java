@@ -2,12 +2,13 @@ package application;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
-import utility.Verificatore;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Agenzia;
 import model.DAO;
+import utility.Verificatore;
 
 public class AgenziaController 
 {
@@ -139,7 +140,10 @@ public class AgenziaController
 	}
 	
 	
-	
+	public static ArrayList<String> getNomiAgenzie()
+	{
+		return DAO.getListaString("agenzia", "Nome");
+	}
 	
 
 }

@@ -1,5 +1,11 @@
 package view;
 
+import java.util.ArrayList;
+
+import application.AgenziaController;
+import application.FasciaController;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
@@ -11,19 +17,19 @@ public class ApriContrattoViewController
 	private Stage dialogStage;
 	
 	@FXML
-	private ChoiceBox fasciaCB;
+	private ChoiceBox<String> fasciaCB;
 	@FXML
-	private ChoiceBox noleggioCB;
+	private ChoiceBox<String> noleggioCB;
 	@FXML
-	private ChoiceBox tariffaCB;
+	private ChoiceBox<String> tariffaCB;
 	@FXML
-	private ChoiceBox rilascioCB;
+	private ChoiceBox<String> rilascioCB;
 	@FXML
-	private ChoiceBox ritornoCB;
+	private ChoiceBox<String> ritornoCB;
 	@FXML
 	private DatePicker dataInizioDF;
 	@FXML
-	private ChoiceBox clienteCB;
+	private ChoiceBox<String> clienteCB;
 	@FXML
 	private TextField nomeTF;
 	@FXML
@@ -42,7 +48,7 @@ public class ApriContrattoViewController
 	@FXML
 	private void initialize()
 	{
-		
+		configuraPicker();
 	}
 	
 	@FXML
@@ -61,6 +67,48 @@ public class ApriContrattoViewController
 	private void premutoAnnulla()
 	{
 		dialogStage.close();
+	}
+	
+	private void configuraPicker()
+	{
+		//I picker delle agenzie di rilascio e ritorno
+		ObservableList<String> agenzie = FXCollections.observableArrayList();
+		ArrayList<String> listaAgenziePresenti = AgenziaController.getNomiAgenzie();
+		for (String agenzia: listaAgenziePresenti)
+		{
+			agenzie.add(agenzia);
+		}
+		rilascioCB.setItems(agenzie);
+		ritornoCB.setItems(agenzie);
+		rilascioCB.getSelectionModel().selectFirst();
+		ritornoCB.getSelectionModel().selectFirst();
+		
+		//Il picker della tariffa
+		ObservableList<String> tariffa = FXCollections.observableArrayList();
+		tariffa.add("Km Illimitati");
+		tariffa.add("Km Limitati");
+		tariffaCB.setItems(tariffa);
+		tariffaCB.getSelectionModel().selectFirst();
+		
+		//Il picker del noleggio
+		ObservableList<String> noleggio = FXCollections.observableArrayList();
+		noleggio.add("Giornaliero");
+		noleggio.add("Settimanale");
+		noleggioCB.setItems(noleggio);
+		noleggioCB.getSelectionModel().selectFirst();
+		
+		//Il picker della fascia
+		ObservableList<String> fasce = FXCollections.observableArrayList();
+		ArrayList<String> listaFascePresenti = FasciaController.getNomiFasce();
+		for (String fascia: listaFascePresenti)
+		{
+			fasce.add(fascia);
+		}
+		fasciaCB.setItems(fasce);
+		fasciaCB.getSelectionModel().selectFirst();
+		
+		//Il picker dei clienti
+		//TODO: Bisogna scrivere Cliente e ClienteController
 	}
 	
     public void setDialogStage(Stage dialogStage) 

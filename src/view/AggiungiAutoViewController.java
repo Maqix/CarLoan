@@ -3,6 +3,7 @@ package view;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import application.AgenziaController;
 import application.AutoController;
 import application.Main;
 import javafx.collections.FXCollections;
@@ -127,7 +128,7 @@ public class AggiungiAutoViewController {
 		fasciaCB.getSelectionModel().selectFirst();
 		
 		
-		ArrayList<String> listaAgenziePresenti = DAO.getListaString("agenzia", "Nome");
+		ArrayList<String> listaAgenziePresenti = AgenziaController.getNomiAgenzie();
 		for (String agenzia: listaAgenziePresenti)
 		{
 			agenzie.add(agenzia);
