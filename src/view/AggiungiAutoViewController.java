@@ -154,8 +154,11 @@ public class AggiungiAutoViewController {
 		case "In uso":
 			risultato = 2;
 			break;
-		case "Manutenzione":
+		case "Ordinaria":
 			risultato = 3;
+			break;
+		case "Straordinaria":
+			risultato = 4;
 			break;
 
 		default:
