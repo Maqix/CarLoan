@@ -22,11 +22,11 @@
       </Label>
       <Separator layoutX="17.0" layoutY="109.0" prefHeight="0.0" prefWidth="533.0" />
       <Separator layoutX="17.0" layoutY="79.0" prefHeight="0.0" prefWidth="533.0" />
-      <ChoiceBox layoutX="25.0" layoutY="147.0" prefWidth="150.0" />
-      <ChoiceBox layoutX="217.0" layoutY="147.0" prefWidth="150.0" />
-      <ChoiceBox layoutX="393.0" layoutY="147.0" prefWidth="150.0" />
-      <ChoiceBox layoutX="25.0" layoutY="208.0" prefWidth="150.0" />
-      <ChoiceBox layoutX="217.0" layoutY="208.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="fasciaCB" layoutX="25.0" layoutY="147.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="noleggioCB" layoutX="217.0" layoutY="147.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="tariffaCB" layoutX="393.0" layoutY="147.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="rilascioCB" layoutX="25.0" layoutY="208.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="ritornoCB" layoutX="217.0" layoutY="208.0" prefWidth="150.0" />
       <Label layoutX="25.0" layoutY="121.0" text="Fascia auto">
          <font>
             <Font size="14.0" />
@@ -52,7 +52,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <DatePicker layoutX="394.0" layoutY="208.0" prefHeight="26.0" prefWidth="150.0" promptText="Data inizio..." />
+      <DatePicker fx:id="dataInizioDF" layoutX="394.0" layoutY="208.0" prefHeight="26.0" prefWidth="150.0" promptText="Data inizio..." />
       <Label layoutX="394.0" layoutY="181.0" text="Data Inizio">
          <font>
             <Font size="14.0" />
@@ -70,25 +70,25 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <ChoiceBox layoutX="18.0" layoutY="323.0" prefHeight="26.0" prefWidth="533.0" />
+      <ChoiceBox fx:id="clienteCB" layoutX="18.0" layoutY="323.0" prefHeight="26.0" prefWidth="533.0" />
       <Label layoutX="169.0" layoutY="360.0" text="Altrimenti aggiungi un nuovo cliente">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField layoutX="17.0" layoutY="413.0" promptText="Inserisci il nome..." />
+      <TextField fx:id="nomeTF" layoutX="17.0" layoutY="413.0" promptText="Inserisci il nome..." />
       <Label layoutX="18.0" layoutY="386.0" text="Nome">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField layoutX="203.0" layoutY="414.0" promptText="Inserisci il cognome..." />
+      <TextField fx:id="cognomeTF" layoutX="203.0" layoutY="414.0" promptText="Inserisci il cognome..." />
       <Label layoutX="202.0" layoutY="387.0" text="Cognome">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField layoutX="386.0" layoutY="415.0" promptText="Inserisci il telefono..." />
+      <TextField fx:id="telefonoTF" layoutX="386.0" layoutY="415.0" promptText="Inserisci il telefono..." />
       <Label layoutX="385.0" layoutY="388.0" text="Telefono">
          <font>
             <Font size="14.0" />
@@ -99,7 +99,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField layoutX="125.0" layoutY="456.0" prefHeight="26.0" prefWidth="423.0" promptText="Inserisci il codice fiscale..." />
+      <TextField fx:id="codiceFiscaleTF" layoutX="125.0" layoutY="456.0" prefHeight="26.0" prefWidth="423.0" promptText="Inserisci il codice fiscale..." />
       <Separator layoutX="393.0" layoutY="306.0" prefHeight="3.0" prefWidth="150.0" />
       <Separator layoutX="410.0" layoutY="369.0" prefHeight="3.0" prefWidth="141.0" />
       <Separator layoutX="19.0" layoutY="306.0" prefHeight="3.0" prefWidth="150.0" />
@@ -113,9 +113,9 @@
          </font>
       </Label>
       <Separator layoutX="601.0" layoutY="308.0" prefHeight="3.0" prefWidth="207.0" />
-      <Button layoutX="602.0" layoutY="336.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="207.0" text="Genera Contratto" />
+      <Button layoutX="602.0" layoutY="336.0" mnemonicParsing="false" onAction="#premutoGeneraContratto" prefHeight="26.0" prefWidth="207.0" text="Genera Contratto" />
       <Separator layoutX="602.0" layoutY="385.0" prefHeight="3.0" prefWidth="207.0" />
-      <Button layoutX="602.0" layoutY="393.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="207.0" text="Apri Contratto">
+      <Button layoutX="602.0" layoutY="393.0" mnemonicParsing="false" onAction="#premutoApriContratto" prefHeight="39.0" prefWidth="207.0" text="Apri Contratto">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
@@ -126,18 +126,18 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField editable="false" layoutX="601.0" layoutY="147.0" prefHeight="26.0" prefWidth="207.0" promptText="Premi &quot;Genera Contratto&quot;..." text="Premi &quot;Genera Contratto&quot;..." />
+      <TextField fx:id="autoTF" editable="false" layoutX="601.0" layoutY="147.0" prefHeight="26.0" prefWidth="207.0" promptText="Premi &quot;Genera Contratto&quot;..." text="Premi &quot;Genera Contratto&quot;..." />
       <Label layoutX="601.0" layoutY="182.0" text="Acconto">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField editable="false" layoutX="601.0" layoutY="208.0" prefHeight="26.0" prefWidth="207.0" promptText="Premi &quot;Genera Contratto&quot;..." text="Premi &quot;Genera Contratto&quot;..." />
+      <TextField fx:id="accontoTF" editable="false" layoutX="601.0" layoutY="208.0" prefHeight="26.0" prefWidth="207.0" promptText="Premi &quot;Genera Contratto&quot;..." text="Premi &quot;Genera Contratto&quot;..." />
       <Label layoutX="602.0" layoutY="243.0" text="Numero di Contratto">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField editable="false" layoutX="602.0" layoutY="269.0" prefHeight="26.0" prefWidth="207.0" promptText="Premi &quot;Genera Contratto&quot;..." text="Premi &quot;Genera Contratto&quot;..." />
+      <TextField fx:id="contrattoTF" editable="false" layoutX="602.0" layoutY="269.0" prefHeight="26.0" prefWidth="207.0" promptText="Premi &quot;Genera Contratto&quot;..." text="Premi &quot;Genera Contratto&quot;..." />
    </children>
 </AnchorPane>
