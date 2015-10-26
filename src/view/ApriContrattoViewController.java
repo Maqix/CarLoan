@@ -12,7 +12,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import model.Auto;
 
 public class ApriContrattoViewController 
 {
@@ -47,6 +46,8 @@ public class ApriContrattoViewController
 	@FXML
 	private TextField contrattoTF;
 	
+	private ContrattoController contrattoController = new ContrattoController();
+	
 	@FXML
 	private void initialize()
 	{
@@ -57,11 +58,21 @@ public class ApriContrattoViewController
 	private void premutoGeneraContratto()
 	{
 		//Devo valorizzare i dati del riepilogo
-		//Assegno una auto libera in base alla fascia e all'agenzia scelta
+		//Ottengo la fascia e l'agenzia scelti per assegnare una auto
 		int fascia = fasciaCB.getSelectionModel().getSelectedIndex()+1;
 		String agenzia = AgenziaController.getPivaFromNome(rilascioCB.getSelectionModel().getSelectedItem());
-		Auto autoAssegnata = ContrattoController.getAuto(fascia, agenzia);
-		autoTF.setText(autoAssegnata.getModello() + " - " + autoAssegnata.getTarga());
+		//Faccio generare una auto valida al ContrattoController
+		contrattoController.setAuto(fascia, agenzia);
+		//Mostro nella TextField l'auto assegnata
+		autoTF.setText(contrattoController.getAuto().getModello() + " - " + contrattoController.getAuto().getTarga());
+		//Faccio generare un acconto adeguato al ContrattoController
+		Integer acconto = contrattoController.generaAcconto();
+		//Mostro nella TextField l'acconto
+		accontoTF.setText(acconto.toString() + "€");
+		//Faccio generare un numero di contratto al ContrattoController
+		Integer numContratto = contrattoController.generaNumContratto();
+		//Mostro nella TextField il numero di contratto
+		contrattoTF.setText(numContratto.toString());
 	}
 	
 	@FXML
