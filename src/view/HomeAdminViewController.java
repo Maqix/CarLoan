@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import application.AgenziaController;
 import application.AutoController;
+import application.DipendenteController;
 import application.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,7 +24,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Agenzia;
 import model.Auto;
-import model.DAO;
 import model.Dipendente;
 
 public class HomeAdminViewController 
@@ -98,7 +98,7 @@ public class HomeAdminViewController
 	
 	private void configuraTabellaDipendenti()
 	{
-		listaDipendenti = DAO.getListaDipendenti();
+		listaDipendenti = DipendenteController.getListaDipendente();
 		
 		if (!listaDipendenti.isEmpty())
 		{
@@ -413,28 +413,18 @@ public class HomeAdminViewController
 				Optional<ButtonType> result = alert.showAndWait();
 				if (result.get() == ButtonType.OK)
 				{
-					//Elimino il dipendente dal DB
-					String comando = String.format("DELETE FROM `dipendente` WHERE `Username` IN ('%s')", dipendenteSelezionato.getUsername());
 					
 					//Se l'operazione sul DB va a buon fine
-					if (DAO.esegui(comando))
+					if (DipendenteController.eliminaDipendente(dipendenteSelezionato))
 					{
 						//Elimino il dipendente dalla lista
 						listaDipendenti.remove(dipendenteSelezionato);
 						//Avviso l'utente
-						Alert alert3 = new Alert(AlertType.INFORMATION);
-						alert3.setTitle("Elimina Dipendente");
-						alert3.setHeaderText("Dipendente eliminato");
-						alert3.setContentText(null);
-						alert3.showAndWait();
+						Main.lanciaInfo("Elimina Dipendente", "Dipendente eliminato");
 					}else
 					{
 						//Avviso l'utente che l'operazione non è andata a buon fine
-						Alert alert4 = new Alert(AlertType.WARNING);
-						alert4.setTitle("Elimina Dipendente");
-						alert4.setHeaderText("Nessuna dipendente eliminato");
-						alert4.setContentText("C'è stato un problema col Database, contattare l'amministratore");
-						alert4.showAndWait();
+					    Main.lanciaWarning("Nessun dipendente eliminato", "C'� stato un problema col Database, contattare l'amministratore");
 					}
 				}
 			
@@ -445,6 +435,7 @@ public class HomeAdminViewController
 			alert2.setHeaderText("Nessuna dipendente selezionato");
 			alert2.setContentText("Seleziona un dipendente nell'elenco per eliminarlo");
 			alert2.showAndWait();
+			Main.lanciaWarning("Nessun dipendente eliminato", "Seleziona un dipendente nell'elenco per eliminarlo");
 		}
 	}
 	

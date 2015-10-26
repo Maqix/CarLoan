@@ -4,7 +4,7 @@ import java.sql.SQLException;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import utility.Verificatore;
+
 
 public class Agenzia {
 
@@ -109,17 +109,6 @@ public class Agenzia {
 	}
 	
 
-				
-private boolean partitaIvaEsistente()
-	{
-	String comando = String.format("SELECT PartitaIva FROM agenzia WHERE PartitaIva = '%s'", this.getPartitaIva());
-		try {
-			return DAO.cerca(comando);
-			} catch (SQLException e) {
-			e.printStackTrace();
-		return false;
-			}
-	}			
 }
 
 	

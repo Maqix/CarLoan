@@ -16,54 +16,6 @@ public class Dipendente {
 	private final StringProperty 	password;
 	private final StringProperty 	nomeAgenzia;
 	
-	public String verificaDipendente()
-	{
-		String risposta = "Errore!";
-		if (nome.get().length() > 0 && nome.get().length() < 46)
-		{
-			if (cognome.get().length() > 0 && cognome.get().length() < 46)
-			{
-				if (telefono.get().length() > 5 && telefono.get().length() < 11)
-				{
-					if (Verificatore.controllaTel(telefono.get()))
-					{
-						if (!isUsernameEsistente())
-						{
-							risposta = "";
-						}else
-						{
-							risposta = "Un dipendente con questo Username è già presente";
-						}
-					}else
-					{
-						risposta = "Il telefono deve essere numerico";
-					}
-				}else
-				{
-					risposta = "Il telefono deve essere compreso tra 6 e 10 caratteri";
-				}
-			}else
-			{
-				risposta = "Il cognome deve essere compreso tra 1 e 45 caratteri";
-			}
-		}else
-		{
-			risposta = "Il nome deve essere compreso tra 1 e 45 caratteri";
-		}
-		return risposta;
-	}
-	
-	private boolean isUsernameEsistente()
-	{
-		String comando = String.format("SELECT Username FROM dipendente WHERE Username = '%s'", this.getUsername());
-		try {
-			return DAO.cerca(comando);
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
-	
 	
 	public Dipendente()
 	{
