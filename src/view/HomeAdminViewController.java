@@ -1,7 +1,5 @@
 package view;
 
-//MAQIX
-
 import java.io.IOException;
 import java.util.Optional;
 
