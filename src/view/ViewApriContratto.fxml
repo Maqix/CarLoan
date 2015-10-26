@@ -23,10 +23,10 @@
       <Separator layoutX="17.0" layoutY="109.0" prefHeight="0.0" prefWidth="533.0" />
       <Separator layoutX="17.0" layoutY="79.0" prefHeight="0.0" prefWidth="533.0" />
       <ChoiceBox layoutX="25.0" layoutY="147.0" prefWidth="150.0" />
-      <ChoiceBox layoutX="217.0" layoutY="208.0" prefWidth="150.0" />
-      <ChoiceBox layoutX="25.0" layoutY="208.0" prefWidth="150.0" />
-      <ChoiceBox layoutX="393.0" layoutY="147.0" prefWidth="150.0" />
       <ChoiceBox layoutX="217.0" layoutY="147.0" prefWidth="150.0" />
+      <ChoiceBox layoutX="393.0" layoutY="147.0" prefWidth="150.0" />
+      <ChoiceBox layoutX="25.0" layoutY="208.0" prefWidth="150.0" />
+      <ChoiceBox layoutX="217.0" layoutY="208.0" prefWidth="150.0" />
       <Label layoutX="25.0" layoutY="121.0" text="Fascia auto">
          <font>
             <Font size="14.0" />
