@@ -128,9 +128,6 @@ public class ApriContrattoViewController
 		fasciaCB.getSelectionModel().selectFirst();
 		
 		//Il picker dei clienti
-		//TODO: Bisogna scrivere Cliente e ClienteController
-		
-		
 		ArrayList<String> listaClientiPresenti = ClienteController.getDatiCliente();
 		for (String cliente: listaClientiPresenti)
 		{
@@ -139,22 +136,7 @@ public class ApriContrattoViewController
 		clienteCB.setItems(clienti);
 		clienteCB.getSelectionModel().selectFirst();
 	}
-	
-	/*
-    private int ottieniFasciaIntFromString(String fascia)
-    {
-		String regex = "\\d+";	  
-		Pattern pattern = Pattern.compile(regex);
-		Matcher matcher = pattern.matcher(fascia);	
-		int fasciaInt = 0;
-		while (matcher.find())
-		{
-			String match = matcher.group();
-			fasciaInt = Integer.parseInt(match);
-		}
-		return fasciaInt;
-    }
-	*/
+
 	
 	public void setDialogStage(Stage dialogStage) 
     {
