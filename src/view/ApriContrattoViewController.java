@@ -3,6 +3,7 @@ package view;
 import java.util.ArrayList;
 
 import application.AgenziaController;
+import application.ClienteController;
 import application.ContrattoController;
 import application.FasciaController;
 import javafx.collections.FXCollections;
@@ -46,6 +47,7 @@ public class ApriContrattoViewController
 	@FXML
 	private TextField contrattoTF;
 	
+	private ObservableList<String> clienti = FXCollections.observableArrayList();
 	private ContrattoController contrattoController = new ContrattoController();
 	
 	@FXML
@@ -127,6 +129,15 @@ public class ApriContrattoViewController
 		
 		//Il picker dei clienti
 		//TODO: Bisogna scrivere Cliente e ClienteController
+		
+		
+		ArrayList<String> listaClientiPresenti = ClienteController.getDatiCliente();
+		for (String cliente: listaClientiPresenti)
+		{
+			clienti.add(cliente);
+		}
+		clienteCB.setItems(clienti);
+		clienteCB.getSelectionModel().selectFirst();
 	}
 	
 	/*
