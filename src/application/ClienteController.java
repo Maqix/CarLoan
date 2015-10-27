@@ -18,7 +18,23 @@ public class ClienteController {
     }
 	
 	
-	
+	public static Cliente getClienteFromCF(String cf)
+	{
+		String nome = "",cognome = "",telefono = "";
+		try {
+			nome = DAO.cercaS("SELECT Nome FROM `cliente` WHERE `CF` = '"+cf+"'");
+			cognome = DAO.cercaS("SELECT Cognome FROM `cliente` WHERE `CF` = '"+cf+"'");
+			telefono = DAO.cercaS("SELECT Telefono FROM `cliente` WHERE `CF` = '"+cf+"'");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		Cliente cliente = new Cliente();
+		cliente.setNome(nome);
+		cliente.setCognome(cognome);
+		cliente.setTelefono(telefono);
+		cliente.setCF(cf);
+		return cliente;
+	}
 	
 	
 	public static ObservableList<Cliente> caricaListaCliente()

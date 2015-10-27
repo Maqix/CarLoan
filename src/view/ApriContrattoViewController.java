@@ -6,6 +6,8 @@ import application.AgenziaController;
 import application.ClienteController;
 import application.ContrattoController;
 import application.FasciaController;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,6 +15,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.Cliente;
 
 public class ApriContrattoViewController 
 {
@@ -135,6 +138,26 @@ public class ApriContrattoViewController
 		}
 		clienteCB.setItems(clienti);
 		clienteCB.getSelectionModel().selectFirst();
+		clienteCB.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+		      @Override
+		      public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) 
+		      {
+		        String stringaClienteSelezionato = clienteCB.getItems().get((Integer) number2);
+		        //Devo prendere i primi sedici caratteri (il CF)
+		        String cf = stringaClienteSelezionato.substring(0, 16);
+		        setClienteTF(cf);
+		      }
+		    });
+		
+	}
+	
+	private void setClienteTF(String cf)
+	{
+		Cliente clienteSelezionato = ClienteController.getClienteFromCF(cf);
+		nomeTF.setText(clienteSelezionato.getNome());
+		cognomeTF.setText(clienteSelezionato.getCognome());
+		telefonoTF.setText(clienteSelezionato.getTelefono());
+		codiceFiscaleTF.setText(clienteSelezionato.getCF());
 	}
 
 	
