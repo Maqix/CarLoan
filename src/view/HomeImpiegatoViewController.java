@@ -107,6 +107,14 @@ public class HomeImpiegatoViewController {
 		{
 			tblContratto.setItems(listaContratti);
 			colID.setCellValueFactory(cellData -> cellData.getValue().idContrattoProperty().asObject());
+			colAuto.setCellValueFactory(cellData -> cellData.getValue().autoProperty());
+			colAgenziaAp.setCellValueFactory(cellData -> cellData.getValue().agenziaAperturaProperty());
+			colAgenziaCh.setCellValueFactory(cellData -> cellData.getValue().agenziaChiusuraProperty());
+			colDataInizio.setCellValueFactory(cellData -> cellData.getValue().dataInizioProperty());
+			colDataFine.setCellValueFactory(cellData -> cellData.getValue().dataFineProperty());
+			colCliente.setCellValueFactory(cellData -> cellData.getValue().clienteProperty());
+			colTipoNoleggio.setCellValueFactory(cellData -> cellData.getValue().tipoNoleggioProperty());
+			colTipoChilometraggio.setCellValueFactory(cellData -> cellData.getValue().tipoChilometraggioProperty());
 		}
 	}
 	
