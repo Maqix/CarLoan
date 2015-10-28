@@ -16,6 +16,7 @@ import model.DAO;
 import utility.Crittografia;
 import view.DialogVerificaViewController;
 import view.HomeAdminViewController;
+import view.HomeImpiegatoViewController;
 import view.RegistraAdminViewController;
 
 public class MainController {
@@ -56,6 +57,7 @@ public class MainController {
 		{
 			//Lancia HomeDipendente
 			mainApp.utenteLoggato = usernameTF.getText();
+			lanciaHomeImpiegato();
 		}else
 		{
 			Main.lanciaWarning("Username o Password errati", "");
@@ -144,6 +146,32 @@ public class MainController {
 
 	        
 	        HomeAdminViewController controller =  loader.getController();
+	        controller.setMainApp(mainApp);
+	        
+	        return;
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        return;
+	    }
+	}
+	
+	private void lanciaHomeImpiegato()
+	{
+		try {
+	        // Load the fxml file and create a new stage for the popup dialog.
+	        FXMLLoader loader = new FXMLLoader();
+	        loader.setLocation(DialogVerificaViewController.class.getResource("ViewHomeImpiegato.fxml"));
+	        AnchorPane page = (AnchorPane) loader.load();
+
+	        Scene scene = new Scene(page);
+	        mainApp.primaryStage.setTitle("Home Impiegato");
+	        mainApp.primaryStage.setScene(scene);
+	        mainApp.primaryStage.centerOnScreen();
+	     
+
+
+	        
+	        HomeImpiegatoViewController controller =  loader.getController();
 	        controller.setMainApp(mainApp);
 	        
 	        return;
