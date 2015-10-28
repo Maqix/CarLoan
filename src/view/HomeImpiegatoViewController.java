@@ -3,11 +3,19 @@ package view;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import model.Auto;
 import model.Cliente;
 import model.Contratto;
+
+import java.io.IOException;
+
 import application.AutoController;
 import application.ClienteController;
 import application.ContrattoController;
@@ -108,7 +116,33 @@ public class HomeImpiegatoViewController {
 	@FXML
 	public void apriContratto()
 	{
-		
+		try {
+	        // Load the fxml file and create a new stage for the popup dialog.
+	        FXMLLoader loader = new FXMLLoader();
+	        loader.setLocation(HomeAdminViewController.class.getResource("ViewApriContratto.fxml"));
+	        AnchorPane page = (AnchorPane) loader.load();
+
+	        // Create the dialog Stage.
+	        Stage dialogStage = new Stage();
+	        dialogStage.setTitle("Apri Contratto");
+	        dialogStage.initModality(Modality.APPLICATION_MODAL);
+	        dialogStage.initOwner(mainApp.primaryStage);
+	        Scene scene = new Scene(page);
+	        dialogStage.setScene(scene);
+
+	        
+	        ApriContrattoViewController controller =  loader.getController();
+	        controller.setDialogStage(dialogStage);
+	        
+	        // Show the dialog and wait until the user closes it
+	        dialogStage.showAndWait();
+	      
+	        
+	        return;
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        return;
+	    }
 	}
 	
 	@FXML
