@@ -43,7 +43,7 @@
             <Font size="21.0" />
          </font>
       </Label>
-      <TableView layoutX="33.0" layoutY="258.0" prefHeight="152.0" prefWidth="793.0">
+      <TableView fx:id="tblContratto" layoutX="33.0" layoutY="258.0" prefHeight="152.0" prefWidth="793.0">
          <columns>
             <TableColumn fx:id="colID" prefWidth="41.0" text="ID" />
             <TableColumn fx:id="colAuto" prefWidth="92.0" text="Auto" />

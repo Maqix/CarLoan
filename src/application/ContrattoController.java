@@ -5,7 +5,10 @@ package application;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import model.Auto;
+import model.Contratto;
 import model.DAO;
 
 public class ContrattoController 
@@ -110,6 +113,57 @@ public class ContrattoController
 	{
 		//TODO: Controllare veramente il contratto
 		return "";
+	}
+	
+	public static ObservableList<Contratto> getListaContratti()
+    {
+		return caricaListaContratti();
+    }
+	
+	private static ObservableList<Contratto> caricaListaContratti()
+	{
+		 ObservableList<Contratto> listaContratti = FXCollections.observableArrayList();
+	   	 ResultSet rs = null;
+	   	 String comando = "SELECT * FROM contratto";
+	   	 rs = DAO.getResultSet(comando);
+	   	 try {
+				while (rs.next())
+				 {
+					 Contratto tempContratto = new Contratto();
+					 
+					 int idContratto = rs.getInt("idContratto");
+					 int totVersato = rs.getInt("TotaleVersato");
+					 int km = rs.getInt("KmIniziali");
+					 String auto = rs.getString("Auto");
+					 String apertura = rs.getString("AgenziaApertura");
+					 String chiusura = rs.getString("AgenziaChiusura");
+					 String inizio = rs.getDate("Inizio").toString();
+					 String fine = rs.getDate("Fine").toString();
+					 String cliente = rs.getString("Cliente");
+					 String noleggio = rs.getString("TipoNoleggio");
+					 String chilometraggio = rs.getString("TipoChilometraggio");
+					 boolean isAperto = rs.getBoolean("isAperto");
+					 
+					 tempContratto.setIdContratto(idContratto);
+					 tempContratto.setTotVersato(totVersato);
+					 tempContratto.setKmIniziali(km);
+					 tempContratto.setAuto(auto);
+					 tempContratto.setAgenziaApertura(apertura);
+					 tempContratto.setAgenziaChiusura(chiusura);
+					 tempContratto.setDataInizio(inizio);
+					 tempContratto.setDataFine(fine);
+					 tempContratto.setCliente(cliente);
+					 tempContratto.setTipoNoleggio(noleggio);
+					 tempContratto.setTipoChilometraggio(chilometraggio);
+					 tempContratto.setIsAperto(isAperto);
+					 
+					 listaContratti.add(tempContratto);
+				 }
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+	   	 
+	   	 return listaContratti;
 	}
 
 	public int getIdContratto() {

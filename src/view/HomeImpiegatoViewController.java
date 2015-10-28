@@ -1,22 +1,5 @@
 package view;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import model.Auto;
-import model.Cliente;
-import model.Contratto;
-
 import java.io.IOException;
 import java.util.Optional;
 
@@ -24,6 +7,22 @@ import application.AutoController;
 import application.ClienteController;
 import application.ContrattoController;
 import application.Main;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import model.Auto;
+import model.Cliente;
+import model.Contratto;
 
 public class HomeImpiegatoViewController {
 
@@ -60,7 +59,7 @@ public class HomeImpiegatoViewController {
     private void initialize() 
 	{
 		configuraTabellaAuto();
-		//configuraTabellaContratti();
+		configuraTabellaContratti();
 		configuraTabellaClienti();
 
     }
@@ -99,23 +98,18 @@ public class HomeImpiegatoViewController {
 	
 	
 	
-	/*
+	
 	private void configuraTabellaContratti()
 	{
-		listaContratti = ContrattoController;
+		listaContratti = ContrattoController.getListaContratti();
 		
-		if (!listaClienti.isEmpty())
+		if (!listaContratti.isEmpty())
 		{
-			tblCliente.setItems(listaClienti);
-			colCF.setCellValueFactory(cellData -> cellData.getValue().getCFProperty());
-			colNome.setCellValueFactory(cellData -> cellData.getValue().getNomeProperty());
-			colCognome.setCellValueFactory(cellData -> cellData.getValue().getCognomeProperty());
-			colTelefono.setCellValueFactory(cellData -> cellData.getValue().getTelefonoProperty());
-			colContratto.setCellValueFactory(cellData -> cellData.getValue().getContrattoProperty().asObject());
-			
+			tblContratto.setItems(listaContratti);
+			colID.setCellValueFactory(cellData -> cellData.getValue().idContrattoProperty().asObject());
 		}
 	}
-	*/
+	
 	
 	@FXML
 	public void apriContratto()

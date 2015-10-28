@@ -2,10 +2,29 @@ package model;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class Contratto 
 {
+	public Contratto() 
+	{
+		this.idContratto = new SimpleIntegerProperty(0);
+		this.auto = new SimpleStringProperty("");
+		this.agenziaApertura = new SimpleStringProperty("");
+		this.agenziaChiusura = new SimpleStringProperty("");
+		this.dataInizio = new SimpleStringProperty("");
+		this.dataFine = new SimpleStringProperty("");
+		this.totVersato = new SimpleIntegerProperty(0);
+		this.kmIniziali = new SimpleIntegerProperty(0);
+		this.cliente = new SimpleStringProperty("");
+		this.isAperto = new SimpleBooleanProperty(false);
+		this.tipoNoleggio = new SimpleStringProperty("");
+		this.tipoChilometraggio = new SimpleStringProperty("");
+	}
+
 	private IntegerProperty idContratto;
 	private StringProperty	auto;
 	private StringProperty	agenziaApertura;
@@ -18,6 +37,7 @@ public class Contratto
 	private BooleanProperty	isAperto;
 	private	StringProperty 	tipoNoleggio;
 	private	StringProperty	tipoChilometraggio;
+	
 	
 	
 	public IntegerProperty idContrattoProperty() {
