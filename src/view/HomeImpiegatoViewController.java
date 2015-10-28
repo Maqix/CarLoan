@@ -39,7 +39,7 @@ public class HomeImpiegatoViewController {
 	
 	//La lista di auto
 	private ObservableList<Auto> listaAuto = FXCollections.observableArrayList();
-	//La lista di agenzie
+	//La lista di contratti
 	private ObservableList<Contratto> listaContratti = FXCollections.observableArrayList();
 	//La lista di dipendenti
 	private ObservableList<Cliente> listaClienti = FXCollections.observableArrayList();
@@ -105,24 +105,17 @@ public class HomeImpiegatoViewController {
 	}
 	*/
 	
+	@FXML
+	public void apriContratto()
+	{
+		
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@FXML
+	public void chiudiContratto()
+	{
+		
+	}
 	
 	public Main getMainApp() {
 		return mainApp;
