@@ -4,6 +4,12 @@ package application;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Date;
+import java.util.Locale;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -111,8 +117,66 @@ public class ContrattoController
 	
 	public String verificaContratto()
 	{
-		//TODO: Controllare veramente il contratto
-		return "";
+		/*
+		 * Verifiche da fare per aprire un contratto:
+		 * - Controllare che sia presente una auto che soddisfi i requisiti (libera, agenzia)
+		 * - Controllare che la data di inizio sia superiore a oggi
+		 * - Controllare che il cliente non abbia già un contratto aperto
+		 * - Controllare il codice fiscale del cliente
+		 */
+		String risposta = "Errore";
+		if (this.auto.getTarga().equals(""))
+		{
+			risposta = "Non è presente un auto libera nell'agenzia selezionata";
+		}else
+		{
+			if (!verificaData())
+			{
+				risposta = "La data inserita è precedente ad oggi";
+			}else
+			{
+				if (ClienteController.getClienteFromCF(this.cliente).getContratto() != 0)
+				{
+					risposta = "Questo cliente ha già un contratto aperto";
+				}else
+				{
+					if (!ClienteController.verificaCF(ClienteController.getClienteFromCF(this.cliente)))
+					{
+						risposta = "Codice Fiscale non valido";
+					}else
+					{
+						risposta = "";
+					}
+				}
+			}
+		}
+		return risposta;
+	}
+	
+	/**
+	 * Verifica la data
+	 * @return true se this.dataInizio è superiore alla data corrente
+	 */
+	private boolean verificaData()
+	{
+		boolean risposta;
+		String string = this.dataInizio;
+		DateFormat format = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
+		Date oggi = Date.from(Instant.now());
+		Date date = Date.from(Instant.now());
+		try {
+			date = format.parse(string);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		if (date.before(oggi))
+		{
+			risposta = true;
+		}else
+		{
+			risposta = false;
+		}
+		return risposta;
 	}
 	
 	public static ObservableList<Contratto> getListaContratti()

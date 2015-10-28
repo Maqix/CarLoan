@@ -39,7 +39,6 @@ public class Contratto
 	private	StringProperty	tipoChilometraggio;
 	
 	
-	
 	public IntegerProperty idContrattoProperty() {
 		return this.idContratto;
 	}

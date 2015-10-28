@@ -8,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Cliente;
 import model.DAO;
+import utility.Verificatore;
 
 public class ClienteController {
 
@@ -52,13 +53,12 @@ public class ClienteController {
 				 String nome = rs.getString("Nome");
 				 String cognome = rs.getString("Cognome");
 				 String telefono = rs.getString("Telefono");
-				// int contratto = rs.getInt("Contratto");
-				 
+				 int contratto = rs.getInt("Contratto");
 				 tempCliente.setCF(cf);
 				 tempCliente.setNome(nome);
 				 tempCliente.setCognome(cognome);
 				 tempCliente.setTelefono(telefono);
-				 //tempCliente.setContratto(contratto);
+				 tempCliente.setContratto(contratto);
 				 
 				 listaCliente.add(tempCliente);
 			 }
@@ -68,6 +68,16 @@ public class ClienteController {
    	 	
 		return listaCliente;
 		
+	}
+	
+	public static boolean verificaCF(Cliente cliente)
+	{
+		boolean risposta = false;
+		if (Verificatore.ControllaCF(cliente.getCF()).equals(""))
+		{
+			risposta = true;
+		}
+		return risposta;
 	}
 	
 	
@@ -88,7 +98,6 @@ public class ClienteController {
 		}
 		return datiCliente;
 	}
-	
 	
 	
 }

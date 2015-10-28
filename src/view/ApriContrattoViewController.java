@@ -86,21 +86,34 @@ public class ApriContrattoViewController
 	@FXML
 	private void premutoApriContratto()
 	{
-		impostaAperturaContratto();
-		if (contrattoController.verificaContratto().equals(""))
+		if (formRiempito())
 		{
-			if (contrattoController.apriContratto()) 
+			impostaAperturaContratto();
+			if (contrattoController.verificaContratto().equals(""))
 			{
-				Main.lanciaInfo("Nuovo Contratto", "Il contratto è stato aperto");
+				if (contrattoController.apriContratto()) 
+				{
+					Main.lanciaInfo("Nuovo Contratto", "Il contratto è stato aperto");
+				}else
+				{
+					Main.lanciaWarning("Impossibile aprire il contratto", "Problemi con il database");
+				}
 			}else
 			{
-				Main.lanciaWarning("Impossibile aprire il contratto", "Problemi con il database");
+				Main.lanciaWarning("Impossibile aprire il contratto", contrattoController.verificaContratto());
 			}
 		}else
 		{
-			Main.lanciaWarning("Impossibile aprire il contratto", contrattoController.verificaContratto());
+			Main.lanciaWarning("Impossibile aprire il contratto", "Seleziona un cliente dall'elenco o riempi i campi");
 		}
 		dialogStage.close();
+	}
+	
+	private boolean formRiempito()
+	{
+		boolean risposta = !((nomeTF.getText().equals("")) && (cognomeTF.getText().equals("")));
+		risposta = risposta && !(telefonoTF.getText().equals(""));
+		return risposta;
 	}
 	
 	
