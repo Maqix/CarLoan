@@ -1,11 +1,13 @@
 package view;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import application.AgenziaController;
 import application.ClienteController;
 import application.ContrattoController;
 import application.FasciaController;
+import application.Main;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -57,6 +59,7 @@ public class ApriContrattoViewController
 	private void initialize()
 	{
 		configuraPicker();
+		dataInizioDF.setValue(LocalDate.now());
 	}
 	
 	@FXML
@@ -73,7 +76,7 @@ public class ApriContrattoViewController
 		//Faccio generare un acconto adeguato al ContrattoController
 		Integer acconto = contrattoController.generaAcconto();
 		//Mostro nella TextField l'acconto
-		accontoTF.setText(acconto.toString() + "€");
+		accontoTF.setText(acconto.toString());
 		//Faccio generare un numero di contratto al ContrattoController
 		Integer numContratto = contrattoController.generaNumContratto();
 		//Mostro nella TextField il numero di contratto
@@ -83,13 +86,63 @@ public class ApriContrattoViewController
 	@FXML
 	private void premutoApriContratto()
 	{
-		
+		impostaAperturaContratto();
+		if (contrattoController.verificaContratto().equals(""))
+		{
+			if (contrattoController.apriContratto()) 
+			{
+				Main.lanciaInfo("Nuovo Contratto", "Il contratto è stato aperto");
+			}else
+			{
+				Main.lanciaWarning("Impossibile aprire il contratto", "Problemi con il database");
+			}
+		}else
+		{
+			Main.lanciaWarning("Impossibile aprire il contratto", contrattoController.verificaContratto());
+		}
+		dialogStage.close();
 	}
+	
 	
 	@FXML
 	private void premutoAnnulla()
 	{
 		dialogStage.close();
+	}
+	
+	private void impostaAperturaContratto()
+	{
+		//Imposto l'agenzia di chiusura
+		String agenziaChiusura = AgenziaController.getPivaFromNome(ritornoCB.getSelectionModel().getSelectedItem());
+		contrattoController.setAgenziaChiusura(agenziaChiusura);
+		//Assegno la data di di inizio
+		String dataInizio = dataInizioDF.getValue().toString();
+		contrattoController.setDataInizio(dataInizio);
+		//Assegno la data di fine
+		LocalDate inizio = dataInizioDF.getValue();
+		if (noleggioCB.getSelectionModel().getSelectedItem().equals("Giornaliero"))
+		{
+			//Aggiungo un giorno alla data di inizio
+			LocalDate fine = inizio.plusDays(1);
+			contrattoController.setDataFine(fine.toString());
+		}else
+		{
+			//Aggiungo sette giorni alla data di inizio
+			LocalDate fine = inizio.plusDays(7);
+			contrattoController.setDataFine(fine.toString());
+		}
+		//Assegno il totaleVersato pari all'acconto
+		contrattoController.setTotVersato(Integer.parseInt(accontoTF.getText()));
+		//Assegno i Km iniziali (il controller li prende dalla macchina assegnata)
+		contrattoController.assegnaKmIniziali();
+		//Assegno il cliente
+		contrattoController.setCliente(codiceFiscaleTF.getText());
+		//Imposto isAperto a true
+		contrattoController.setAperto(true);
+		//Imposto il tipo di noleggio
+		contrattoController.setTipoNoleggio(noleggioCB.getSelectionModel().getSelectedItem());
+		//Imposto il tipo di chilometraggio
+		contrattoController.setTipoChilometraggio(tariffaCB.getSelectionModel().getSelectedItem());
 	}
 	
 	private void configuraPicker()
