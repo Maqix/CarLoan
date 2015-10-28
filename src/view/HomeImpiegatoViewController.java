@@ -5,8 +5,11 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -15,6 +18,7 @@ import model.Cliente;
 import model.Contratto;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import application.AutoController;
 import application.ClienteController;
@@ -149,6 +153,20 @@ public class HomeImpiegatoViewController {
 	public void chiudiContratto()
 	{
 		
+	}
+	
+	@FXML
+	private void premutoLogout()
+	{
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Logout");
+		alert.setHeaderText("Attenzione!");
+		alert.setContentText("Sei sicuro di voler effettuare il logout?");
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK)
+		{
+			mainApp.lanciaLogin();
+		}
 	}
 	
 	public Main getMainApp() {

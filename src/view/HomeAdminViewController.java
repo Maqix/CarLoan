@@ -424,13 +424,27 @@ public class HomeAdminViewController
 					}else
 					{
 						//Avviso l'utente che l'operazione non Ã¨ andata a buon fine
-					    Main.lanciaWarning("Nessun dipendente eliminato", "C'è stato un problema col Database, contattare l'amministratore");
+					    Main.lanciaWarning("Nessun dipendente eliminato", "C'ï¿½ stato un problema col Database, contattare l'amministratore");
 					}
 				}
 			
 		}else
 		{
 			Main.lanciaWarning("Nessun dipendente eliminato", "Seleziona un dipendente nell'elenco per eliminarlo");
+		}
+	}
+	
+	@FXML
+	private void premutoLogout()
+	{
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Logout");
+		alert.setHeaderText("Attenzione!");
+		alert.setContentText("Sei sicuro di voler effettuare il logout?");
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK)
+		{
+			mainApp.lanciaLogin();
 		}
 	}
 	

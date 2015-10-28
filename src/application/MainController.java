@@ -60,9 +60,10 @@ public class MainController {
 			lanciaHomeImpiegato();
 		}else
 		{
-			Main.lanciaWarning("Username o Password errati", "");
+			Main.lanciaWarning("Username o Password errati", "Assicurati di essere registrato come Admin o Dipendente");
 		}
-		
+		usernameTF.setText("");
+		pswdTF.setText("");
 	}
 	
 	@FXML

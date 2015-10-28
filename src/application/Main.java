@@ -69,6 +69,7 @@ public class Main extends Application {
 	{
 		primaryStage.setTitle("CarLoan");
 		primaryStage.setScene(scenaLogin);
+		primaryStage.centerOnScreen();
 	}
 	
 	public static void lanciaWarning(String titolo, String contenuto) {
