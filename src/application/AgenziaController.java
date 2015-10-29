@@ -139,6 +139,30 @@ public class AgenziaController
 		
 	}
 	
+	public static boolean isAgenziaSenzaAuto(Agenzia agenzia)
+	{
+		boolean risposta = false;
+		String comando = String.format("SELECT * FROM auto WHERE Agenzia = '%s'", agenzia.getPartitaIva());
+		try {
+			risposta = !DAO.cerca(comando);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return risposta;
+	}
+	
+	public static boolean isAgenziaSenzaDipendenti(Agenzia agenzia)
+	{
+		boolean risposta = false;
+		String comando = String.format("SELECT * FROM dipendente WHERE Agenzia = '%s'", agenzia.getPartitaIva());
+		try {
+			risposta = !DAO.cerca(comando);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return risposta;
+	}
+	
 	public static String getPivaFromNome(String nomeAgenzia)
 	{
 		try {

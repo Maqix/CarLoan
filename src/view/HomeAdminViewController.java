@@ -200,6 +200,7 @@ public class HomeAdminViewController
 		//Se ho selezionato veramente una Auto
 		if (autoSelezionata != null)
 		{
+			//Se l'auto non è sotto contratto
 			if (autoSelezionata.getStato() != 2)
 			{
 				//Se l'utente conferma di voler eliminare l'auto
@@ -341,23 +342,36 @@ public class HomeAdminViewController
 		//Se ho selezionato veramente un'agenzia
 		if (agenziaSelezionata != null)
 		{
-			//Se l'utente conferma di voler eliminare l'auto
-			Optional<ButtonType> result = alert.showAndWait();
-			if (result.get() == ButtonType.OK)
+			//Se l'agenzia non ha auto
+			if (AgenziaController.isAgenziaSenzaAuto(agenziaSelezionata))
 			{
-				
-				//Se l'operazione sul DB va a buon fine
-				if (AgenziaController.eliminaAgenzia(agenziaSelezionata))
+				if (AgenziaController.isAgenziaSenzaDipendenti(agenziaSelezionata))
 				{
-					//Elimino l'agenzia dalla lista
-					listaAgenzie.remove(agenziaSelezionata);
-					//Avviso l'utente
-					Main.lanciaInfo("Elimina Agenzia", "Agenzia eliminata");
+					//Se l'utente conferma di voler eliminare l'agenzia
+					Optional<ButtonType> result = alert.showAndWait();
+					if (result.get() == ButtonType.OK)
+					{
+						
+						//Se l'operazione sul DB va a buon fine
+						if (AgenziaController.eliminaAgenzia(agenziaSelezionata))
+						{
+							//Elimino l'agenzia dalla lista
+							listaAgenzie.remove(agenziaSelezionata);
+							//Avviso l'utente
+							Main.lanciaInfo("Elimina Agenzia", "Agenzia eliminata");
+						}else
+						{
+							//Avviso l'utente che l'operazione non è andata a buon fine
+							Main.lanciaWarning("Nessuna agenzia eliminata", "C'e' stato un problema col Database, contattare l'amministratore");
+						}
+					}
 				}else
 				{
-					//Avviso l'utente che l'operazione non è andata a buon fine
-					Main.lanciaWarning("Nessuna agenzia eliminata", "C'� stato un problema col Database, contattare l'amministratore");
+					Main.lanciaWarning("Elimina Agenzia", "Questa agenzia ha dei dipendenti, elimina tutti i dipendenti dall'agenzia prima di rimuoverla");
 				}
+			}else
+			{
+				Main.lanciaWarning("Elimina Agenzia", "Questa agenzia ha delle auto, elimina tutte le auto dall'agenzia prima di rimuoverla");
 			}
 			
 		}else
@@ -365,6 +379,7 @@ public class HomeAdminViewController
 			Main.lanciaWarning("Nessuna agenzia selezionata", "Seleziona un'agenzia nell'elenco per eliminarla");
 		}
 	}
+	
 
 	@FXML
 	private void aggiungiDipendente()
