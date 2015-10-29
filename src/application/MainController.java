@@ -48,6 +48,9 @@ public class MainController {
 	@FXML
 	private void premutoLogin()
 	{
+		
+		//String user=usernameTF.getText();
+		//String passw = pswdTF.
 		if (isAdmin(usernameTF.getText(),pswdTF.getText()))
 		{
 			//Lancia HomeAdmin
@@ -188,12 +191,26 @@ public class MainController {
 		String enPswd = Crittografia.encrypt(pswd);
 		//Cerco se nel DB è presente già un admin con questo nome
 		String comando = String.format("SELECT Username FROM admin WHERE Username = '%s' AND Password = '%s'", nome,enPswd);
+		
 		try {
-			//DAO.connetti();
-			risposta = DAO.cerca(comando);
-		} catch (SQLException e) {
-			e.printStackTrace();
+			String verifica = DAO.cercaS(comando);
+			
+			if(nome.equals(verifica))
+			{
+			try {
+				//DAO.connetti();
+				risposta = DAO.cerca(comando);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			}
+			
+			
+		} catch (SQLException e1) {
+			
+			e1.printStackTrace();
 		}
+		
 		
 		return risposta;
 	}
@@ -205,10 +222,22 @@ public class MainController {
 		//Cerco se nel DB è presente già un dipendente con questo nome
 		String comando = String.format("SELECT Username FROM dipendente WHERE Username = '%s' AND Password = '%s'", nome,enPswd);
 		try {
-			//DAO.connetti();
-			risposta = DAO.cerca(comando);
-		} catch (SQLException e) {
-			e.printStackTrace();
+			String verifica = DAO.cercaS(comando);
+			
+			if(nome.equals(verifica))
+			{
+			try {
+				//DAO.connetti();
+				risposta = DAO.cerca(comando);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			}
+			
+			
+		} catch (SQLException e1) {
+			
+			e1.printStackTrace();
 		}
 		
 		return risposta;
