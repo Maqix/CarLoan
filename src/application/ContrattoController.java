@@ -162,6 +162,7 @@ public class ContrattoController
 				risposta = "La data inserita è precedente ad oggi";
 			}else
 			{
+				System.out.println("============================"+ClienteController.getClienteFromCF(this.cliente).getContratto());
 				if (ClienteController.getClienteFromCF(this.cliente).getContratto() != 0)
 				{
 					risposta = "Questo cliente ha già un contratto aperto";

@@ -153,6 +153,11 @@ public class HomeImpiegatoViewController {
 	        tblCliente.setItems(listaClienti);
 	        tblCliente.refresh();
 	        
+	        //Aggiorno la tabella auto
+	        listaAuto = AutoController.getListaAuto();
+	        tblAuto.setItems(listaAuto);
+	        tblAuto.refresh();
+	        
 	        return;
 	    } catch (IOException e) {
 	        e.printStackTrace();

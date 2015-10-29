@@ -17,9 +17,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import model.Auto;
 import model.Cliente;
-import model.Contratto;
 
 public class ApriContrattoViewController 
 {

@@ -22,10 +22,12 @@ public class ClienteController {
 	public static Cliente getClienteFromCF(String cf)
 	{
 		String nome = "",cognome = "",telefono = "";
+		int contratto = 0;
 		try {
 			nome = DAO.cercaS("SELECT Nome FROM `cliente` WHERE `CF` = '"+cf+"'");
 			cognome = DAO.cercaS("SELECT Cognome FROM `cliente` WHERE `CF` = '"+cf+"'");
 			telefono = DAO.cercaS("SELECT Telefono FROM `cliente` WHERE `CF` = '"+cf+"'");
+			contratto= DAO.cercaI("SELECT Contratto FROM `cliente` WHERE `CF` = '"+cf+"'");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -34,6 +36,7 @@ public class ClienteController {
 		cliente.setCognome(cognome);
 		cliente.setTelefono(telefono);
 		cliente.setCF(cf);
+		cliente.setContratto(contratto);
 		return cliente;
 	}
 	
