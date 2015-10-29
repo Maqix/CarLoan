@@ -39,7 +39,7 @@ public class ClienteController {
 	
 	public static boolean aggiungiCliente(Cliente cliente)
 	{
-		String comando = String.format("INSERT INTO `cliente` (`CF`, `Nome`, `Cognome`, `Telefono`, `Contratto`) VALUES ('%s', '%s', '%s', '%s', '%d')",cliente.getCF(),cliente.getNome(),cliente.getCognome(),cliente.getTelefono(),cliente.getContratto());
+		String comando = String.format("INSERT INTO `cliente` (`CF`, `Nome`, `Cognome`, `Telefono`, `Contratto`) VALUES ('%s', '%s', '%s', '%s', %s)",cliente.getCF(),cliente.getNome(),cliente.getCognome(),cliente.getTelefono(),"NULL");
 		if (DAO.esegui(comando))
 		{
 			return true;

@@ -17,7 +17,9 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.Auto;
 import model.Cliente;
+import model.Contratto;
 
 public class ApriContrattoViewController 
 {
@@ -89,6 +91,9 @@ public class ApriContrattoViewController
 	@FXML
 	private void premutoApriContratto()
 	{
+		contrattoController.setClienteNome(nomeTF.getText());
+		contrattoController.setClienteCognome(cognomeTF.getText());
+		contrattoController.setClienteTelefono(telefonoTF.getText());
 		if (generato)
 		{
 			if (formRiempito())
@@ -100,6 +105,7 @@ public class ApriContrattoViewController
 					{
 						Main.lanciaInfo("Nuovo Contratto", "Il contratto è stato aperto");
 						dialogStage.close();
+						//listaContratti.add(ContrattoController.getListaContratti().get(ContrattoController.getListaContratti().size()));
 					}else
 					{
 						Main.lanciaWarning("Impossibile aprire il contratto", "Problemi con il database");
@@ -241,4 +247,5 @@ public class ApriContrattoViewController
     {
         this.dialogStage = dialogStage;
     }
+
 }

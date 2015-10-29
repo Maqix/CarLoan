@@ -142,7 +142,16 @@ public class HomeImpiegatoViewController {
 	        
 	        // Show the dialog and wait until the user closes it
 	        dialogStage.showAndWait();
-	      
+	        
+	        //Aggiorno la tabella contratti
+	        listaContratti = ContrattoController.getListaContratti();
+	        tblContratto.setItems(listaContratti);
+	        tblContratto.refresh();
+	        
+	        //Aggiorno la tabella clienti
+	        listaClienti = ClienteController.getListaCliente();
+	        tblCliente.setItems(listaClienti);
+	        tblCliente.refresh();
 	        
 	        return;
 	    } catch (IOException e) {

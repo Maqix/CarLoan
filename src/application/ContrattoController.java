@@ -33,9 +33,14 @@ public class ContrattoController
 	private String cliente;
 	private String tipoNoleggio;
 	private String tipoChilometraggio;
+	private String clienteNome;
+	private String clienteCognome;
+	private String clienteTelefono;
 	
 	public boolean apriContratto()
 	{
+		//Inserisco il cliente (se non esistente) nel DB
+		inserisciSeNonEsistente(this.cliente);
 		//Inserisco il contratto nel DB
 		String comando = String.format("INSERT INTO `contratto` (`idContratto`, `Auto`, `AgenziaApertura`, `AgenziaChiusura`, `Inizio`, `Fine`, `TotaleVersato`, `KmIniziali`, `Cliente`, `isAperto`, `TipoNoleggio`, `TipoChilometraggio`) VALUES ('%d', '%s', '%s', '%s', '%s', '%s', '%d', '%d', '%s', '%d', '%s', '%s')", this.idContratto,this.auto.getTarga(),this.agenziaApertura,this.agenziaChiusura,this.dataInizio,this.dataFine,this.totVersato,this.kmIniziali,this.cliente,(this.isAperto) ? 1 : 0,this.tipoNoleggio,this.tipoChilometraggio);
 		if (DAO.esegui(comando))
@@ -44,7 +49,7 @@ public class ContrattoController
 			comando = String.format("UPDATE `auto` SET `Stato` = '2' WHERE `Targa` = '%s'",this.auto.getTarga());
 			if (DAO.esegui(comando))
 			{
-				inserisciSeNonEsistente(ClienteController.getClienteFromCF(this.cliente));
+				
 				//Aggiorno il cliente col riferimento al contratto
 				comando = String.format("UPDATE `cliente` SET `Contratto` = '%d' WHERE `CF` = '%s'",this.idContratto, this.cliente);
 				if (DAO.esegui(comando))
@@ -66,7 +71,7 @@ public class ContrattoController
 		}
 	}
 	
-	private void inserisciSeNonEsistente(Cliente cliente)
+	private void inserisciSeNonEsistente(String cf)
 	{
 		boolean esistente = false;
 		try {
@@ -76,7 +81,12 @@ public class ContrattoController
 		}
 		if (!esistente)
 		{
-			ClienteController.aggiungiCliente(cliente);
+			Cliente clienteNuovo = new Cliente();
+			clienteNuovo.setNome(this.clienteNome);
+			clienteNuovo.setCognome(this.clienteCognome);
+			clienteNuovo.setTelefono(this.clienteTelefono);
+			clienteNuovo.setCF(this.cliente);
+			ClienteController.aggiungiCliente(clienteNuovo);
 		}
 	}
 	
@@ -349,5 +359,17 @@ public class ContrattoController
 
 	public void setTipoChilometraggio(String tipoChilometraggio) {
 		this.tipoChilometraggio = tipoChilometraggio;
+	}
+
+	public void setClienteNome(String clienteNome) {
+		this.clienteNome = clienteNome;
+	}
+
+	public void setClienteCognome(String clienteCognome) {
+		this.clienteCognome = clienteCognome;
+	}
+
+	public void setClienteTelefono(String clienteTelefono) {
+		this.clienteTelefono = clienteTelefono;
 	}
 }
