@@ -55,6 +55,8 @@ public class ApriContrattoViewController
 	private ObservableList<String> clienti = FXCollections.observableArrayList();
 	private ContrattoController contrattoController = new ContrattoController();
 	
+	boolean generato = false;
+	
 	@FXML
 	private void initialize()
 	{
@@ -65,6 +67,7 @@ public class ApriContrattoViewController
 	@FXML
 	private void premutoGeneraContratto()
 	{
+		generato = true;
 		//Devo valorizzare i dati del riepilogo
 		//Ottengo la fascia e l'agenzia scelti per assegnare una auto
 		int fascia = fasciaCB.getSelectionModel().getSelectedIndex()+1;
@@ -86,27 +89,35 @@ public class ApriContrattoViewController
 	@FXML
 	private void premutoApriContratto()
 	{
-		if (formRiempito())
+		if (generato)
 		{
-			impostaAperturaContratto();
-			if (contrattoController.verificaContratto().equals(""))
+			if (formRiempito())
 			{
-				if (contrattoController.apriContratto()) 
+				impostaAperturaContratto();
+				if (contrattoController.verificaContratto().equals(""))
 				{
-					Main.lanciaInfo("Nuovo Contratto", "Il contratto è stato aperto");
+					if (contrattoController.apriContratto()) 
+					{
+						Main.lanciaInfo("Nuovo Contratto", "Il contratto è stato aperto");
+						dialogStage.close();
+					}else
+					{
+						Main.lanciaWarning("Impossibile aprire il contratto", "Problemi con il database");
+					}
 				}else
 				{
-					Main.lanciaWarning("Impossibile aprire il contratto", "Problemi con il database");
+					Main.lanciaWarning("Impossibile aprire il contratto", contrattoController.verificaContratto());
 				}
 			}else
 			{
-				Main.lanciaWarning("Impossibile aprire il contratto", contrattoController.verificaContratto());
+				//TODO: C'è un problema nel picker cliente
+				Main.lanciaWarning("Impossibile aprire il contratto", "Seleziona un cliente dall'elenco o riempi i campi");
 			}
 		}else
 		{
-			Main.lanciaWarning("Impossibile aprire il contratto", "Seleziona un cliente dall'elenco o riempi i campi");
+			Main.lanciaWarning("Impossibile aprire il contratto", "Premi 'Genera Contratto' prima di aprire il contratto");
 		}
-		dialogStage.close();
+		
 	}
 	
 	private boolean formRiempito()

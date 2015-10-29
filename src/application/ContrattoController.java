@@ -14,6 +14,7 @@ import java.util.Locale;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Auto;
+import model.Cliente;
 import model.Contratto;
 import model.DAO;
 
@@ -42,6 +43,7 @@ public class ContrattoController
 			comando = String.format("UPDATE `auto` SET `Stato` = '2' WHERE `Targa` = '%s'",this.auto.getTarga());
 			if (DAO.esegui(comando))
 			{
+				inserisciSeNonEsistente(ClienteController.getClienteFromCF(this.cliente));
 				//Aggiorno il cliente col riferimento al contratto
 				comando = String.format("UPDATE `cliente` SET `Contratto` = '%d' WHERE `CF` = '%s'",this.idContratto, this.cliente);
 				if (DAO.esegui(comando))
@@ -60,6 +62,20 @@ public class ContrattoController
 		}else
 		{
 			return false;
+		}
+	}
+	
+	private void inserisciSeNonEsistente(Cliente cliente)
+	{
+		boolean esistente = false;
+		try {
+			esistente = DAO.cerca("SELECT * FROM cliente WHERE `CF` = '"+this.cliente+"'");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if (!esistente)
+		{
+			ClienteController.aggiungiCliente(cliente);
 		}
 	}
 	
@@ -161,7 +177,8 @@ public class ContrattoController
 	{
 		boolean risposta;
 		String string = this.dataInizio;
-		DateFormat format = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
+		System.out.println("this.dataInizio = "+this.dataInizio);
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ITALIAN);
 		Date oggi = Date.from(Instant.now());
 		Date date = Date.from(Instant.now());
 		try {
@@ -169,12 +186,13 @@ public class ContrattoController
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+		System.out.println("Data da controllare: " + date.toString() + " Oggi: "+oggi.toString());
 		if (date.before(oggi))
 		{
-			risposta = true;
+			risposta = false;
 		}else
 		{
-			risposta = false;
+			risposta = true;
 		}
 		return risposta;
 	}

@@ -37,6 +37,17 @@ public class ClienteController {
 		return cliente;
 	}
 	
+	public static boolean aggiungiCliente(Cliente cliente)
+	{
+		String comando = String.format("INSERT INTO `cliente` (`CF`, `Nome`, `Cognome`, `Telefono`, `Contratto`) VALUES ('%s', '%s', '%s', '%s', '%d')",cliente.getCF(),cliente.getNome(),cliente.getCognome(),cliente.getTelefono(),cliente.getContratto());
+		if (DAO.esegui(comando))
+		{
+			return true;
+		}else
+		{
+			return false;
+		}
+	}
 	
 	public static ObservableList<Cliente> caricaListaCliente()
 	{
