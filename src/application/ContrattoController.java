@@ -8,6 +8,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -180,6 +181,7 @@ public class ContrattoController
 		System.out.println("this.dataInizio = "+this.dataInizio);
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ITALIAN);
 		Date oggi = Date.from(Instant.now());
+		oggi = impostaMezzanotte(oggi);
 		Date date = Date.from(Instant.now());
 		try {
 			date = format.parse(string);
@@ -187,6 +189,7 @@ public class ContrattoController
 			e.printStackTrace();
 		}
 		System.out.println("Data da controllare: " + date.toString() + " Oggi: "+oggi.toString());
+		
 		if (date.before(oggi))
 		{
 			risposta = false;
@@ -195,6 +198,18 @@ public class ContrattoController
 			risposta = true;
 		}
 		return risposta;
+	}
+	
+	public static Date impostaMezzanotte(Date date) {
+	    Calendar calendar = Calendar.getInstance();
+
+	    calendar.setTime( date );
+	    calendar.set(Calendar.HOUR_OF_DAY, 0);
+	    calendar.set(Calendar.MINUTE, 0);
+	    calendar.set(Calendar.SECOND, 0);
+	    calendar.set(Calendar.MILLISECOND, 0);
+
+	    return calendar.getTime();
 	}
 	
 	public static ObservableList<Contratto> getListaContratti()
