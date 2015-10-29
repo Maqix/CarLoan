@@ -144,6 +144,9 @@ public class HomeImpiegatoViewController {
 	        dialogStage.showAndWait();
 	        
 	        //Aggiorno la tabella contratti
+	        //FIXME: - La tabella contratti si aggiorna solo se ci sono già dei contratti presenti ?!
+	        //		 - listaContratti contiene effettivamente il nuovo contratto
+	        //       - pero' la tabella mostra la riga (quindi legge che c'è un contratto) VUOTA
 	        listaContratti = ContrattoController.getListaContratti();
 	        tblContratto.setItems(listaContratti);
 	        tblContratto.refresh();
