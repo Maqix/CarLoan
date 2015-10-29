@@ -110,7 +110,6 @@ public class ApriContrattoViewController
 				}
 			}else
 			{
-				//TODO: C'è un problema nel picker cliente
 				Main.lanciaWarning("Impossibile aprire il contratto", "Seleziona un cliente dall'elenco o riempi i campi");
 			}
 		}else

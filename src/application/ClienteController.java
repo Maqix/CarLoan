@@ -49,7 +49,7 @@ public class ClienteController {
 		}
 	}
 	
-	public static ObservableList<Cliente> caricaListaCliente()
+	private  static ObservableList<Cliente> caricaListaCliente()
 	{
 		ObservableList<Cliente> listaCliente = FXCollections.observableArrayList();
    	 ResultSet rs = null;
@@ -94,18 +94,12 @@ public class ClienteController {
 	
 	public static ArrayList<String> getDatiCliente()
 	{
-		//return DAO.getListaString("cliente", "Nome,Cognome,Telefono");
-		//Ottengo la lista di nomi
-		ArrayList<String> nomi = DAO.getListaString("cliente", "Nome");
-		//Ottengo la lista di cognomi
-		ArrayList<String> cognomi = DAO.getListaString("cliente", "Cognome");
-		//Ottengo i codici fiscali
-		ArrayList<String> cf = DAO.getListaString("cliente", "CF");
-		//Costruisco la lista di cf+nome+cognome
+		
+		ObservableList<Cliente> listaCliente = caricaListaCliente();
 		ArrayList<String> datiCliente = new ArrayList<String>();
-		for (int i=0; i<nomi.size(); i++)
+		for (Cliente cliente:listaCliente)
 		{
-			datiCliente.add(cf.get(i) + " - " + nomi.get(i) + " " + cognomi.get(i)); 
+			datiCliente.add(cliente.getCF() + " - " + cliente.getNome() + " " + cliente.getCognome());
 		}
 		return datiCliente;
 	}
