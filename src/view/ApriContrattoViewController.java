@@ -2,6 +2,7 @@ package view;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import application.AgenziaController;
 import application.ClienteController;
@@ -16,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
 import model.Cliente;
 
@@ -56,6 +58,7 @@ public class ApriContrattoViewController
 	private ContrattoController contrattoController = new ContrattoController();
 	
 	boolean generato = false;
+	boolean sceltiKmPrevisti = false;
 	
 	@FXML
 	private void initialize()
@@ -86,12 +89,47 @@ public class ApriContrattoViewController
 		contrattoTF.setText(numContratto.toString());
 	}
 	
+	private int quantiChilometri()
+	{
+		int risposta = 0;
+		TextInputDialog dialog = new TextInputDialog("0");
+		dialog.setTitle("Genera Contratto");
+		dialog.setHeaderText("E' stata scelta la tariffa 'Km Limitati'");
+		dialog.setContentText("Inserisci i Km previsti");
+		Optional<String> result = dialog.showAndWait();
+		if (result.isPresent())
+		{
+		    try {
+				risposta = Integer.parseInt(result.get());
+			} catch (NumberFormatException e) {
+				Main.lanciaWarning("Chilometri Previsti", "I Km si esprimono in numeri");
+				risposta = -100;
+			}
+		}
+		return risposta;
+	}
+	
 	@FXML
 	private void premutoApriContratto()
 	{
 		contrattoController.setClienteNome(nomeTF.getText());
 		contrattoController.setClienteCognome(cognomeTF.getText());
 		contrattoController.setClienteTelefono(telefonoTF.getText());
+		//Se la tariffa è "Km Limitati" devo chiedere quanti chilometri si vogliono pagare
+		if (tariffaCB.getSelectionModel().getSelectedItem().equals("Km Limitati"))
+		{
+			boolean esci = false;
+			int chilometriPrevisti = 0;
+			while (!esci)
+			{
+				chilometriPrevisti = quantiChilometri();
+				if (chilometriPrevisti != -100) {esci = true;}
+			}
+			contrattoController.setKmPrevisti(chilometriPrevisti);
+		}else
+		{
+			contrattoController.setKmPrevisti(0);
+		}
 		if (generato)
 		{
 			if (formRiempito())

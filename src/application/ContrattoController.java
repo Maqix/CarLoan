@@ -24,6 +24,7 @@ public class ContrattoController
 	private int idContratto;
 	private int totVersato;
 	private int kmIniziali;
+	private int kmPrevisti;
 	private boolean isAperto;
 	private Auto auto;
 	private String agenziaApertura;
@@ -42,7 +43,7 @@ public class ContrattoController
 		//Inserisco il cliente (se non esistente) nel DB
 		inserisciSeNonEsistente(this.cliente);
 		//Inserisco il contratto nel DB
-		String comando = String.format("INSERT INTO `contratto` (`idContratto`, `Auto`, `AgenziaApertura`, `AgenziaChiusura`, `Inizio`, `Fine`, `TotaleVersato`, `KmIniziali`, `Cliente`, `isAperto`, `TipoNoleggio`, `TipoChilometraggio`) VALUES ('%d', '%s', '%s', '%s', '%s', '%s', '%d', '%d', '%s', '%d', '%s', '%s')", this.idContratto,this.auto.getTarga(),this.agenziaApertura,this.agenziaChiusura,this.dataInizio,this.dataFine,this.totVersato,this.kmIniziali,this.cliente,(this.isAperto) ? 1 : 0,this.tipoNoleggio,this.tipoChilometraggio);
+		String comando = String.format("INSERT INTO `contratto` (`idContratto`, `Auto`, `AgenziaApertura`, `AgenziaChiusura`, `Inizio`, `Fine`, `TotaleVersato`, `KmIniziali`, `Cliente`, `isAperto`, `TipoNoleggio`, `TipoChilometraggio`, `KmPrevisti`) VALUES ('%d', '%s', '%s', '%s', '%s', '%s', '%d', '%d', '%s', '%d', '%s', '%s','%d')", this.idContratto,this.auto.getTarga(),this.agenziaApertura,this.agenziaChiusura,this.dataInizio,this.dataFine,this.totVersato,this.kmIniziali,this.cliente,(this.isAperto) ? 1 : 0,this.tipoNoleggio,this.tipoChilometraggio, this.kmPrevisti);
 		if (DAO.esegui(comando))
 		{
 			//Aggiorno l'auto scelta come "In Uso"
@@ -162,7 +163,7 @@ public class ContrattoController
 				risposta = "La data inserita è precedente ad oggi";
 			}else
 			{
-				System.out.println("============================"+ClienteController.getClienteFromCF(this.cliente).getContratto());
+				//System.out.println("============================"+ClienteController.getClienteFromCF(this.cliente).getContratto());
 				if (ClienteController.getClienteFromCF(this.cliente).getContratto() != 0)
 				{
 					risposta = "Questo cliente ha già un contratto aperto";
@@ -372,5 +373,12 @@ public class ContrattoController
 
 	public void setClienteTelefono(String clienteTelefono) {
 		this.clienteTelefono = clienteTelefono;
+	}
+	public int getKmPrevisti() {
+		return kmPrevisti;
+	}
+
+	public void setKmPrevisti(int kmPrevisti) {
+		this.kmPrevisti = kmPrevisti;
 	}
 }
