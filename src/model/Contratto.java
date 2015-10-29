@@ -1,5 +1,7 @@
 package model;
 
+import java.sql.SQLException;
+
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -23,6 +25,8 @@ public class Contratto
 		this.isAperto = new SimpleBooleanProperty(false);
 		this.tipoNoleggio = new SimpleStringProperty("");
 		this.tipoChilometraggio = new SimpleStringProperty("");
+		this.nomeAgenziaAp = new SimpleStringProperty("");
+		this.nomeAgenziaCh = new SimpleStringProperty("");
 	}
 
 	private IntegerProperty idContratto;
@@ -37,7 +41,19 @@ public class Contratto
 	private BooleanProperty	isAperto;
 	private	StringProperty 	tipoNoleggio;
 	private	StringProperty	tipoChilometraggio;
+	private final StringProperty 	nomeAgenziaAp;
+	private final StringProperty 	nomeAgenziaCh;
+
 	
+	public StringProperty getNomeAgenziaApProperty()
+	{
+		return nomeAgenziaAp;
+	}
+	
+	public StringProperty getNomeAgenziaChProperty()
+	{
+		return nomeAgenziaCh;
+	}
 	
 	public IntegerProperty idContrattoProperty() {
 		return this.idContratto;
@@ -73,6 +89,12 @@ public class Contratto
 	
 	public void setAgenziaApertura(final java.lang.String agenziaApertura) {
 		this.agenziaAperturaProperty().set(agenziaApertura);
+		try {
+			String nomeAgenzia = DAO.cercaS("SELECT Nome FROM agenzia WHERE PartitaIVA = '" + this.agenziaApertura.get() + "'");
+			this.nomeAgenziaAp.set(nomeAgenzia);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public StringProperty agenziaChiusuraProperty() {
@@ -85,6 +107,12 @@ public class Contratto
 	
 	public void setAgenziaChiusura(final java.lang.String agenziaChiusura) {
 		this.agenziaChiusuraProperty().set(agenziaChiusura);
+		try {
+			String nomeAgenzia = DAO.cercaS("SELECT Nome FROM agenzia WHERE PartitaIVA = '" + this.agenziaChiusura.get() + "'");
+			this.nomeAgenziaCh.set(nomeAgenzia);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public StringProperty dataInizioProperty() {
