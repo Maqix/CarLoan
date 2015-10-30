@@ -134,10 +134,60 @@ public class ContrattoController
 		return this.auto;
 	}
 	
-	public static void chiudiContratto(int idContratto)
+	public static boolean chiudiContratto(int idContratto)
 	{
-		//TODO: Chiudere veramente il contratto
+		//Reimposto l'auto come libera
+		if (AutoController.liberaAuto(ContrattoController.getContrattoApertoFromId(idContratto).getAuto()))
+		{
+			if (impostaContrattoChiuso(idContratto))
+			{
+				if (impostaClienteContrattoNull(idContratto))
+				{
+					return true;
+				}else
+				{
+					Main.lanciaWarning("Chiudi Contratto", "Problemi col Database");
+					return false;
+				}
+			}else
+			{
+				Main.lanciaWarning("ChiudiContratto", "Problemi col Database");
+				return false;
+			}
+		}else
+		{
+			Main.lanciaWarning("ChiudiContratto", "Problemi col Database");
+			return false;
+		}
+
 		
+	}
+	
+	private static boolean impostaClienteContrattoNull(int idContratto)
+	{
+		//FIXME: Non ottiene il CF giusto
+		String cliente = ContrattoController.getContrattoApertoFromId(idContratto).getCliente();
+		String comando = String.format("UPDATE `cliente` SET `Contratto` = NULL WHERE `CF` = '%s';", cliente);
+		if (DAO.esegui(comando))
+		{
+			return true;
+		}else
+		{
+			return false;
+		}
+	}
+	
+	private static boolean impostaContrattoChiuso(int idContratto)
+	{
+		//Imposto il contratto come chiuso
+		String comando = String.format("UPDATE `contratto` SET `isAperto` = false WHERE `idContratto` = '%s';", idContratto);
+		if (DAO.esegui(comando))
+		{
+			return true;
+		}else
+		{
+			return false;
+		}
 	}
 	
 	/**

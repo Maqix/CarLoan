@@ -98,6 +98,21 @@ public class AutoController
 			return false;
 		}
 	}
+	
+	public static boolean liberaAuto(String targa)
+	{
+		boolean risposta = false;
+		//Aggiorno l'auto nel DB
+		String comando = String.format("UPDATE `auto` SET `Stato` = '1' WHERE `Targa` = '%s';",targa);
+		if (DAO.esegui(comando))
+		{
+			risposta = true;
+		}else
+		{
+			risposta = false;
+		}
+		return risposta;
+	}
 
 
 	public static String verificaAuto(Auto auto)

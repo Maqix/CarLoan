@@ -65,8 +65,11 @@ public class ChiudiContrattoViewController
 	{
 		if (generato)
 		{
-			ContrattoController.chiudiContratto(ottieniNumContratto());
-			dialogStage.close();
+			if (ContrattoController.chiudiContratto(ottieniNumContratto()))
+			{
+				Main.lanciaInfo("Chiudi Contratto", "Contratto chiuso");
+				dialogStage.close();
+			}
 		}else
 		{
 			Main.lanciaWarning("Chiudi Contratto", "Genera un Totale per poter chiudere il contratto");
@@ -95,7 +98,6 @@ public class ChiudiContrattoViewController
 	private String verificaTotale()
 	{
 		String risposta = "Errore!";
-		int kmInseriti = kmAttuali;
 		int kmPartenza = contrattoSelezionato.getKmIniziali();
 		if (contrattoSelezionato.getIdContratto() != 0)
 		{
