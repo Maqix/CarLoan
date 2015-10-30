@@ -39,6 +39,8 @@ public class ApriContrattoViewController
 	@FXML
 	private ChoiceBox<String> ritornoCB;
 	@FXML
+	private ChoiceBox<String> rilascioCB;
+	@FXML
 	private DatePicker dataInizioDF;
 	@FXML
 	private ChoiceBox<String> clienteCB;
@@ -78,8 +80,28 @@ public class ApriContrattoViewController
 		//Ottengo la fascia e l'agenzia scelti per assegnare una auto
 		int fascia = fasciaCB.getSelectionModel().getSelectedIndex()+1;
 		
+		
+		
+		
+		
+
 		//Faccio generare una auto valida al ContrattoController
+		if(MainController.tipoLogin=="Admin")
+		{
+			String agenzia = AgenziaController.getPivaFromNome(rilascioCB.getSelectionModel().getSelectedItem());
+		contrattoController.setAuto(fascia, agenzia);
+		}
+		
+		
+		
+		
+		
+		
+		//Faccio generare una auto valida al ContrattoController quando sono in modalità dipendente
+		else if(MainController.tipoLogin=="Impiegato")
+		{
 		contrattoController.setAuto(fascia, MainController.agenzia);
+		}
 		//Mostro nella TextField l'auto assegnata
 		autoTF.setText(contrattoController.getAuto().getModello() + " - " + contrattoController.getAuto().getTarga());
 		//Faccio generare un acconto adeguato al ContrattoController
@@ -218,18 +240,26 @@ public class ApriContrattoViewController
 		//I picker delle agenzie di rilascio e ritorno
 		ObservableList<String> agenzie = FXCollections.observableArrayList();
 		ArrayList<String> listaAgenziePresenti = AgenziaController.getNomiAgenzie();
-		String nomeAgenzia = AgenziaController.getNomeFromPiva(MainController.agenzia);
-		rilascioLabel.setText(nomeAgenzia);
 		
 		
 		for (String agenzia: listaAgenziePresenti)
 		{
 			agenzie.add(agenzia);
 		}
-		//rilascioLabel.setItems(agenzie);
+		if(MainController.tipoLogin=="Impiegato")
+		{
+			String nomeAgenzia = AgenziaController.getNomeFromPiva(MainController.agenzia);
+		rilascioLabel.setText(nomeAgenzia);
+		
+		}else if(MainController.tipoLogin=="Admin")
+		{
+		rilascioCB.setItems(agenzie);
+		rilascioCB.getSelectionModel().selectFirst();
+		}
+		
 		ritornoCB.setItems(agenzie);
-		//rilascioLabel.getSelectionModel().selectFirst();
 		ritornoCB.getSelectionModel().selectFirst();
+		
 		
 		//Il picker della tariffa
 		ObservableList<String> tariffa = FXCollections.observableArrayList();

@@ -114,7 +114,7 @@ public class HomeAdminViewController
 		try {
 	        // Load the fxml file and create a new stage for the popup dialog.
 	        FXMLLoader loader = new FXMLLoader();
-	        loader.setLocation(HomeAdminViewController.class.getResource("ViewApriContratto.fxml"));
+	        loader.setLocation(HomeAdminViewController.class.getResource("ViewApriContrattoAdmin.fxml"));
 	        AnchorPane page = (AnchorPane) loader.load();
 
 	        // Create the dialog Stage.

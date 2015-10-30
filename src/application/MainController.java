@@ -34,6 +34,8 @@ public class MainController {
 	private PasswordField pswdTF;
 	
 	public static String agenzia;
+	public static String tipoLogin;
+	
 	//@SuppressWarnings("unused")
 	private Main  mainApp;
 	
@@ -46,7 +48,7 @@ public class MainController {
     }
 	
 	@FXML
-	private void premutoLogin()
+	private String premutoLogin()
 	{
 		
 		//String user=usernameTF.getText();
@@ -55,11 +57,14 @@ public class MainController {
 		{
 			//Lancia HomeAdmin
 			mainApp.utenteLoggato = usernameTF.getText();
+			tipoLogin="Admin";
 			lanciaHomeAdmin();
+			
 		}else if (isDipendente(usernameTF.getText(),pswdTF.getText()))
 		{
 			//Lancia HomeDipendente
 			mainApp.utenteLoggato = usernameTF.getText();
+			tipoLogin="Impiegato";
 			lanciaHomeImpiegato();
 		}else
 		{
@@ -67,6 +72,8 @@ public class MainController {
 		}
 		usernameTF.setText("");
 		pswdTF.setText("");
+		
+		return tipoLogin;
 	}
 	
 	@FXML
