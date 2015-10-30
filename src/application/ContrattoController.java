@@ -134,7 +134,7 @@ public class ContrattoController
 		return this.auto;
 	}
 	
-	public void chiudiContratto(int idContratto)
+	public static void chiudiContratto(int idContratto)
 	{
 		//TODO: Chiudere veramente il contratto
 		
@@ -305,7 +305,7 @@ public class ContrattoController
 		return risposta;
 	}
 	
-	public  String getTotaleContratto(int idContratto, int kmAttuali, LocalDate dataRientroLocal)
+	public static String getTotaleContratto(int idContratto, int kmAttuali, LocalDate dataRientroLocal)
 	{
 		String risposta = "TODO";
 		double totale = 0;

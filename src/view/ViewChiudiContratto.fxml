@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
@@ -44,22 +45,22 @@
          <children>
             <Label text="Numero contratto:" />
             <Label text="Auto assegnata:" GridPane.rowIndex="1" />
-            <Label fx:id="labelIdContratto" text="666" GridPane.columnIndex="1" />
-            <Label fx:id="labelAuto" text="Pagani Zonda" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="labelIdContratto" GridPane.columnIndex="1" />
+            <Label fx:id="labelAuto" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label text="Tipo noleggio:" GridPane.rowIndex="2" />
             <Label text="Tipo tariffa:" GridPane.rowIndex="3" />
-            <Label fx:id="labelTipoNoleggio" text="Mensile" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label fx:id="labelTipoTariffa" text="Km Esagerati" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label fx:id="labelTipoNoleggio" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label fx:id="labelTipoTariffa" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label fx:id="labelScrittaKmPrevisti" text="Km Previsti:" GridPane.rowIndex="4" />
-            <Label fx:id="labelKmPrevisti" text="999" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label fx:id="labelKmPrevisti" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <Label text="TOTALE:" GridPane.rowIndex="8">
                <font>
-                  <Font name="System Bold" size="19.0" />
+                  <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label fx:id="labelTotale" prefHeight="24.0" prefWidth="198.0" text="1000€" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="8">
+            <Label fx:id="labelTotale" alignment="CENTER_RIGHT" prefHeight="24.0" prefWidth="198.0" text="Premi 'Genera Totale'" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="8">
                <font>
-                  <Font name="System Bold" size="19.0" />
+                  <Font name="System Bold" size="18.0" />
                </font>
             </Label>
             <Label fx:id="labelScrittaKmPrevisti1" text="Km Auto:" GridPane.rowIndex="5" />
@@ -71,5 +72,6 @@
       <Separator layoutX="23.0" layoutY="153.0" orientation="VERTICAL" prefHeight="211.0" prefWidth="6.0" />
       <Separator layoutX="435.0" layoutY="150.0" orientation="VERTICAL" prefHeight="211.0" prefWidth="6.0" />
       <Separator layoutX="222.0" layoutY="153.0" orientation="VERTICAL" prefHeight="211.0" prefWidth="6.0" />
+      <Button layoutX="26.0" layoutY="385.0" mnemonicParsing="false" onAction="#premutoGeneraTotale" prefHeight="39.0" prefWidth="412.0" text="Genera Totale" />
    </children>
 </AnchorPane>

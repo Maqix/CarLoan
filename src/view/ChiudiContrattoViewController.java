@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import application.ClienteController;
 import application.ContrattoController;
+import application.Main;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -46,7 +47,7 @@ public class ChiudiContrattoViewController
 	private int kmAttuali = 0;
 	private LocalDate dataSelezionata = LocalDate.now();
 	
-	ContrattoController contrattoController = new ContrattoController();
+	private boolean generato = false;
 	
 	@FXML
 	private void initialize()
@@ -56,13 +57,20 @@ public class ChiudiContrattoViewController
 		configuraDatePicker();
 		labelScrittaKmPrevisti.setVisible(false);
 		labelKmPrevisti.setVisible(false);
-		labelTotale.setText("0");
+		labelTotale.setText("Premi 'Genera Totale'");
 	}
 
 	@FXML
 	private void premutoChiudiContratto()
 	{
-		contrattoController.chiudiContratto(ottieniNumContratto());
+		if (generato)
+		{
+			ContrattoController.chiudiContratto(ottieniNumContratto());
+			dialogStage.close();
+		}else
+		{
+			Main.lanciaWarning("Chiudi Contratto", "Genera un Totale per poter chiudere il contratto");
+		}
 	}
 	
 	@FXML
@@ -71,12 +79,53 @@ public class ChiudiContrattoViewController
 		dialogStage.close();
 	}
 	
+	@FXML
+	private void premutoGeneraTotale()
+	{
+		if (verificaTotale().equals(""))
+		{
+			generato = true;
+			labelTotale.setText(ContrattoController.getTotaleContratto(contrattoSelezionato.getIdContratto(), kmAttuali, dataSelezionata));
+		}else
+		{
+			Main.lanciaWarning("Genera Totale", verificaTotale());
+		}
+	}
+	
+	private String verificaTotale()
+	{
+		String risposta = "Errore!";
+		int kmInseriti = kmAttuali;
+		int kmPartenza = contrattoSelezionato.getKmIniziali();
+		if (contrattoSelezionato.getIdContratto() != 0)
+		{
+			if (kmAttuali != -100)
+			{
+				if (kmAttuali >= kmPartenza)
+				{
+					risposta = "";
+				}else
+				{
+					risposta = "Hai inserito meno Km di quanti ne aveva l'auto al momento del noleggio ("+String.valueOf(kmPartenza)+")";
+				}
+			}else
+			{
+				risposta = "I Km si esprimono in numeri";
+			}
+		}else
+		{
+			risposta = "Seleziona un contratto per poterlo chiudere";
+		}
+		return risposta;
+	}
+	
 	private int ottieniNumContratto()
 	{
 		int risposta = 0;
 		risposta = contrattoSelezionato.getIdContratto();
 		return risposta;
 	}
+	
 	
 	private void configuraPicker()
 	{
@@ -100,7 +149,6 @@ public class ChiudiContrattoViewController
 	
 	private void configuraTextField()
 	{
-		//TODO: Fanculo questa merda ci vuole un pulsante
 		kmAttualiTF.textProperty().addListener(new ChangeListener<String>() {
             public void changed(final ObservableValue<? extends String> observableValue, final String oldValue, final String newValue) 
             {
@@ -109,47 +157,29 @@ public class ChiudiContrattoViewController
             	try {
 					kmTF = Integer.parseInt(testo);
 	            	kmAttuali = kmTF;
-	            	String totale = contrattoController.getTotaleContratto(contrattoSelezionato.getIdContratto(),kmAttuali,dataRientroDP.getValue());
-	            	labelTotale.setText(totale);
 	            	
 				} catch (NumberFormatException e) {
 					kmTF = -100;
 	            	kmAttuali = kmTF;
-	            	labelTotale.setText("Inserisci Km");
 				}
             }
         });
 	}
-	
-	/*
-	private String validaTotale(String totaleStringa)
-	{
-		String risposta = "Errore!";
-		Integer totale = Integer.parseInt(totaleStringa);
-		if (totale < Integer.parseInt(contrattoController.getTotaleContratto(contrattoSelezionato.getIdContratto(),kmAttuali,dataRientroDP.getValue())))
-		{
-			risposta = "Km errati";
-		}else
-		{
-			risposta = "";
-		}
-		return risposta;
-	}
-	*/
 	
 	private void configuraDatePicker()
 	{
 		dataRientroDP.setValue(LocalDate.now());
 		dataRientroDP.setOnAction(event -> {
 		    LocalDate dataScelta = dataRientroDP.getValue();
+		    /*
 		    if (dataScelta.isBefore(LocalDate.now()))
 		    {
-		    	dataRientroDP.setValue(LocalDate.now());
-		    	labelTotale.setText(contrattoController.getTotaleContratto(contrattoSelezionato.getIdContratto(),kmAttuali,dataRientroDP.getValue()));
+		    	dataScelta = LocalDate.now();
+		    	dataRientroDP.setValue(dataScelta);
 		    }
+		    */
 		    setDataSelezionata(dataScelta);
-		    labelTotale.setText(contrattoController.getTotaleContratto(contrattoSelezionato.getIdContratto(),kmAttuali,dataScelta));
-		});
+		    });
 	}
 	
 	private void configuraContrattoTF()
