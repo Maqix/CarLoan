@@ -39,6 +39,53 @@ public class AutoController
 		}
 		
 	}
+	public static int getCostoKmFromAuto(String targa)
+	{
+		int risposta = 0;
+		int fascia = getFasciaFromAuto(targa);
+		String comando = String.format("SELECT PrezzoKm FROM `fascia` WHERE `idFascia` = %d",fascia);
+		try {
+			risposta = DAO.cercaI(comando);
+		} catch (SQLException e) {
+			risposta = 100000;
+		}
+		return risposta;
+	}
+	public static int getFasciaFromAuto(String targaCerca)
+	{
+		int risposta = 0;
+		Auto auto = new Auto();
+		String comando = String.format("SELECT * FROM `auto` WHERE `Targa` = '%s'",targaCerca);
+		ResultSet rs = DAO.getResultSet(comando);
+	   	 try {
+				while (rs.next())
+				 {
+					 Auto tempAuto = new Auto();
+					
+					 String targa = rs.getString("Targa");
+					 int fascia = rs.getInt("Fascia");
+					 String modello = rs.getString("Modello");
+					 String agenzia = rs.getString("Agenzia");
+					 int stato = rs.getInt("Stato");
+					 int km = rs.getInt("Chilometraggio");
+					 
+					 tempAuto.setTarga(targa);
+					 tempAuto.setFascia(fascia);
+					 tempAuto.setModello(modello);
+					 tempAuto.setAgenzia(agenzia);
+					 tempAuto.setStato(stato);
+					 tempAuto.setChilometraggio(km);
+					 
+					 auto = tempAuto;
+					 //Mi basta la prima auto che trovo
+					 break;
+				 }
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+	   	 risposta = auto.getFascia();
+		return risposta;
+	}
 	public static boolean settaManutenzioneAuto(Auto auto, int stato)
 	{
 		//Aggiorno l'auto nel DB

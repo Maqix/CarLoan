@@ -147,7 +147,37 @@ public class HomeAdminViewController
 	@FXML
 	private void chiudiContratto()
 	{
-		
+		try {
+	        // Load the fxml file and create a new stage for the popup dialog.
+	        FXMLLoader loader = new FXMLLoader();
+	        loader.setLocation(HomeAdminViewController.class.getResource("ViewChiudiContratto.fxml"));
+	        AnchorPane page = (AnchorPane) loader.load();
+
+	        // Create the dialog Stage.
+	        Stage dialogStage = new Stage();
+	        dialogStage.setTitle("Chiudi Contratto");
+	        dialogStage.initModality(Modality.APPLICATION_MODAL);
+	        dialogStage.initOwner(mainApp.primaryStage);
+	        Scene scene = new Scene(page);
+	        dialogStage.setScene(scene);
+
+	        
+	        ChiudiContrattoViewController controller =  loader.getController();
+	        controller.setDialogStage(dialogStage);
+	        
+	        // Show the dialog and wait until the user closes it
+	        dialogStage.showAndWait();
+	        
+	        //Aggiorno la tabella auto
+	        listaAuto = AutoController.getListaAuto();
+	        tblAuto.setItems(listaAuto);
+	        tblAuto.refresh();
+	        
+	        return;
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        return;
+	    }
 	}
 	
 	@FXML

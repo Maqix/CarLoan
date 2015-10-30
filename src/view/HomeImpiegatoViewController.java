@@ -140,9 +140,6 @@ public class HomeImpiegatoViewController {
 	        dialogStage.showAndWait();
 	        
 	        //Aggiorno la tabella contratti
-	        //FIXME: - La tabella contratti si aggiorna solo se ci sono già dei contratti presenti ?!
-	        //		 - listaContratti contiene effettivamente il nuovo contratto
-	        //       - pero' la tabella mostra la riga (quindi legge che c'è un contratto) VUOTA
 	        listaContratti = ContrattoController.getListaContratti();
 	        tblContratto.setItems(listaContratti);
 	        tblContratto.refresh();
@@ -167,7 +164,47 @@ public class HomeImpiegatoViewController {
 	@FXML
 	public void chiudiContratto()
 	{
-		
+		try {
+	        // Load the fxml file and create a new stage for the popup dialog.
+	        FXMLLoader loader = new FXMLLoader();
+	        loader.setLocation(HomeAdminViewController.class.getResource("ViewChiudiContratto.fxml"));
+	        AnchorPane page = (AnchorPane) loader.load();
+
+	        // Create the dialog Stage.
+	        Stage dialogStage = new Stage();
+	        dialogStage.setTitle("Chiudi Contratto");
+	        dialogStage.initModality(Modality.APPLICATION_MODAL);
+	        dialogStage.initOwner(mainApp.primaryStage);
+	        Scene scene = new Scene(page);
+	        dialogStage.setScene(scene);
+
+	        
+	        ChiudiContrattoViewController controller =  loader.getController();
+	        controller.setDialogStage(dialogStage);
+	        
+	        // Show the dialog and wait until the user closes it
+	        dialogStage.showAndWait();
+	        
+	        //Aggiorno la tabella contratti
+	        listaContratti = ContrattoController.getListaContratti();
+	        tblContratto.setItems(listaContratti);
+	        tblContratto.refresh();
+	        
+	        //Aggiorno la tabella clienti
+	        listaClienti = ClienteController.getListaCliente();
+	        tblCliente.setItems(listaClienti);
+	        tblCliente.refresh();
+	        
+	        //Aggiorno la tabella auto
+	        listaAuto = AutoController.getListaAuto();
+	        tblAuto.setItems(listaAuto);
+	        tblAuto.refresh();
+	        
+	        return;
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        return;
+	    }
 	}
 	
 	@FXML

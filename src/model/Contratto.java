@@ -21,6 +21,7 @@ public class Contratto
 		this.dataFine = new SimpleStringProperty("");
 		this.totVersato = new SimpleIntegerProperty(0);
 		this.kmIniziali = new SimpleIntegerProperty(0);
+		this.kmPrevisti = new SimpleIntegerProperty(0);
 		this.cliente = new SimpleStringProperty("");
 		this.isAperto = new SimpleBooleanProperty(false);
 		this.tipoNoleggio = new SimpleStringProperty("");
@@ -37,6 +38,7 @@ public class Contratto
 	private StringProperty	dataFine;
 	private IntegerProperty	totVersato;
 	private IntegerProperty kmIniziali;
+	private IntegerProperty kmPrevisti;
 	private StringProperty	cliente;
 	private BooleanProperty	isAperto;
 	private	StringProperty 	tipoNoleggio;
@@ -210,5 +212,20 @@ public class Contratto
 	public void setTipoChilometraggio(final java.lang.String tipoChilometraggio) {
 		this.tipoChilometraggioProperty().set(tipoChilometraggio);
 	}
+
+	public final IntegerProperty kmPrevistiProperty() {
+		return this.kmPrevisti;
+	}
+	
+
+	public final int getKmPrevisti() {
+		return this.kmPrevistiProperty().get();
+	}
+	
+
+	public final void setKmPrevisti(final int kmPrevisti) {
+		this.kmPrevistiProperty().set(kmPrevisti);
+	}
+	
 	
 }

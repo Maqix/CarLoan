@@ -8,9 +8,11 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,6 +20,7 @@ import model.Auto;
 import model.Cliente;
 import model.Contratto;
 import model.DAO;
+import utility.DateUtils;
 
 public class ContrattoController 
 {
@@ -131,6 +134,12 @@ public class ContrattoController
 		return this.auto;
 	}
 	
+	public void chiudiContratto(int idContratto)
+	{
+		//TODO: Chiudere veramente il contratto
+		
+	}
+	
 	/**
 	 * Genera una auto valida per il contratto
 	 * @param fascia La fascia desiderata per l'auto
@@ -226,14 +235,26 @@ public class ContrattoController
 	
 	public static ObservableList<Contratto> getListaContratti()
     {
-		return caricaListaContratti();
+		return caricaListaContratti(false);
     }
 	
-	private static ObservableList<Contratto> caricaListaContratti()
+	public static ObservableList<Contratto> getListaContrattiAperti()
+	{
+		return caricaListaContratti(true);
+	}
+	
+	private static ObservableList<Contratto> caricaListaContratti(boolean aperti)
 	{
 		 ObservableList<Contratto> listaContratti = FXCollections.observableArrayList();
 	   	 ResultSet rs = null;
-	   	 String comando = "SELECT * FROM contratto";
+	   	 String comando = "";
+	   	 if (aperti)
+	   	 {
+	   		comando = "SELECT * FROM contratto WHERE isAperto = true";
+	   	 }else
+	   	 {
+	   		comando = "SELECT * FROM contratto";
+	   	 }
 	   	 rs = DAO.getResultSet(comando);
 	   	 try {
 				while (rs.next())
@@ -243,6 +264,7 @@ public class ContrattoController
 					 int idContratto = rs.getInt("idContratto");
 					 int totVersato = rs.getInt("TotaleVersato");
 					 int km = rs.getInt("KmIniziali");
+					 int kmPrevisti = rs.getInt("KmPrevisti");
 					 String auto = rs.getString("Auto");
 					 String apertura = rs.getString("AgenziaApertura");
 					 String chiusura = rs.getString("AgenziaChiusura");
@@ -256,6 +278,7 @@ public class ContrattoController
 					 tempContratto.setIdContratto(idContratto);
 					 tempContratto.setTotVersato(totVersato);
 					 tempContratto.setKmIniziali(km);
+					 tempContratto.setKmPrevisti(kmPrevisti);
 					 tempContratto.setAuto(auto);
 					 tempContratto.setAgenziaApertura(apertura);
 					 tempContratto.setAgenziaChiusura(chiusura);
@@ -273,6 +296,114 @@ public class ContrattoController
 			}
 	   	 
 	   	 return listaContratti;
+	}
+	
+	private static int getKmPercorsi(int kmAttuali, Contratto contratto)
+	{
+		int risposta = 0;
+		risposta = kmAttuali - contratto.getKmIniziali();
+		return risposta;
+	}
+	
+	public  String getTotaleContratto(int idContratto, int kmAttuali, LocalDate dataRientroLocal)
+	{
+		String risposta = "TODO";
+		double totale = 0;
+		Contratto contratto = ContrattoController.getContrattoApertoFromId(idContratto);
+		double kmPercorsi = ContrattoController.getKmPercorsi(kmAttuali, contratto);
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ITALIAN);
+		Date dataFine = Date.from(Instant.now());
+		Date dataRientro = DateUtils.asDate(dataRientroLocal);
+		try {
+			dataFine = format.parse(contratto.getDataFine());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		
+		//Verifico il tipo di noleggio
+		if (contratto.getTipoNoleggio().equals("Settimanale"))
+		{
+			//Contratto Settimanale
+			if (dataRientro.after(dataFine))
+			{
+				//E' stata sforata la data
+				int giorniSforati = (int)getDateDiff(dataFine,dataRientro,TimeUnit.DAYS);
+				totale += 70+(7*giorniSforati);
+				
+			}else
+			{
+				totale += 70;
+			}
+		}else
+		{
+			//Contratto Giornaliero
+			if (dataRientro.after(dataFine))
+			{
+				//E' stata sforata la data
+				int giorniSforati = (int)getDateDiff(dataFine,dataRientro,TimeUnit.DAYS);
+				totale += 10+(5*giorniSforati);
+			}else
+			{
+				totale += 10;
+			}
+		}
+		
+		//Verifico il tipo di chilometraggio
+		if (contratto.getTipoChilometraggio().equals("Km Illimitati"))
+		{
+			//Km Illimitati
+			totale += (AutoController.getCostoKmFromAuto(contratto.getAuto()) * kmPercorsi)/10;
+		}else
+		{
+			//Km Limitati
+			if (kmPercorsi > contratto.getKmPrevisti())
+			{
+				//Sono stati sforati i Km
+				totale += ((AutoController.getCostoKmFromAuto(contratto.getAuto()) * kmPercorsi)/10)*0.7 + (0.5*kmPercorsi);
+			}else
+			{
+				totale = ((AutoController.getCostoKmFromAuto(contratto.getAuto()) * kmPercorsi)/10)*0.7;
+			}
+		}
+		
+		//Aggiungo la quota della fascia
+		totale += AutoController.getFasciaFromAuto(contratto.getAuto()) * 10;
+		
+		//Sottraggo l'acconto
+		totale -= contratto.getTotVersato();
+		
+		risposta = String.valueOf(totale);
+		return risposta;
+		
+	}
+	
+	public static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
+	    long diffInMillies = date2.getTime() - date1.getTime();
+	    return timeUnit.convert(diffInMillies,TimeUnit.MILLISECONDS);
+	}
+	
+	public static Contratto getContrattoApertoFromId(int id)
+	{
+		Contratto contratto = new Contratto();
+		//Restituire un contratto da un ID
+		ObservableList<Contratto> listaContratti = getListaContrattiAperti();
+		for (Contratto contrattoCiclo:listaContratti)
+		{
+			if (contrattoCiclo.getIdContratto() == id)
+			{
+				contratto = contrattoCiclo;
+			}
+		}
+		return contratto;
+	}
+	
+	public static Contratto getContrattoApertoFromIndice(int indice)
+	{
+		Contratto contratto = new Contratto();
+		ObservableList<Contratto> listaContratti = getListaContrattiAperti();
+		contratto = listaContratti.get(indice);
+	   	 return contratto;
 	}
 
 	public int getIdContratto() {
