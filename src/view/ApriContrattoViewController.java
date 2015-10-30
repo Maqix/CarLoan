@@ -4,11 +4,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import javafx.scene.control.Label;
+
 import application.AgenziaController;
 import application.ClienteController;
 import application.ContrattoController;
 import application.FasciaController;
 import application.Main;
+import application.MainController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -32,7 +35,7 @@ public class ApriContrattoViewController
 	@FXML
 	private ChoiceBox<String> tariffaCB;
 	@FXML
-	private ChoiceBox<String> rilascioCB;
+	private Label rilascioLabel;
 	@FXML
 	private ChoiceBox<String> ritornoCB;
 	@FXML
@@ -74,9 +77,9 @@ public class ApriContrattoViewController
 		//Devo valorizzare i dati del riepilogo
 		//Ottengo la fascia e l'agenzia scelti per assegnare una auto
 		int fascia = fasciaCB.getSelectionModel().getSelectedIndex()+1;
-		String agenzia = AgenziaController.getPivaFromNome(rilascioCB.getSelectionModel().getSelectedItem());
+		
 		//Faccio generare una auto valida al ContrattoController
-		contrattoController.setAuto(fascia, agenzia);
+		contrattoController.setAuto(fascia, MainController.agenzia);
 		//Mostro nella TextField l'auto assegnata
 		autoTF.setText(contrattoController.getAuto().getModello() + " - " + contrattoController.getAuto().getTarga());
 		//Faccio generare un acconto adeguato al ContrattoController
@@ -215,13 +218,17 @@ public class ApriContrattoViewController
 		//I picker delle agenzie di rilascio e ritorno
 		ObservableList<String> agenzie = FXCollections.observableArrayList();
 		ArrayList<String> listaAgenziePresenti = AgenziaController.getNomiAgenzie();
+		String nomeAgenzia = AgenziaController.getNomeFromPiva(MainController.agenzia);
+		rilascioLabel.setText(nomeAgenzia);
+		
+		
 		for (String agenzia: listaAgenziePresenti)
 		{
 			agenzie.add(agenzia);
 		}
-		rilascioCB.setItems(agenzie);
+		//rilascioLabel.setItems(agenzie);
 		ritornoCB.setItems(agenzie);
-		rilascioCB.getSelectionModel().selectFirst();
+		//rilascioLabel.getSelectionModel().selectFirst();
 		ritornoCB.getSelectionModel().selectFirst();
 		
 		//Il picker della tariffa

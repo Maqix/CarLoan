@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="506.0" prefWidth="833.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ApriContrattoViewController">
+<AnchorPane prefHeight="506.0" prefWidth="833.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ApriContrattoViewController">
    <children>
       <Label layoutX="350.0" layoutY="25.0" text="Apri Contratto">
          <font>
@@ -25,7 +25,6 @@
       <ChoiceBox fx:id="fasciaCB" layoutX="25.0" layoutY="147.0" prefWidth="150.0" />
       <ChoiceBox fx:id="noleggioCB" layoutX="217.0" layoutY="147.0" prefWidth="150.0" />
       <ChoiceBox fx:id="tariffaCB" layoutX="393.0" layoutY="147.0" prefWidth="150.0" />
-      <ChoiceBox fx:id="rilascioCB" layoutX="25.0" layoutY="208.0" prefWidth="150.0" />
       <ChoiceBox fx:id="ritornoCB" layoutX="217.0" layoutY="208.0" prefWidth="150.0" />
       <Label layoutX="25.0" layoutY="121.0" text="Fascia auto">
          <font>
@@ -139,5 +138,10 @@
          </font>
       </Label>
       <TextField fx:id="contrattoTF" editable="false" layoutX="602.0" layoutY="269.0" prefHeight="26.0" prefWidth="207.0" promptText="Premi &quot;Genera Contratto&quot;..." text="Premi &quot;Genera Contratto&quot;..." />
+      <Label fx:id="rilascioLabel" layoutX="25.0" layoutY="208.0" prefHeight="26.0" prefWidth="150.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

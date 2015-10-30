@@ -68,8 +68,7 @@ public class HomeImpiegatoViewController {
 	{
 		listaAuto = AutoController.getListaAuto();
 		
-		if (!listaAuto.isEmpty())
-		{
+		
 			tblAuto.setItems(listaAuto);
 			colTarga.setCellValueFactory(cellData -> cellData.getValue().getTargaProperty());
 			colFascia.setCellValueFactory(cellData -> cellData.getValue().getFasciaProperty().asObject());
@@ -77,15 +76,14 @@ public class HomeImpiegatoViewController {
 			colAgenzia.setCellValueFactory(cellData -> cellData.getValue().getNomeAgenziaProperty());
 			colKm.setCellValueFactory(cellData -> cellData.getValue().getChilometraggioProperty().asObject());
 			colStato.setCellValueFactory(cellData -> cellData.getValue().getStatoStringProperty());
-		}
+		
 	}
 	
 	private void configuraTabellaClienti()
 	{
 		listaClienti = ClienteController.getListaCliente();
 		
-		if (!listaClienti.isEmpty())
-		{
+		
 			tblCliente.setItems(listaClienti);
 			colCF.setCellValueFactory(cellData -> cellData.getValue().getCFProperty());
 			colNome.setCellValueFactory(cellData -> cellData.getValue().getNomeProperty());
@@ -93,7 +91,7 @@ public class HomeImpiegatoViewController {
 			colTelefono.setCellValueFactory(cellData -> cellData.getValue().getTelefonoProperty());
 			colContratto.setCellValueFactory(cellData -> cellData.getValue().getContrattoProperty().asObject());
 			
-		}
+		
 	}
 	
 	
@@ -103,8 +101,6 @@ public class HomeImpiegatoViewController {
 	{
 		listaContratti = ContrattoController.getListaContratti();
 		
-		if (!listaContratti.isEmpty())
-		{
 			tblContratto.setItems(listaContratti);
 			colID.setCellValueFactory(cellData -> cellData.getValue().idContrattoProperty().asObject());
 			colAuto.setCellValueFactory(cellData -> cellData.getValue().autoProperty());
@@ -115,7 +111,7 @@ public class HomeImpiegatoViewController {
 			colCliente.setCellValueFactory(cellData -> cellData.getValue().clienteProperty());
 			colTipoNoleggio.setCellValueFactory(cellData -> cellData.getValue().tipoNoleggioProperty());
 			colTipoChilometraggio.setCellValueFactory(cellData -> cellData.getValue().tipoChilometraggioProperty());
-		}
+		
 	}
 	
 	

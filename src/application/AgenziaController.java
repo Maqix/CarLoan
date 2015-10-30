@@ -173,6 +173,15 @@ public class AgenziaController
 		}
 	}
 	
+	public static String getNomeFromPiva(String piva)
+	{
+		try {
+			return DAO.cercaS("SELECT Nome FROM agenzia WHERE PartitaIVA = '" + piva + "'");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return "";
+		}
+	}
 	
 	public static ArrayList<String> getNomiAgenzie()
 	{

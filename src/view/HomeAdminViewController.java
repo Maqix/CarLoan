@@ -68,8 +68,7 @@ public class HomeAdminViewController
 	{
 		listaAuto = AutoController.getListaAuto();
 		
-		if (!listaAuto.isEmpty())
-		{
+		
 			tblAuto.setItems(listaAuto);
 			colTarga.setCellValueFactory(cellData -> cellData.getValue().getTargaProperty());
 			colFascia.setCellValueFactory(cellData -> cellData.getValue().getFasciaProperty().asObject());
@@ -77,15 +76,14 @@ public class HomeAdminViewController
 			colAgenzia.setCellValueFactory(cellData -> cellData.getValue().getNomeAgenziaProperty());
 			colKm.setCellValueFactory(cellData -> cellData.getValue().getChilometraggioProperty().asObject());
 			colStato.setCellValueFactory(cellData -> cellData.getValue().getStatoStringProperty());
-		}
+		
 	}
 	
 	private void configuraTabellaAgenzie()
 	{
 		listaAgenzie = AgenziaController.getListaAgenzia();
 		
-		if (!listaAgenzie.isEmpty())
-		{
+		
 			tblAgenzie.setItems(listaAgenzie);
 			colPartitaIva.setCellValueFactory(cellData -> cellData.getValue().getPartitaIvaProperty());
 			colNome.setCellValueFactory(cellData -> cellData.getValue().getNomeProperty());
@@ -93,22 +91,21 @@ public class HomeAdminViewController
 			colProvincia.setCellValueFactory(cellData -> cellData.getValue().getProvinciaProperty());
 			colVia.setCellValueFactory(cellData -> cellData.getValue().getViaProperty());
 			colCivico.setCellValueFactory(cellData -> cellData.getValue().getCivicoProperty());
-		}
+		
 	}
 	
 	private void configuraTabellaDipendenti()
 	{
 		listaDipendenti = DipendenteController.getListaDipendente();
 		
-		if (!listaDipendenti.isEmpty())
-		{
+		
 			tblDipendenti.setItems(listaDipendenti);
 			colUsername.setCellValueFactory(cellData -> cellData.getValue().getUsernameProperty());
 			colAgenziaDip.setCellValueFactory(cellData -> cellData.getValue().getAgenziaNomeProperty());
 			colNomeDip.setCellValueFactory(cellData -> cellData.getValue().getNomeProperty());
 			colCognome.setCellValueFactory(cellData -> cellData.getValue().getCognomeProperty());
 			colTelefono.setCellValueFactory(cellData -> cellData.getValue().getTelefonoProperty());
-		}
+		
 	}
 	
 	@FXML

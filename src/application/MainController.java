@@ -33,7 +33,7 @@ public class MainController {
 	@FXML
 	private PasswordField pswdTF;
 	
-	
+	public static String agenzia;
 	//@SuppressWarnings("unused")
 	private Main  mainApp;
 	
@@ -172,8 +172,7 @@ public class MainController {
 	        mainApp.primaryStage.setScene(scene);
 	        mainApp.primaryStage.centerOnScreen();
 	     
-
-
+	        
 	        
 	        HomeImpiegatoViewController controller =  loader.getController();
 	        controller.setMainApp(mainApp);
@@ -224,6 +223,8 @@ public class MainController {
 		try {
 			String verifica = DAO.cercaS(comando);
 			
+			String comando1 = String.format("SELECT Agenzia FROM dipendente WHERE Username = '%s'", nome);
+			agenzia = DAO.cercaS(comando1);
 			if(nome.equals(verifica))
 			{
 			try {
