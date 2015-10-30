@@ -373,7 +373,8 @@ public class ContrattoController
 		//Sottraggo l'acconto
 		totale -= contratto.getTotVersato();
 		
-		risposta = String.valueOf(totale);
+		
+		risposta = String.format("%.2f€", totale);;
 		return risposta;
 		
 	}

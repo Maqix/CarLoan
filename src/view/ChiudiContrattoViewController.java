@@ -193,12 +193,14 @@ public class ChiudiContrattoViewController
 			labelScrittaKmPrevisti.setVisible(true);
 			labelKmPrevisti.setText(String.valueOf(contrattoSelezionato.getKmPrevisti()));
 			labelKmPrevisti.setVisible(true);
+			kmAttualiTF.setText(String.valueOf(contrattoSelezionato.getKmIniziali()+contrattoSelezionato.getKmPrevisti()));
 		}else
 		{
 			labelScrittaKmPrevisti.setVisible(false);
 			labelKmPrevisti.setVisible(false);
+			kmAttualiTF.setText(String.valueOf(contrattoSelezionato.getKmIniziali()));
 		}
-		kmAttualiTF.setText(String.valueOf(contrattoSelezionato.getKmIniziali()));
+		
 		
 	}
 
