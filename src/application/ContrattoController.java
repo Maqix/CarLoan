@@ -139,9 +139,9 @@ public class ContrattoController
 		//Reimposto l'auto come libera
 		if (AutoController.liberaAuto(ContrattoController.getContrattoApertoFromId(idContratto).getAuto()))
 		{
-			if (impostaContrattoChiuso(idContratto))
+			if (impostaClienteContrattoNull(idContratto))
 			{
-				if (impostaClienteContrattoNull(idContratto))
+				if (impostaContrattoChiuso(idContratto))
 				{
 					return true;
 				}else
