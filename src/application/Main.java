@@ -1,6 +1,9 @@
 package application;
 	
 import java.io.IOException;
+import java.net.URL;
+
+import com.sun.javafx.css.StyleManager;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -22,6 +25,15 @@ public class Main extends Application {
 	
 	@Override
 	public void start(Stage primaryStage) {
+			
+        URL url = this.getClass().getResource("application.css");
+        if (url == null) {
+            System.out.println("Resource not found. Aborting.");
+            System.exit(-1);
+        }
+        String css = url.toExternalForm(); 
+        Application.setUserAgentStylesheet(Application.STYLESHEET_MODENA);
+        StyleManager.getInstance().addUserAgentStylesheet(css);
 			
 			this.primaryStage = primaryStage;
 			this.primaryStage.setTitle("CarLoan");
@@ -49,6 +61,8 @@ public class Main extends Application {
 	            scenaLogin = scene;
 	            
 	            primaryStage.setScene(scene);
+	            
+	            
 	            primaryStage.show();
 	            
 

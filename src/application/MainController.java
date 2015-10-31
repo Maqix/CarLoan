@@ -251,5 +251,9 @@ public class MainController {
 		return risposta;
 	}
 
-	
+	@FXML
+	private void premutoEsci()
+	{
+		this.mainApp.primaryStage.close();
+	}
 }
