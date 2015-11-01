@@ -97,7 +97,7 @@ public class Main extends Application {
 	{
 		if (nightmode)
 		{
-	        URL url = this.getClass().getResource("application.css");
+	        URL url = this.getClass().getResource("nightmode.css");
 	        if (url == null) {
 	            System.out.println("Resource not found. Aborting.");
 	            System.exit(-1);
@@ -107,7 +107,14 @@ public class Main extends Application {
 	        StyleManager.getInstance().addUserAgentStylesheet(css);
 		}else
 		{
+	        URL url = this.getClass().getResource("daymode.css");
+	        if (url == null) {
+	            System.out.println("Resource not found. Aborting.");
+	            System.exit(-1);
+	        }
+	        String css = url.toExternalForm(); 
 	        Application.setUserAgentStylesheet(Application.STYLESHEET_MODENA);
+	        StyleManager.getInstance().addUserAgentStylesheet(css);
 		}
 	}
 }

@@ -1,3 +1,4 @@
+/* 
 .root {  -fx-base: #38424b; 
 	    -fx-background-color: 
         #090a0c,
@@ -16,9 +17,7 @@
     -fx-background-radius: 5,4,3,5;
     -fx-background-insets: 0,1,2,0;
     -fx-text-fill: white;
-    /*-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );*/
     -fx-text-fill: linear-gradient(white, #d0d0d0);
-    /*-fx-padding: 10 20 10 20;*/
 }
 .button:focused {
     -fx-background-color: 
@@ -32,12 +31,11 @@
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
     -fx-text-fill: linear-gradient(white, gray);
     -fx-font-weight: bold;
-    /*-fx-padding: 10 20 10 20;*/
 }
 .button Text {
     -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.9) , 1, 0.0 , 0 , 1 );
 }
-
+*/
  /*    
 .background {
     -fx-background-color: #1d1d1d;
