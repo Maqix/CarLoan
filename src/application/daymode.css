@@ -1,41 +1,81 @@
-/* 
-.root {  -fx-base: #38424b; 
+.root {  -fx-base: #ececec; 
 	    -fx-background-color: 
-        #090a0c,
-        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
-        linear-gradient(#20262b, #191d22),
-        radial-gradient(center 50% 0%, radius 200%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+        #ececec,
+        linear-gradient(#ececec 0%, #dbdbdb 20%, #bfbfbf 100%),
+        linear-gradient(#d2d2d2, #b6b6b6);
     -fx-background-insets: 0,1,2,0;
-} 
-
+    -fx-focus-color: black;
+}
 .button {
     -fx-background-color: 
-        #090a0c,
-        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
-        linear-gradient(#20262b, #191d22),
-        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+        #ececec,
+        linear-gradient(#ececec 0%, #dbdbdb 20%, #bfbfbf 100%),
+        linear-gradient(#d2d2d2, #b6b6b6);
     -fx-background-radius: 5,4,3,5;
     -fx-background-insets: 0,1,2,0;
-    -fx-text-fill: white;
-    -fx-text-fill: linear-gradient(white, #d0d0d0);
+    -fx-text-fill: black;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-text-fill: linear-gradient(#3e3e3e,black);
 }
 .button:focused {
     -fx-background-color: 
-        #090a0c,
-        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
-        linear-gradient(#20262b, #191d22),
-        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+        #ececec,
+        linear-gradient(#ececec 0%, #dbdbdb 20%, #bfbfbf 100%),
+        linear-gradient(#d2d2d2, #b6b6b6);
     -fx-background-radius: 5,4,3,5;
     -fx-background-insets: 0,1,2,0;
-    -fx-text-fill: white;
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
-    -fx-text-fill: linear-gradient(white, gray);
+    -fx-text-fill: black;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 20, 0.0 , 0 , 1 );
+    -fx-text-fill: linear-gradient(#3e3e3e,black);
     -fx-font-weight: bold;
 }
 .button Text {
     -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.9) , 1, 0.0 , 0 , 1 );
 }
-*/
+
+.label {
+    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
+}
+
+.table-view {
+    -fx-base: #ececec;
+    -fx-control-inner-background:  #ececec;
+    -fx-background-color:  #ececec,
+        linear-gradient(#ececec 0%, #dbdbdb 20%, #bfbfbf 100%),
+        linear-gradient(#d2d2d2, #b6b6b6);
+    -fx-padding: 5;
+    -fx-border-color: black;
+}
+
+.table-view .column-header-background {
+    -fx-background-color:          #ececec,
+        linear-gradient(#ececec 0%, #dbdbdb 20%, #bfbfbf 100%),
+        linear-gradient(#d2d2d2, #b6b6b6);
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-size: 35;
+    -fx-border-width: 0 0 1 0;
+    -fx-background-color: transparent;
+    -fx-border-color: 
+        transparent
+        transparent
+        black 
+        transparent;
+    -fx-border-insets: 0 10 1 0;
+}
+
+.table-view .column-header .label {
+    -fx-font-family: "Helvetica Neue";
+    -fx-text-fill: black;
+    -fx-alignment: center-left;
+    -fx-opacity: 1;
+}
+
+.table-view:focused .table-row-cell:filled:focused:selected {
+    -fx-background-color: -fx-focus-color;
+}
+
  /*    
 .background {
     -fx-background-color: #1d1d1d;
