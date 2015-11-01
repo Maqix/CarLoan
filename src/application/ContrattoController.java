@@ -410,7 +410,7 @@ public class ContrattoController
 			if (kmPercorsi > contratto.getKmPrevisti())
 			{
 				//Sono stati sforati i Km
-				totale += ((AutoController.getCostoKmFromAuto(contratto.getAuto()) * kmPercorsi)/10)*0.7 + (0.5*kmPercorsi);
+				totale += ((AutoController.getCostoKmFromAuto(contratto.getAuto()) * kmPercorsi)/10)*0.7 + (0.8*kmPercorsi);
 			}else
 			{
 				totale = ((AutoController.getCostoKmFromAuto(contratto.getAuto()) * kmPercorsi)/10)*0.7;

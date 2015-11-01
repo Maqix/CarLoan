@@ -97,7 +97,7 @@ public class ApriContrattoViewController
 		
 		
 		
-		//Faccio generare una auto valida al ContrattoController quando sono in modalità dipendente
+		//Faccio generare una auto valida al ContrattoController quando sono in modalitï¿½ dipendente
 		else if(MainController.tipoLogin=="Impiegato")
 		{
 		contrattoController.setAuto(fascia, MainController.agenzia);
@@ -116,7 +116,7 @@ public class ApriContrattoViewController
 	
 	private int quantiChilometri()
 	{
-		int risposta = 0;
+		int risposta = -1000;
 		TextInputDialog dialog = new TextInputDialog("0");
 		dialog.setTitle("Genera Contratto");
 		dialog.setHeaderText("E' stata scelta la tariffa 'Km Limitati'");
@@ -149,6 +149,7 @@ public class ApriContrattoViewController
 			{
 				chilometriPrevisti = quantiChilometri();
 				if (chilometriPrevisti != -100) {esci = true;}
+				if (chilometriPrevisti == -1000) {return;}
 			}
 			contrattoController.setKmPrevisti(chilometriPrevisti);
 		}else
