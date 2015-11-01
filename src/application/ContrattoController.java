@@ -31,7 +31,7 @@ public class ContrattoController
 	private boolean isAperto;
 	private Auto auto;
 	private String agenziaApertura;
-	private String agenziaChiusura;
+	private static String agenziaChiusura;
 	private String dataInizio;
 	private String dataFine;
 	private String cliente;
@@ -46,7 +46,7 @@ public class ContrattoController
 		//Inserisco il cliente (se non esistente) nel DB
 		inserisciSeNonEsistente(this.cliente);
 		//Inserisco il contratto nel DB
-		String comando = String.format("INSERT INTO `contratto` (`idContratto`, `Auto`, `AgenziaApertura`, `AgenziaChiusura`, `Inizio`, `Fine`, `TotaleVersato`, `KmIniziali`, `Cliente`, `isAperto`, `TipoNoleggio`, `TipoChilometraggio`, `KmPrevisti`) VALUES ('%d', '%s', '%s', '%s', '%s', '%s', '%d', '%d', '%s', '%d', '%s', '%s','%d')", this.idContratto,this.auto.getTarga(),this.agenziaApertura,this.agenziaChiusura,this.dataInizio,this.dataFine,this.totVersato,this.kmIniziali,this.cliente,(this.isAperto) ? 1 : 0,this.tipoNoleggio,this.tipoChilometraggio, this.kmPrevisti);
+		String comando = String.format("INSERT INTO `contratto` (`idContratto`, `Auto`, `AgenziaApertura`, `AgenziaChiusura`, `Inizio`, `Fine`, `TotaleVersato`, `KmIniziali`, `Cliente`, `isAperto`, `TipoNoleggio`, `TipoChilometraggio`, `KmPrevisti`) VALUES ('%d', '%s', '%s', '%s', '%s', '%s', '%d', '%d', '%s', '%d', '%s', '%s','%d')", this.idContratto,this.auto.getTarga(),this.agenziaApertura,ContrattoController.agenziaChiusura,this.dataInizio,this.dataFine,this.totVersato,this.kmIniziali,this.cliente,(this.isAperto) ? 1 : 0,this.tipoNoleggio,this.tipoChilometraggio, this.kmPrevisti);
 		if (DAO.esegui(comando))
 		{
 			//Aggiorno l'auto scelta come "In Uso"
@@ -141,6 +141,8 @@ public class ContrattoController
 		{
 			if (impostaClienteContrattoNull(idContratto))
 			{
+				if (AutoController.settaAgenziaAuto(ContrattoController.getContrattoApertoFromId(idContratto).getAuto(), agenziaChiusura))
+				{
 				if (impostaContrattoChiuso(idContratto))
 				{
 					return true;
@@ -148,6 +150,11 @@ public class ContrattoController
 				{
 					Main.lanciaWarning("Chiudi Contratto", "Problemi col Database");
 					return false;
+				}
+				}else
+				{
+					Main.lanciaWarning("Chiudi Contratto", "Problemi col Database");
+                    return false;				
 				}
 			}else
 			{
@@ -159,6 +166,7 @@ public class ContrattoController
 			Main.lanciaWarning("ChiudiContratto", "Problemi col Database");
 			return false;
 		}
+		
 
 		
 	}
@@ -502,7 +510,7 @@ public class ContrattoController
 	}
 
 	public void setAgenziaChiusura(String agenziaChiusura) {
-		this.agenziaChiusura = agenziaChiusura;
+		ContrattoController.agenziaChiusura = agenziaChiusura;
 	}
 
 	public String getDataInizio() {

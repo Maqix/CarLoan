@@ -2,6 +2,7 @@ package view;
 
 import java.time.LocalDate;
 
+import application.AutoController;
 import application.ClienteController;
 import application.ContrattoController;
 import application.Main;
@@ -65,15 +66,21 @@ public class ChiudiContrattoViewController
 	{
 		if (generato)
 		{
+			if (AutoController.settaKmAuto(ContrattoController.getContrattoApertoFromId(ottieniNumContratto()).getAuto(), kmAttuali))
+			{
 			if (ContrattoController.chiudiContratto(ottieniNumContratto()))
 			{
 				Main.lanciaInfo("Chiudi Contratto", "Contratto chiuso");
 				dialogStage.close();
+			}else
+			{
+				Main.lanciaWarning("Chiudi Contratto", "Genera un Totale per poter chiudere il contratto");	
 			}
 		}else
 		{
 			Main.lanciaWarning("Chiudi Contratto", "Genera un Totale per poter chiudere il contratto");
 		}
+	}
 	}
 	
 	@FXML

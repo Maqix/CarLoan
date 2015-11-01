@@ -99,6 +99,37 @@ public class AutoController
 		}
 	}
 	
+	
+	public static boolean settaAgenziaAuto(String targa, String agenzia)
+	{
+		boolean risposta = false;
+		//Aggiorno l'auto nel DB
+		String comando = String.format("UPDATE `auto` SET `Agenzia` = '%s' WHERE `Targa` = '%s';",agenzia, targa);
+		if (DAO.esegui(comando))
+		{
+			risposta = true;
+		}else
+		{
+			risposta = false;
+		}
+		return risposta;
+	}
+	
+	public static boolean settaKmAuto(String targa, int km)
+	{
+		boolean risposta = false;
+		//Aggiorno l'auto nel DB
+		String comando = String.format("UPDATE `auto` SET `Chilometraggio` = '%d' WHERE `Targa` = '%s';",km, targa);
+		if (DAO.esegui(comando))
+		{
+			risposta = true;
+		}else
+		{
+			risposta = false;
+		}
+		return risposta;
+	}
+	
 	public static boolean liberaAuto(String targa)
 	{
 		boolean risposta = false;
