@@ -26,15 +26,6 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 			
-        URL url = this.getClass().getResource("application.css");
-        if (url == null) {
-            System.out.println("Resource not found. Aborting.");
-            System.exit(-1);
-        }
-        String css = url.toExternalForm(); 
-        Application.setUserAgentStylesheet(Application.STYLESHEET_MODENA);
-        StyleManager.getInstance().addUserAgentStylesheet(css);
-			
 			this.primaryStage = primaryStage;
 			this.primaryStage.setTitle("CarLoan");
 			this.primaryStage.setResizable(false);
@@ -100,5 +91,23 @@ public class Main extends Application {
 		alert.setHeaderText(titolo);
 		alert.setContentText(contenuto);
 		alert.showAndWait();
+	}
+	
+	public void cambiaTema(boolean nightmode)
+	{
+		if (nightmode)
+		{
+	        URL url = this.getClass().getResource("application.css");
+	        if (url == null) {
+	            System.out.println("Resource not found. Aborting.");
+	            System.exit(-1);
+	        }
+	        String css = url.toExternalForm(); 
+	        Application.setUserAgentStylesheet(Application.STYLESHEET_MODENA);
+	        StyleManager.getInstance().addUserAgentStylesheet(css);
+		}else
+		{
+	        Application.setUserAgentStylesheet(Application.STYLESHEET_MODENA);
+		}
 	}
 }

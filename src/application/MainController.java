@@ -3,12 +3,15 @@ package application;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -33,6 +36,9 @@ public class MainController {
 	@FXML
 	private PasswordField pswdTF;
 	
+	@FXML
+	private ToggleButton temaButton;
+	
 	public static String agenzia;
 	public static String tipoLogin;
 	
@@ -44,7 +50,19 @@ public class MainController {
 	@FXML
     private void initialize() 
 	{
-		
+		temaButton.selectedProperty().addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> ov, Boolean oldValue, Boolean newValue) 
+			{
+				if (newValue)
+				{
+					mainApp.cambiaTema(true);
+				}else
+				{
+					mainApp.cambiaTema(false);
+				}
+			}
+		});
     }
 	
 	@FXML
