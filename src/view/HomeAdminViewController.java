@@ -374,23 +374,29 @@ public class HomeAdminViewController
 			{
 				if (AgenziaController.isAgenziaSenzaDipendenti(agenziaSelezionata))
 				{
-					//Se l'utente conferma di voler eliminare l'agenzia
-					Optional<ButtonType> result = alert.showAndWait();
-					if (result.get() == ButtonType.OK)
+					if (AgenziaController.isAgenziaSenzaContratti(agenziaSelezionata))
 					{
-						
-						//Se l'operazione sul DB va a buon fine
-						if (AgenziaController.eliminaAgenzia(agenziaSelezionata))
+						//Se l'utente conferma di voler eliminare l'agenzia
+						Optional<ButtonType> result = alert.showAndWait();
+						if (result.get() == ButtonType.OK)
 						{
-							//Elimino l'agenzia dalla lista
-							listaAgenzie.remove(agenziaSelezionata);
-							//Avviso l'utente
-							Main.lanciaInfo("Elimina Agenzia", "Agenzia eliminata");
-						}else
-						{
-							//Avviso l'utente che l'operazione non è andata a buon fine
-							Main.lanciaWarning("Nessuna agenzia eliminata", "C'e' stato un problema col Database, contattare l'amministratore");
+							
+							//Se l'operazione sul DB va a buon fine
+							if (AgenziaController.eliminaAgenzia(agenziaSelezionata))
+							{
+								//Elimino l'agenzia dalla lista
+								listaAgenzie.remove(agenziaSelezionata);
+								//Avviso l'utente
+								Main.lanciaInfo("Elimina Agenzia", "Agenzia eliminata");
+							}else
+							{
+								//Avviso l'utente che l'operazione non è andata a buon fine
+								Main.lanciaWarning("Nessuna agenzia eliminata", "C'e' stato un problema col Database, contattare l'amministratore");
+							}
 						}
+					}else
+					{
+						Main.lanciaWarning("Elimina Agenzia", "Questa agenzia ha già aperto o chiuso dei contratti, impossibile rimuoverla");
 					}
 				}else
 				{

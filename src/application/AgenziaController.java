@@ -163,6 +163,18 @@ public class AgenziaController
 		return risposta;
 	}
 	
+	public static boolean isAgenziaSenzaContratti(Agenzia agenzia)
+	{
+		boolean risposta = false;
+		String comando = String.format("SELECT * FROM contratto WHERE AgenziaApertura = '%s' OR AgenziaApertura = '%s'", agenzia.getPartitaIva(),agenzia.getPartitaIva());
+		try {
+			risposta = !DAO.cerca(comando);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return risposta;
+	}
+	
 	public static String getPivaFromNome(String nomeAgenzia)
 	{
 		try {
