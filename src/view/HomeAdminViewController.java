@@ -299,6 +299,9 @@ public class HomeAdminViewController
 				    {
 				    	statoScelto = 4;
 				    }else {Main.lanciaWarning("Impossibile aggiornare l'auto", "Problemi col database");}
+				}else
+				{
+					statoScelto = autoSelezionata.getStato();
 				}
 				//Cambio lo stato nella lista in ram
 				for (Auto autoCorrente: listaAuto)

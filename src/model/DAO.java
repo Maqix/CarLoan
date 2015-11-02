@@ -1,6 +1,9 @@
 
 package model;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,6 +37,66 @@ public class DAO {
                 return null;
                 }       
 
+	}
+	
+	public static boolean isDBesistente(String dbName){
+
+	    try{
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection connessione2 = DriverManager.getConnection("jdbc:mysql://localhost:3306/", "", "");
+	        ResultSet resultSet = connessione2.getMetaData().getCatalogs();
+
+	        while (resultSet.next()) {
+
+	          String databaseName = resultSet.getString(1);
+	            if(databaseName.equals(dbName)){
+	                return true;
+	            }
+	        }
+	        resultSet.close();
+
+	    }
+	    catch(Exception e){
+	        e.printStackTrace();
+	    }
+
+	    return false;
+	}
+	
+	public static void importaSeed() throws SQLException, FileNotFoundException
+	{
+		InputStream in = new FileInputStream("carloan.sql");
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql", "", "");
+		Scanner s = new Scanner(in);
+		s.useDelimiter("(;(\r)?\n)|(--\n)");
+		Statement st = null;
+		st = conn.createStatement();
+		st.execute("CREATE SCHEMA carloan");
+		st = null;
+		conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/carloan", "", "");
+		try
+		{
+			st = conn.createStatement();
+			while (s.hasNext())
+			{
+				String line = s.next();
+				if (line.startsWith("/*!") && line.endsWith("*/"))
+				{
+					int i = line.indexOf(' ');
+					line = line.substring(i + 1, line.length() - " */".length());
+				}
+
+				if (line.trim().length() > 0)
+				{
+					st.execute(line);
+				}
+			}
+		}
+		finally
+		{
+			if (st != null) st.close();
+		}
+		s.close();
 	}
 
 
