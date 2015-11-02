@@ -46,6 +46,7 @@ public class Main extends Application {
 			
 			if (DAO.isDBesistente("carloan"))
 			{
+				System.out.println("true");
 				try {
 					DAO.connetti();
 				} catch (ClassNotFoundException e1) {

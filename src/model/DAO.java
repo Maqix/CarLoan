@@ -43,7 +43,7 @@ public class DAO {
 
 	    try{
             Class.forName("com.mysql.jdbc.Driver");
-            Connection connessione2 = DriverManager.getConnection("jdbc:mysql://localhost:3306/", "", "");
+            Connection connessione2 = DriverManager.getConnection("jdbc:mysql://localhost:3306/", "root", "");
 	        ResultSet resultSet = connessione2.getMetaData().getCatalogs();
 
 	        while (resultSet.next()) {
@@ -66,14 +66,14 @@ public class DAO {
 	public static void importaSeed() throws SQLException, FileNotFoundException
 	{
 		InputStream in = new FileInputStream("carloan.sql");
-		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql", "", "");
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql", "root", "");
 		Scanner s = new Scanner(in);
 		s.useDelimiter("(;(\r)?\n)|(--\n)");
 		Statement st = null;
 		st = conn.createStatement();
 		st.execute("CREATE SCHEMA carloan");
 		st = null;
-		conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/carloan", "", "");
+		conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/carloan", "root", "");
 		try
 		{
 			st = conn.createStatement();
