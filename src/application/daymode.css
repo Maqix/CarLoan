@@ -5,6 +5,7 @@
         linear-gradient(#f9f9f9,  #c7c7c7);
     -fx-background-insets: 0,1,2,0;
     -fx-focus-color: black;
+    -fx-selection-bar: #c7c7c7;
 }
 .text-field{
 	-fx-border-color: black;
@@ -42,6 +43,7 @@
 .label {
     -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
 }
+
 
 /* 
 .table-view {

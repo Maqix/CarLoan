@@ -10,13 +10,22 @@
    <children>
       <Button layoutX="59.0" layoutY="654.0" mnemonicParsing="false" onAction="#apriContratto" prefHeight="46.0" prefWidth="247.0" text="Apri Contratto" />
       <Button layoutX="380.0" layoutY="654.0" mnemonicParsing="false" onAction="#chiudiContratto" prefHeight="46.0" prefWidth="247.0" text="Chiudi Contratto" />
-      <Button layoutX="677.0" layoutY="290.0" mnemonicParsing="false" onAction="#aggiungiAgenzia" prefHeight="26.0" prefWidth="140.0" text="Aggiungi Agenzia" />
-      <Button layoutX="676.0" layoutY="330.0" mnemonicParsing="false" onAction="#eliminaAgenzia" prefHeight="26.0" prefWidth="140.0" text="Rimuovi Agenzia" />
-      <Button layoutX="673.0" layoutY="87.0" mnemonicParsing="false" onAction="#aggiungiAuto" prefHeight="26.0" prefWidth="140.0" text="Aggiungi Auto" />
+      <Button layoutX="677.0" layoutY="290.0" mnemonicParsing="false" onAction="#aggiungiAgenzia" prefHeight="46.0" prefWidth="140.0" text="Aggiungi&#10;Agenzia" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font></Button>
+      <Button layoutX="676.0" layoutY="350.0" mnemonicParsing="false" onAction="#eliminaAgenzia" prefHeight="26.0" prefWidth="140.0" text="Rimuovi Agenzia" />
+      <Button layoutX="673.0" layoutY="67.0" mnemonicParsing="false" onAction="#aggiungiAuto" prefHeight="46.0" prefWidth="140.0" text="Aggiungi &#10;Auto" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font></Button>
       <Button layoutX="673.0" layoutY="127.0" mnemonicParsing="false" onAction="#eliminaAuto" prefHeight="26.0" prefWidth="140.0" text="Rimuovi Auto" />
       <Button layoutX="673.0" layoutY="168.0" mnemonicParsing="false" onAction="#manutenzioneAuto" prefWidth="140.0" text="Manutenzione Auto" />
-      <Button layoutX="676.0" layoutY="504.0" mnemonicParsing="false" onAction="#aggiungiDipendente" prefWidth="140.0" text="Aggiungi Dipendente" />
-      <Button layoutX="676.0" layoutY="544.0" mnemonicParsing="false" onAction="#eliminaDipendente" prefHeight="26.0" prefWidth="140.0" text="Rimuovi Dipendente" />
+      <Button layoutX="676.0" layoutY="504.0" mnemonicParsing="false" onAction="#aggiungiDipendente" prefHeight="54.0" prefWidth="140.0" text="Aggiungi&#10;Dipendente" textAlignment="CENTER">
+         <font>
+            <Font name="System Font Bold" size="13.0" />
+         </font></Button>
+      <Button layoutX="676.0" layoutY="572.0" mnemonicParsing="false" onAction="#eliminaDipendente" prefHeight="26.0" prefWidth="140.0" text="Rimuovi Dipendente" />
       <TableView fx:id="tblAgenzie" layoutX="33.0" layoutY="258.0" prefHeight="152.0" prefWidth="619.0">
         <columns>
           <TableColumn fx:id="colPartitaIva" prefWidth="104.72525024414062" text="P. IVA" />
