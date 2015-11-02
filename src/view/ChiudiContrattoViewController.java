@@ -50,6 +50,8 @@ public class ChiudiContrattoViewController
 	
 	private boolean generato = false;
 	
+	private double totale = 0;
+	
 	@FXML
 	private void initialize()
 	{
@@ -68,19 +70,22 @@ public class ChiudiContrattoViewController
 		{
 			if (AutoController.settaKmAuto(ContrattoController.getContrattoApertoFromId(ottieniNumContratto()).getAuto(), kmAttuali))
 			{
-			if (ContrattoController.chiudiContratto(ottieniNumContratto()))
-			{
-				Main.lanciaInfo("Chiudi Contratto", "Contratto chiuso");
-				dialogStage.close();
+				if (ContrattoController.chiudiContratto(ottieniNumContratto(),totale))
+				{
+					Main.lanciaInfo("Chiudi Contratto", "Contratto chiuso");
+					dialogStage.close();
+				}else
+				{
+					Main.lanciaWarning("Chiudi Contratto", "Problemi con il database");	
+				}
 			}else
 			{
-				Main.lanciaWarning("Chiudi Contratto", "Genera un Totale per poter chiudere il contratto");	
+				Main.lanciaWarning("Chiudi Contratto", "Genera un Totale per poter chiudere il contratto");
 			}
 		}else
 		{
 			Main.lanciaWarning("Chiudi Contratto", "Genera un Totale per poter chiudere il contratto");
 		}
-	}
 	}
 	
 	@FXML
@@ -95,7 +100,9 @@ public class ChiudiContrattoViewController
 		if (verificaTotale().equals(""))
 		{
 			generato = true;
-			labelTotale.setText(ContrattoController.getTotaleContratto(contrattoSelezionato.getIdContratto(), kmAttuali, dataSelezionata));
+			totale = ContrattoController.getTotaleContratto(contrattoSelezionato.getIdContratto(), kmAttuali, dataSelezionata);
+			String scrittaTotale = String.format("%.2f€", ContrattoController.getTotaleContratto(contrattoSelezionato.getIdContratto(), kmAttuali, dataSelezionata));
+			labelTotale.setText(scrittaTotale);
 		}else
 		{
 			Main.lanciaWarning("Genera Totale", verificaTotale());

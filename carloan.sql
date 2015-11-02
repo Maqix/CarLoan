@@ -7,7 +7,7 @@
 #
 # Host: localhost (MySQL 5.6.24)
 # Database: carloan
-# Generation Time: 2015-11-02 13:10:38 +0000
+# Generation Time: 2015-11-02 13:45:59 +0000
 # ************************************************************
 
 
@@ -128,9 +128,9 @@ LOCK TABLES `cliente` WRITE;
 
 INSERT INTO `cliente` (`CF`, `Nome`, `Cognome`, `Telefono`, `Contratto`)
 VALUES
-	('DLGNGL94R25L049B','Angelo','Del Giudice','324232',6),
+	('DLGNGL94R25L049B','Angelo','Del Giudice','324232',NULL),
 	('GRGMHL94A01L049U','Michele','Gargaro','3894567213',NULL),
-	('QRTMCL93A03F205Q','Marcello','Quarta','3920457316',3);
+	('QRTMCL93A03F205Q','Marcello','Quarta','3920457316',NULL);
 
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -166,22 +166,6 @@ CREATE TABLE `contratto` (
   CONSTRAINT `contratto_ibfk_3` FOREIGN KEY (`AgenziaChiusura`) REFERENCES `agenzia` (`PartitaIVA`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-LOCK TABLES `contratto` WRITE;
-/*!40000 ALTER TABLE `contratto` DISABLE KEYS */;
-
-INSERT INTO `contratto` (`idContratto`, `Auto`, `AgenziaApertura`, `AgenziaChiusura`, `Inizio`, `Fine`, `TotaleVersato`, `KmIniziali`, `Cliente`, `isAperto`, `TipoNoleggio`, `TipoChilometraggio`, `KmPrevisti`)
-VALUES
-	(1,'AZ066GH','12345678910','12345678910','2015-10-30','2015-10-31',10,55000,'DLGNGL94R25L049B',X'30','Giornaliero','Km Illimitati',0),
-	(2,'CZ571EM','12345678910','12345678911','2015-10-30','2015-10-31',10,99564,'GRGMHL94A01L049U',X'30','Giornaliero','Km Illimitati',0),
-	(3,'DF567GH','12345678910','12345678910','2015-10-30','2015-10-31',10,1,'QRTMCL93A03F205Q',X'31','Giornaliero','Km Limitati',400),
-	(4,'AZ066GH','12345678911','12345678911','2015-11-01','2015-11-02',10,55000,'DLGNGL94R25L049B',X'30','Giornaliero','Km Limitati',0),
-	(5,'AZ066GH','12345678910','12345678910','2015-11-01','2015-11-02',10,55000,'GRGMHL94A01L049U',X'30','Giornaliero','Km Limitati',0),
-	(6,'CZ571EM','12345678911','12345678911','2015-11-01','2015-11-02',10,99564,'DLGNGL94R25L049B',X'31','Giornaliero','Km Limitati',30),
-	(7,'ER465FG','12345678910','12345678911','2015-11-02','2015-11-03',10,34566,'GRGMHL94A01L049U',X'30','Giornaliero','Km Illimitati',0),
-	(8,'ER465FG','12345678911','12345678911','2015-11-02','2015-11-03',10,34566,'GRGMHL94A01L049U',X'30','Giornaliero','Km Illimitati',0);
-
-/*!40000 ALTER TABLE `contratto` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table dipendente

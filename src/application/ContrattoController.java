@@ -134,23 +134,23 @@ public class ContrattoController
 		return this.auto;
 	}
 	
-	public static boolean chiudiContratto(int idContratto)
+	public static boolean chiudiContratto(int idContratto, double totale)
 	{
 		//Reimposto l'auto come libera
 		if (AutoController.liberaAuto(ContrattoController.getContrattoApertoFromId(idContratto).getAuto()))
 		{
 			if (impostaClienteContrattoNull(idContratto))
 			{
-				if (AutoController.settaAgenziaAuto(ContrattoController.getContrattoApertoFromId(idContratto).getAuto(), agenziaChiusura))
+				if (AutoController.settaAgenziaAuto(ContrattoController.getContrattoApertoFromId(idContratto).getAuto(), ContrattoController.getContrattoApertoFromId(idContratto).getAgenziaChiusura()))
 				{
-				if (impostaContrattoChiuso(idContratto))
-				{
-					return true;
-				}else
-				{
-					Main.lanciaWarning("Chiudi Contratto", "Problemi col Database");
-					return false;
-				}
+					if (impostaContrattoChiuso(idContratto,totale))
+					{
+						return true;
+					}else
+					{
+						Main.lanciaWarning("Chiudi Contratto", "Problemi col Database");
+						return false;
+					}
 				}else
 				{
 					Main.lanciaWarning("Chiudi Contratto", "Problemi col Database");
@@ -173,7 +173,6 @@ public class ContrattoController
 	
 	private static boolean impostaClienteContrattoNull(int idContratto)
 	{
-		//FIXME: Non ottiene il CF giusto
 		String cliente = ContrattoController.getContrattoApertoFromId(idContratto).getCliente();
 		String comando = String.format("UPDATE `cliente` SET `Contratto` = NULL WHERE `CF` = '%s';", cliente);
 		if (DAO.esegui(comando))
@@ -183,12 +182,13 @@ public class ContrattoController
 		{
 			return false;
 		}
-	}
+	}   
 	
-	private static boolean impostaContrattoChiuso(int idContratto)
+	private static boolean impostaContrattoChiuso(int idContratto, double totale)
 	{
 		//Imposto il contratto come chiuso
-		String comando = String.format("UPDATE `contratto` SET `isAperto` = false WHERE `idContratto` = '%s';", idContratto);
+		double totalePiuAcconto = (double) ContrattoController.getContrattoApertoFromId(idContratto).getTotVersato() + totale;
+		String comando = String.format(Locale.US,"UPDATE `contratto` SET `isAperto` = false, `TotaleVersato` = %.2f WHERE `idContratto` = '%s'", totalePiuAcconto,idContratto);
 		if (DAO.esegui(comando))
 		{
 			return true;
@@ -363,9 +363,8 @@ public class ContrattoController
 		return risposta;
 	}
 	
-	public static String getTotaleContratto(int idContratto, int kmAttuali, LocalDate dataRientroLocal)
+	public static double getTotaleContratto(int idContratto, int kmAttuali, LocalDate dataRientroLocal)
 	{
-		String risposta = "TODO";
 		double totale = 0;
 		Contratto contratto = ContrattoController.getContrattoApertoFromId(idContratto);
 		double kmPercorsi = ContrattoController.getKmPercorsi(kmAttuali, contratto);
@@ -431,9 +430,8 @@ public class ContrattoController
 		//Sottraggo l'acconto
 		totale -= contratto.getTotVersato();
 		
-		
-		risposta = String.format("%.2f€", totale);;
-		return risposta;
+		//risposta = String.format("%.2f", totale);;
+		return totale;
 		
 	}
 	
