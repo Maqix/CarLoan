@@ -58,10 +58,10 @@
     -fx-border-width: 0 0 1 0;
     -fx-background-color: transparent;
     -fx-border-color: 
-        transparent
-        transparent
+        black
+        black
         black 
-        transparent;
+        black;
     -fx-border-insets: 0 10 1 0;
 }
 
