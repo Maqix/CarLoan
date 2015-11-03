@@ -37,6 +37,10 @@
     -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.9) , 1, 0.0 , 0 , 1 );
 }
 
+.table-view {
+	-fx-border-color: black;
+}
+
  /*    
 .background {
     -fx-background-color: #1d1d1d;

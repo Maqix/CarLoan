@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="741.0" prefWidth="794.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.HomeAdminViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="735.0" prefWidth="794.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.HomeAdminViewController">
    <children>
-      <ImageView fx:id="background" fitHeight="741.0" fitWidth="794.0" opacity="0.3" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="background" fitHeight="735.0" fitWidth="794.0" opacity="0.95" pickOnBounds="true" />
       <Button fx:id="btnApriContratto" layoutX="59.0" layoutY="667.0" mnemonicParsing="false" onAction="#apriContratto" prefHeight="46.0" prefWidth="247.0" text="Apri Contratto" />
       <Button fx:id="btnChiudiContratto" layoutX="380.0" layoutY="667.0" mnemonicParsing="false" onAction="#chiudiContratto" prefHeight="46.0" prefWidth="247.0" text="Chiudi Contratto" />
       <Button fx:id="btnAggiungiAgenzia" layoutX="677.0" layoutY="293.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#aggiungiAgenzia" prefHeight="40.0" prefWidth="85.0" text="Aggiungi Agenzia" textAlignment="CENTER">
@@ -62,26 +62,17 @@
          <font>
             <Font size="21.0" />
          </font>
-         <effect>
-            <DropShadow blurType="ONE_PASS_BOX" color="#a8a8a8" height="11.89" offsetX="1.0" offsetY="1.0" radius="3.17" spread="0.29" width="2.79" />
-         </effect>
       </Label>
       <Label layoutX="357.0" layoutY="221.0" text="Agenzie">
          <font>
             <Font size="21.0" />
          </font>
-         <effect>
-            <DropShadow blurType="ONE_PASS_BOX" color="#a8a8a8" height="11.89" offsetX="1.0" offsetY="1.0" radius="3.17" spread="0.29" width="2.79" />
-         </effect>
       </Label>
       <Label layoutX="372.0" layoutY="14.0" text="Auto">
          <font>
             <Font size="21.0" />
          </font>
-         <effect>
-            <DropShadow blurType="ONE_PASS_BOX" color="#a8a8a8" height="11.89" offsetX="1.0" offsetY="1.0" radius="3.17" spread="0.29" width="2.79" />
-         </effect>
       </Label>
-      <Button fx:id="btnLogout" layoutX="677.0" layoutY="667.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#premutoLogout" prefHeight="46.0" prefWidth="85.0" text="Logout" />
+      <Button fx:id="btnLogout" layoutX="658.0" layoutY="667.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#premutoLogout" prefHeight="46.0" prefWidth="104.0" text="Esci" />
    </children>
 </AnchorPane>

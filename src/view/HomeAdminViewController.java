@@ -85,6 +85,9 @@ public class HomeAdminViewController
 		btnAggiungiDipendente.setGraphic(new ImageView(new Image(this.getClass().getResource("aggiungiDipendente.png").toString())));
 		btnRimuoviDipendente.setText("");
 		btnRimuoviDipendente.setGraphic(new ImageView(new Image(this.getClass().getResource("eliminaDipendente.png").toString())));
+		btnApriContratto.setGraphic(new ImageView(new Image(this.getClass().getResource("apriContratto.png").toString())));
+		btnChiudiContratto.setGraphic(new ImageView(new Image(this.getClass().getResource("chiudiContratto.png").toString())));
+		btnLogout.setGraphic(new ImageView(new Image(this.getClass().getResource("logout.png").toString())));
 	}
 	
 	private void configuraTabellaAuto()
