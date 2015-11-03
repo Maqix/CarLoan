@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="741.0" prefWidth="851.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.HomeImpiegatoViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="735.0" prefWidth="842.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.HomeImpiegatoViewController">
    <children>
-      <Button layoutX="21.0" layoutY="653.0" mnemonicParsing="false" onAction="#apriContratto" prefHeight="46.0" prefWidth="247.0" text="Apri Contratto" />
-      <Button layoutX="342.0" layoutY="653.0" mnemonicParsing="false" onAction="#chiudiContratto" prefHeight="46.0" prefWidth="247.0" text="Chiudi Contratto" />
+      <ImageView fx:id="background" fitHeight="735.0" fitWidth="842.0" pickOnBounds="true" />
+      <Button fx:id="btnApriContratto" layoutX="43.0" layoutY="652.0" mnemonicParsing="false" onAction="#apriContratto" prefHeight="46.0" prefWidth="247.0" text="Apri Contratto" />
+      <Button fx:id="btnChiudiContratto" layoutX="364.0" layoutY="652.0" mnemonicParsing="false" onAction="#chiudiContratto" prefHeight="46.0" prefWidth="247.0" text="Chiudi Contratto" />
       <TableView fx:id="tblAuto" layoutX="18.0" layoutY="54.0" prefHeight="152.0" prefWidth="808.0">
          <columns>
             <TableColumn fx:id="colTarga" prefWidth="145.0" text="Targa" />
@@ -56,6 +58,6 @@
             <TableColumn fx:id="colTipoChilometraggio" minWidth="0.0" prefWidth="91.0" text="Tariffa" />
          </columns>
       </TableView>
-      <Button layoutX="691.0" layoutY="653.0" mnemonicParsing="false" onAction="#premutoLogout" prefHeight="46.0" prefWidth="140.0" text="Logout" />
+      <Button fx:id="btnLogout" layoutX="713.0" layoutY="652.0" mnemonicParsing="false" onAction="#premutoLogout" prefHeight="46.0" prefWidth="104.0" text="Esci" />
    </children>
 </AnchorPane>

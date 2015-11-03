@@ -14,6 +14,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -47,6 +50,15 @@ public class HomeImpiegatoViewController {
 	TableColumn<Cliente, String> colCF, colNome, colCognome, colTelefono;
 	@FXML
 	TableColumn<Cliente,Integer> colContratto;
+	@FXML
+	Button btnApriContratto;
+	@FXML
+	Button btnChiudiContratto;
+	@FXML
+	Button btnLogout;
+	@FXML
+	ImageView background;
+	
 	
 	//La lista di auto
 	private ObservableList<Auto> listaAuto = FXCollections.observableArrayList();
@@ -58,11 +70,20 @@ public class HomeImpiegatoViewController {
 	@FXML
     private void initialize() 
 	{
+		background.setImage(new Image(this.getClass().getResource("backgroundHomeImpiegato.png").toString()));
 		configuraTabellaAuto();
 		configuraTabellaContratti();
 		configuraTabellaClienti();
+		configuraPulsanti();
 
     }
+	
+	private void configuraPulsanti()
+	{
+		btnApriContratto.setGraphic(new ImageView(new Image(this.getClass().getResource("apriContratto.png").toString())));
+		btnChiudiContratto.setGraphic(new ImageView(new Image(this.getClass().getResource("chiudiContratto.png").toString())));
+		btnLogout.setGraphic(new ImageView(new Image(this.getClass().getResource("logout.png").toString())));
+	}
 	
 	private void configuraTabellaAuto()
 	{
