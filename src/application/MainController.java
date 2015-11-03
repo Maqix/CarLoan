@@ -1,6 +1,7 @@
 package application;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
 
 import javafx.beans.value.ChangeListener;
@@ -12,6 +13,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -50,15 +53,22 @@ public class MainController {
 	@FXML
     private void initialize() 
 	{
+		URL urlGiorno = this.getClass().getResource("daymode.png");
+		URL urlNotte = this.getClass().getResource("nigthmode.png");
+		Image iconaGiorno = new Image(urlGiorno.toString());
+		Image iconaNotte = new Image(urlNotte.toString());
+		temaButton.setGraphic(new ImageView(iconaNotte));
 		temaButton.selectedProperty().addListener(new ChangeListener<Boolean>() {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> ov, Boolean oldValue, Boolean newValue) 
 			{
 				if (newValue)
 				{
+					temaButton.setGraphic(new ImageView(iconaGiorno));
 					mainApp.cambiaTema(true);
 				}else
 				{
+					temaButton.setGraphic(new ImageView(iconaNotte));
 					mainApp.cambiaTema(false);
 				}
 			}
