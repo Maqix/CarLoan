@@ -19,6 +19,8 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -32,7 +34,7 @@ public class HomeAdminViewController
 	@FXML
 	Button btnAggiungiAgenzia, btnRimuoviAgenzia, btnAggiungiDipendente, btnRimuoviDipendente, btnAggiungiAuto, btnRimuoviAuto;
 	@FXML
-	Button btnManutenzioneAuto, btnApriContratto, btnChiudiContratto;
+	Button btnManutenzioneAuto, btnApriContratto, btnChiudiContratto,btnLogout;
 	@FXML
 	TableView<Auto>  tblAuto;
 	@FXML
@@ -47,6 +49,8 @@ public class HomeAdminViewController
 	TableColumn<Auto, String> colTarga, colModello, colAgenzia, colStato;
 	@FXML
 	TableColumn<Auto, Integer> colKm, colFascia;
+	@FXML
+	ImageView background;
 	
 	//La lista di auto
 	private ObservableList<Auto> listaAuto = FXCollections.observableArrayList();
@@ -58,11 +62,30 @@ public class HomeAdminViewController
 	@FXML
     private void initialize() 
 	{
+		background.setImage(new Image(this.getClass().getResource("backgroundHomeAdmin.png").toString()));
 		configuraTabellaAuto();
 		configuraTabellaAgenzie();
 		configuraTabellaDipendenti();
-
+		configuraPulsanti();
     }
+	
+	private void configuraPulsanti()
+	{
+		btnAggiungiAuto.setText("");
+		btnAggiungiAuto.setGraphic(new ImageView(new Image(this.getClass().getResource("aggiungiAuto.png").toString())));
+		btnRimuoviAuto.setText("");
+		btnRimuoviAuto.setGraphic(new ImageView(new Image(this.getClass().getResource("eliminaAuto.png").toString())));
+		btnManutenzioneAuto.setText("");
+		btnManutenzioneAuto.setGraphic(new ImageView(new Image(this.getClass().getResource("manutenzioneAuto.png").toString())));
+		btnAggiungiAgenzia.setText("");
+		btnAggiungiAgenzia.setGraphic(new ImageView(new Image(this.getClass().getResource("aggiungiAgenzia.png").toString())));
+		btnRimuoviAgenzia.setText("");
+		btnRimuoviAgenzia.setGraphic(new ImageView(new Image(this.getClass().getResource("eliminaAgenzia.png").toString())));
+		btnAggiungiDipendente.setText("");
+		btnAggiungiDipendente.setGraphic(new ImageView(new Image(this.getClass().getResource("aggiungiDipendente.png").toString())));
+		btnRimuoviDipendente.setText("");
+		btnRimuoviDipendente.setGraphic(new ImageView(new Image(this.getClass().getResource("eliminaDipendente.png").toString())));
+	}
 	
 	private void configuraTabellaAuto()
 	{
