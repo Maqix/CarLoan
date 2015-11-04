@@ -58,7 +58,7 @@
             <TableColumn fx:id="colUsername" prefWidth="84.57733154296875" text="Username" />
          </columns>
       </TableView>
-      <Label layoutX="343.0" layoutY="435.0" text="Dipendenti">
+      <Label layoutX="343.0" layoutY="432.0" text="Dipendenti">
          <font>
             <Font size="21.0" />
          </font>
