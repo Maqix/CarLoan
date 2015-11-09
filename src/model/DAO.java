@@ -1,6 +1,9 @@
 
 package model;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,6 +37,66 @@ public class DAO {
                 return null;
                 }       
 
+	}
+	
+	public static boolean isDBesistente(String dbName){
+
+	    try{
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection connessione2 = DriverManager.getConnection("jdbc:mysql://localhost:3306/", "root", "");
+	        ResultSet resultSet = connessione2.getMetaData().getCatalogs();
+
+	        while (resultSet.next()) {
+
+	          String databaseName = resultSet.getString(1);
+	            if(databaseName.equals(dbName)){
+	                return true;
+	            }
+	        }
+	        resultSet.close();
+
+	    }
+	    catch(Exception e){
+	        e.printStackTrace();
+	    }
+
+	    return false;
+	}
+	
+	public static void importaSeed() throws SQLException, FileNotFoundException
+	{
+		InputStream in = new FileInputStream("carloan.sql");
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql", "root", "");
+		Scanner s = new Scanner(in);
+		s.useDelimiter("(;(\r)?\n)|(--\n)");
+		Statement st = null;
+		st = conn.createStatement();
+		st.execute("CREATE SCHEMA carloan");
+		st = null;
+		conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/carloan", "root", "");
+		try
+		{
+			st = conn.createStatement();
+			while (s.hasNext())
+			{
+				String line = s.next();
+				if (line.startsWith("/*!") && line.endsWith("*/"))
+				{
+					int i = line.indexOf(' ');
+					line = line.substring(i + 1, line.length() - " */".length());
+				}
+
+				if (line.trim().length() > 0)
+				{
+					st.execute(line);
+				}
+			}
+		}
+		finally
+		{
+			if (st != null) st.close();
+		}
+		s.close();
 	}
 
 
@@ -190,111 +254,9 @@ public class DAO {
 
         }
 	
-	
-	/**
-	 * Esegue una query sul database e restituisce il relativo tableModel da utilizzare in una JTable
-	 * @param queryTXT
-	 * @return AgroludosTableModel
-	 * 
-	 */
-    /*
-	public static AgroludosTableModel getTabella(String queryText)
-	{
-	
-		Statement enunciato;
-		try {
-			
-			//Crea uno statement per l'interrogazione del database
-			enunciato = connessione.createStatement( ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			
-			//Trace
-			System.out.println("Database -> Interrogazione SQL: " + queryText);		
-			
-			//Crea un ResultSet eseguendo l'interrogazione desiderata
-			ResultSet tabellina = enunciato.executeQuery(queryText);
-			
-			return new AgroludosTableModel(tabellina);
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		}
-		
-	}*/
 
          
-     public static ObservableList<Auto> getListaAuto()
 
-     {
-    	 ObservableList<Auto> listaAuto = FXCollections.observableArrayList();
-    	 ResultSet rs = null;
-    	 String comando = "SELECT * FROM auto";
-    	 rs = DAO.getResultSet(comando);
-    	 try {
-			while (rs.next())
-			 {
-				 Auto tempAuto = new Auto();
-				
-				 String targa = rs.getString("Targa");
-				 int fascia = rs.getInt("Fascia");
-				 String modello = rs.getString("Modello");
-				 String agenzia = rs.getString("Agenzia");
-				 int stato = rs.getInt("Stato");
-				 int km = rs.getInt("Chilometraggio");
-				 
-				 tempAuto.setTarga(targa);
-				 tempAuto.setFascia(fascia);
-				 tempAuto.setModello(modello);
-				 tempAuto.setAgenzia(agenzia);
-				 tempAuto.setStato(stato);
-				 tempAuto.setChilometraggio(km);
-				 
-				 listaAuto.add(tempAuto);
-			 }
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-    	 
-    	 return listaAuto;
-     }
-     
-
-     public static ObservableList<Agenzia> getListaAgenzie()
-     {
-    	 ObservableList<Agenzia> listaAgenzie = FXCollections.observableArrayList();
-    	 ResultSet rs = null;
-    	 String comando = "SELECT * FROM agenzia";
-    	 rs = DAO.getResultSet(comando);
-    	 try {
-			while (rs.next())
-			 {
-				 Agenzia tempAgenzia = new Agenzia();
-				
-				 String partitaIva = rs.getString("PartitaIVA");
-				 String nome = rs.getString("Nome");
-				 String citta = rs.getString("Citta");
-				 String provincia = rs.getString("Provincia");
-				 String via = rs.getString("Via");
-				 String civico = rs.getString("Civico");
-				 
-				 tempAgenzia.setPartitaIva(partitaIva);
-				 tempAgenzia.setNome(nome);
-
-				// tempAgenzia.setCitta(citt�);
-
-				 tempAgenzia.setCitta(citta);
-				 tempAgenzia.setProvincia(provincia);
-				 tempAgenzia.setVia(via);
-				 tempAgenzia.setCivico(civico);
-				 
-				 listaAgenzie.add(tempAgenzia);
-			 }
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-    	 
-    	 return listaAgenzie;
-     }
      
      public static ObservableList<Dipendente> getListaDipendenti()
      {

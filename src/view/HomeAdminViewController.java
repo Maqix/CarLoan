@@ -3,6 +3,9 @@ package view;
 import java.io.IOException;
 import java.util.Optional;
 
+import application.AgenziaController;
+import application.AutoController;
+import application.DipendenteController;
 import application.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,12 +19,13 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Agenzia;
 import model.Auto;
-import model.DAO;
 import model.Dipendente;
 
 public class HomeAdminViewController 
@@ -30,7 +34,7 @@ public class HomeAdminViewController
 	@FXML
 	Button btnAggiungiAgenzia, btnRimuoviAgenzia, btnAggiungiDipendente, btnRimuoviDipendente, btnAggiungiAuto, btnRimuoviAuto;
 	@FXML
-	Button btnManutenzioneAuto, btnApriContratto, btnChiudiContratto;
+	Button btnManutenzioneAuto, btnApriContratto, btnChiudiContratto,btnLogout;
 	@FXML
 	TableView<Auto>  tblAuto;
 	@FXML
@@ -45,6 +49,8 @@ public class HomeAdminViewController
 	TableColumn<Auto, String> colTarga, colModello, colAgenzia, colStato;
 	@FXML
 	TableColumn<Auto, Integer> colKm, colFascia;
+	@FXML
+	ImageView background;
 	
 	//La lista di auto
 	private ObservableList<Auto> listaAuto = FXCollections.observableArrayList();
@@ -56,34 +62,54 @@ public class HomeAdminViewController
 	@FXML
     private void initialize() 
 	{
+		background.setImage(new Image(this.getClass().getResource("backgroundHomeAdmin.png").toString()));
 		configuraTabellaAuto();
 		configuraTabellaAgenzie();
 		configuraTabellaDipendenti();
-
+		configuraPulsanti();
     }
+	
+	private void configuraPulsanti()
+	{
+		btnAggiungiAuto.setText("");
+		btnAggiungiAuto.setGraphic(new ImageView(new Image(this.getClass().getResource("aggiungiAuto.png").toString())));
+		btnRimuoviAuto.setText("");
+		btnRimuoviAuto.setGraphic(new ImageView(new Image(this.getClass().getResource("eliminaAuto.png").toString())));
+		btnManutenzioneAuto.setText("");
+		btnManutenzioneAuto.setGraphic(new ImageView(new Image(this.getClass().getResource("manutenzioneAuto.png").toString())));
+		btnAggiungiAgenzia.setText("");
+		btnAggiungiAgenzia.setGraphic(new ImageView(new Image(this.getClass().getResource("aggiungiAgenzia.png").toString())));
+		btnRimuoviAgenzia.setText("");
+		btnRimuoviAgenzia.setGraphic(new ImageView(new Image(this.getClass().getResource("eliminaAgenzia.png").toString())));
+		btnAggiungiDipendente.setText("");
+		btnAggiungiDipendente.setGraphic(new ImageView(new Image(this.getClass().getResource("aggiungiDipendente.png").toString())));
+		btnRimuoviDipendente.setText("");
+		btnRimuoviDipendente.setGraphic(new ImageView(new Image(this.getClass().getResource("eliminaDipendente.png").toString())));
+		btnApriContratto.setGraphic(new ImageView(new Image(this.getClass().getResource("apriContratto.png").toString())));
+		btnChiudiContratto.setGraphic(new ImageView(new Image(this.getClass().getResource("chiudiContratto.png").toString())));
+		btnLogout.setGraphic(new ImageView(new Image(this.getClass().getResource("logout.png").toString())));
+	}
 	
 	private void configuraTabellaAuto()
 	{
-		listaAuto = DAO.getListaAuto();
+		listaAuto = AutoController.getListaAuto();
 		
-		if (!listaAuto.isEmpty())
-		{
+		
 			tblAuto.setItems(listaAuto);
 			colTarga.setCellValueFactory(cellData -> cellData.getValue().getTargaProperty());
 			colFascia.setCellValueFactory(cellData -> cellData.getValue().getFasciaProperty().asObject());
 			colModello.setCellValueFactory(cellData -> cellData.getValue().getModelloProperty());
-			colAgenzia.setCellValueFactory(cellData -> cellData.getValue().getAgenziaNomeStringProperty());
+			colAgenzia.setCellValueFactory(cellData -> cellData.getValue().getNomeAgenziaProperty());
 			colKm.setCellValueFactory(cellData -> cellData.getValue().getChilometraggioProperty().asObject());
 			colStato.setCellValueFactory(cellData -> cellData.getValue().getStatoStringProperty());
-		}
+		
 	}
 	
 	private void configuraTabellaAgenzie()
 	{
-		listaAgenzie = DAO.getListaAgenzie();
+		listaAgenzie = AgenziaController.getListaAgenzia();
 		
-		if (!listaAgenzie.isEmpty())
-		{
+		
 			tblAgenzie.setItems(listaAgenzie);
 			colPartitaIva.setCellValueFactory(cellData -> cellData.getValue().getPartitaIvaProperty());
 			colNome.setCellValueFactory(cellData -> cellData.getValue().getNomeProperty());
@@ -91,22 +117,93 @@ public class HomeAdminViewController
 			colProvincia.setCellValueFactory(cellData -> cellData.getValue().getProvinciaProperty());
 			colVia.setCellValueFactory(cellData -> cellData.getValue().getViaProperty());
 			colCivico.setCellValueFactory(cellData -> cellData.getValue().getCivicoProperty());
-		}
+		
 	}
 	
 	private void configuraTabellaDipendenti()
 	{
-		listaDipendenti = DAO.getListaDipendenti();
+		listaDipendenti = DipendenteController.getListaDipendente();
 		
-		if (!listaDipendenti.isEmpty())
-		{
+		
 			tblDipendenti.setItems(listaDipendenti);
 			colUsername.setCellValueFactory(cellData -> cellData.getValue().getUsernameProperty());
-			colAgenziaDip.setCellValueFactory(cellData -> cellData.getValue().getAgenziaNomeStringProperty());
+			colAgenziaDip.setCellValueFactory(cellData -> cellData.getValue().getAgenziaNomeProperty());
 			colNomeDip.setCellValueFactory(cellData -> cellData.getValue().getNomeProperty());
 			colCognome.setCellValueFactory(cellData -> cellData.getValue().getCognomeProperty());
 			colTelefono.setCellValueFactory(cellData -> cellData.getValue().getTelefonoProperty());
-		}
+		
+	}
+	
+	@FXML
+	private void apriContratto()
+	{
+		try {
+	        // Load the fxml file and create a new stage for the popup dialog.
+	        FXMLLoader loader = new FXMLLoader();
+	        loader.setLocation(HomeAdminViewController.class.getResource("ViewApriContrattoAdmin.fxml"));
+	        AnchorPane page = (AnchorPane) loader.load();
+
+	        // Create the dialog Stage.
+	        Stage dialogStage = new Stage();
+	        dialogStage.setTitle("Apri Contratto");
+	        dialogStage.initModality(Modality.APPLICATION_MODAL);
+	        dialogStage.initOwner(mainApp.primaryStage);
+	        Scene scene = new Scene(page);
+	        dialogStage.setScene(scene);
+
+	        
+	        ApriContrattoViewController controller =  loader.getController();
+	        controller.setDialogStage(dialogStage);
+	        
+	        // Show the dialog and wait until the user closes it
+	        dialogStage.showAndWait();
+	      
+	        //Aggiorno la tabella auto
+	        listaAuto = AutoController.getListaAuto();
+	        tblAuto.setItems(listaAuto);
+	        tblAuto.refresh();
+	        
+	        return;
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        return;
+	    }
+	}
+	
+	@FXML
+	private void chiudiContratto()
+	{
+		try {
+	        // Load the fxml file and create a new stage for the popup dialog.
+	        FXMLLoader loader = new FXMLLoader();
+	        loader.setLocation(HomeAdminViewController.class.getResource("ViewChiudiContratto.fxml"));
+	        AnchorPane page = (AnchorPane) loader.load();
+
+	        // Create the dialog Stage.
+	        Stage dialogStage = new Stage();
+	        dialogStage.setTitle("Chiudi Contratto");
+	        dialogStage.initModality(Modality.APPLICATION_MODAL);
+	        dialogStage.initOwner(mainApp.primaryStage);
+	        Scene scene = new Scene(page);
+	        dialogStage.setScene(scene);
+
+	        
+	        ChiudiContrattoViewController controller =  loader.getController();
+	        controller.setDialogStage(dialogStage);
+	        
+	        // Show the dialog and wait until the user closes it
+	        dialogStage.showAndWait();
+	        
+	        //Aggiorno la tabella auto
+	        listaAuto = AutoController.getListaAuto();
+	        tblAuto.setItems(listaAuto);
+	        tblAuto.refresh();
+	        
+	        return;
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        return;
+	    }
 	}
 	
 	@FXML
@@ -156,6 +253,7 @@ public class HomeAdminViewController
 		//Se ho selezionato veramente una Auto
 		if (autoSelezionata != null)
 		{
+			//Se l'auto non è sotto contratto
 			if (autoSelezionata.getStato() != 2)
 			{
 				//Se l'utente conferma di voler eliminare l'auto
@@ -163,27 +261,17 @@ public class HomeAdminViewController
 				if (result.get() == ButtonType.OK)
 				{
 					//Elimino l'auto dal DB
-					String comando = String.format("DELETE FROM `auto` WHERE `Targa` IN ('%s')", autoSelezionata.getTarga());
-					
 					//Se l'operazione sul DB va a buon fine
-					if (DAO.esegui(comando))
+					if (AutoController.eliminaAuto(autoSelezionata))
 					{
 						//Elimino l'auto dalla lista
 						listaAuto.remove(autoSelezionata);
 						//Avviso l'utente
-						Alert alert3 = new Alert(AlertType.INFORMATION);
-						alert3.setTitle("Elimina Auto");
-						alert3.setHeaderText("Auto eliminata");
-						alert3.setContentText(null);
-						alert3.showAndWait();
+						Main.lanciaInfo("Elimina Auto", "Auto eliminata");
 					}else
 					{
 						//Avviso l'utente che l'operazione non è andata a buon fine
-						Alert alert4 = new Alert(AlertType.WARNING);
-						alert4.setTitle("Elimina Auto");
-						alert4.setHeaderText("Nessuna auto eliminata");
-						alert4.setContentText("C'è stato un problema col Database, contattare l'amministratore");
-						alert4.showAndWait();
+						Main.lanciaWarning("Nessuna Auto eliminata", "C'è stato un problema col Database, contattare l'amministratore");
 					}
 				}
 			}else
@@ -193,11 +281,7 @@ public class HomeAdminViewController
 			
 		}else
 		{
-			Alert alert2 = new Alert(AlertType.WARNING);
-			alert2.setTitle("Elimina Auto");
-			alert2.setHeaderText("Nessuna auto selezionata");
-			alert2.setContentText("Seleziona una auto nell'elenco per eliminarla");
-			alert2.showAndWait();
+			Main.lanciaWarning("Nessuna Auto selezionata", "Seleziona un'Auto dall'elenco per eliminarla");
 		}
 	}
 	
@@ -223,15 +307,38 @@ public class HomeAdminViewController
 				ButtonType buttonTypeCancel = new ButtonType("Annulla", ButtonData.CANCEL_CLOSE);
 
 				alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeThree, buttonTypeCancel);
-
+				
+				int statoScelto = 0;
 				Optional<ButtonType> result = alert.showAndWait();
 				if (result.get() == buttonTypeOne){
-				    settaManutenzioneAuto(autoSelezionata.getTarga(), 1);
+				    if(AutoController.settaManutenzioneAuto(autoSelezionata, 1))
+				    {
+				    	statoScelto = 1;
+				    }else {Main.lanciaWarning("Impossibile aggiornare l'auto", "Problemi col database");}
 				} else if (result.get() == buttonTypeTwo) {
-					settaManutenzioneAuto(autoSelezionata.getTarga(), 3);
+				    if(AutoController.settaManutenzioneAuto(autoSelezionata, 3))
+				    {
+				    	statoScelto = 3;
+				    }else {Main.lanciaWarning("Impossibile aggiornare l'auto", "Problemi col database");}
 				} else if (result.get() == buttonTypeThree) {
-					settaManutenzioneAuto(autoSelezionata.getTarga(), 4);
+				    if(AutoController.settaManutenzioneAuto(autoSelezionata, 4))
+				    {
+				    	statoScelto = 4;
+				    }else {Main.lanciaWarning("Impossibile aggiornare l'auto", "Problemi col database");}
+				}else
+				{
+					statoScelto = autoSelezionata.getStato();
 				}
+				//Cambio lo stato nella lista in ram
+				for (Auto autoCorrente: listaAuto)
+				{
+					if (autoCorrente.getTarga().equals(autoSelezionata.getTarga()))
+					{
+						autoCorrente.setStato(statoScelto);
+					}
+				}
+				//Aggiorno la tabella
+				tblAuto.refresh();
 			}else
 			{
 				Main.lanciaWarning("Manutenzione Auto", "L'Auto è attualmente in uso");
@@ -241,30 +348,7 @@ public class HomeAdminViewController
 			Main.lanciaWarning("Manutenzione Auto", "Seleziona una auto per la manutenzione");
 		}
 	}
-	
-	private void settaManutenzioneAuto(String targa, int stato)
-	{
-		//Aggiorno l'auto nel DB
-		String comando = String.format("UPDATE `auto` SET `Stato` = '%d' WHERE `Targa` = '%s';", stato,targa);
-		if (DAO.esegui(comando))
-		{
-			//Cambio lo stato nella lista in ram
-			for (Auto autoCorrente: listaAuto)
-			{
-				if (autoCorrente.getTarga().equals(targa))
-				{
-					autoCorrente.setStato(stato);
-				}
-			}
-			//Aggiorno la tabella
-			tblAuto.refresh();
-		}else
-		{
-			Main.lanciaWarning("Impossibile aggiornare l'auto", "Problemi col database");
-		}
-		
 
-	}
 	
 	@FXML
 	private void aggiungiAgenzia()
@@ -314,44 +398,50 @@ public class HomeAdminViewController
 		//Se ho selezionato veramente un'agenzia
 		if (agenziaSelezionata != null)
 		{
-			//Se l'utente conferma di voler eliminare l'auto
-			Optional<ButtonType> result = alert.showAndWait();
-			if (result.get() == ButtonType.OK)
+			//Se l'agenzia non ha auto
+			if (AgenziaController.isAgenziaSenzaAuto(agenziaSelezionata))
 			{
-				//Elimino l'agenzia dal DB
-				String comando = String.format("DELETE FROM `agenzia` WHERE `PartitaIVA` IN ('%s')", agenziaSelezionata.getPartitaIva());
-				
-				//Se l'operazione sul DB va a buon fine
-				if (DAO.esegui(comando))
+				if (AgenziaController.isAgenziaSenzaDipendenti(agenziaSelezionata))
 				{
-					//Elimino l'agenzia dalla lista
-					listaAgenzie.remove(agenziaSelezionata);
-					//Avviso l'utente
-					Alert alert3 = new Alert(AlertType.INFORMATION);
-					alert3.setTitle("Elimina Agenzia");
-					alert3.setHeaderText("Agenzia eliminata");
-					alert3.setContentText(null);
-					alert3.showAndWait();
+					if (AgenziaController.isAgenziaSenzaContratti(agenziaSelezionata))
+					{
+						//Se l'utente conferma di voler eliminare l'agenzia
+						Optional<ButtonType> result = alert.showAndWait();
+						if (result.get() == ButtonType.OK)
+						{
+							
+							//Se l'operazione sul DB va a buon fine
+							if (AgenziaController.eliminaAgenzia(agenziaSelezionata))
+							{
+								//Elimino l'agenzia dalla lista
+								listaAgenzie.remove(agenziaSelezionata);
+								//Avviso l'utente
+								Main.lanciaInfo("Elimina Agenzia", "Agenzia eliminata");
+							}else
+							{
+								//Avviso l'utente che l'operazione non è andata a buon fine
+								Main.lanciaWarning("Nessuna agenzia eliminata", "C'e' stato un problema col Database, contattare l'amministratore");
+							}
+						}
+					}else
+					{
+						Main.lanciaWarning("Elimina Agenzia", "Questa agenzia ha già aperto o chiuso dei contratti, impossibile rimuoverla");
+					}
 				}else
 				{
-					//Avviso l'utente che l'operazione non è andata a buon fine
-					Alert alert4 = new Alert(AlertType.WARNING);
-					alert4.setTitle("Elimina Agenzia");
-					alert4.setHeaderText("Nessuna agenzia eliminata");
-					alert4.setContentText("C'� stato un problema col Database, contattare l'amministratore");
-					alert4.showAndWait();
+					Main.lanciaWarning("Elimina Agenzia", "Questa agenzia ha dei dipendenti, elimina tutti i dipendenti dall'agenzia prima di rimuoverla");
 				}
+			}else
+			{
+				Main.lanciaWarning("Elimina Agenzia", "Questa agenzia ha delle auto, elimina tutte le auto dall'agenzia prima di rimuoverla");
 			}
 			
 		}else
 		{
-			Alert alert2 = new Alert(AlertType.WARNING);
-			alert2.setTitle("Elimina Agenzia");
-			alert2.setHeaderText("Nessuna agenzia selezionata");
-			alert2.setContentText("Seleziona un'agenzia nell'elenco per eliminarla");
-			alert2.showAndWait();
+			Main.lanciaWarning("Nessuna agenzia selezionata", "Seleziona un'agenzia nell'elenco per eliminarla");
 		}
 	}
+	
 
 	@FXML
 	private void aggiungiDipendente()
@@ -404,38 +494,38 @@ public class HomeAdminViewController
 				Optional<ButtonType> result = alert.showAndWait();
 				if (result.get() == ButtonType.OK)
 				{
-					//Elimino il dipendente dal DB
-					String comando = String.format("DELETE FROM `dipendente` WHERE `Username` IN ('%s')", dipendenteSelezionato.getUsername());
 					
 					//Se l'operazione sul DB va a buon fine
-					if (DAO.esegui(comando))
+					if (DipendenteController.eliminaDipendente(dipendenteSelezionato))
 					{
 						//Elimino il dipendente dalla lista
 						listaDipendenti.remove(dipendenteSelezionato);
 						//Avviso l'utente
-						Alert alert3 = new Alert(AlertType.INFORMATION);
-						alert3.setTitle("Elimina Dipendente");
-						alert3.setHeaderText("Dipendente eliminato");
-						alert3.setContentText(null);
-						alert3.showAndWait();
+						Main.lanciaInfo("Elimina Dipendente", "Dipendente eliminato");
 					}else
 					{
 						//Avviso l'utente che l'operazione non è andata a buon fine
-						Alert alert4 = new Alert(AlertType.WARNING);
-						alert4.setTitle("Elimina Dipendente");
-						alert4.setHeaderText("Nessuna dipendente eliminato");
-						alert4.setContentText("C'è stato un problema col Database, contattare l'amministratore");
-						alert4.showAndWait();
+					    Main.lanciaWarning("Nessun dipendente eliminato", "C'� stato un problema col Database, contattare l'amministratore");
 					}
 				}
 			
 		}else
 		{
-			Alert alert2 = new Alert(AlertType.WARNING);
-			alert2.setTitle("Elimina Dipendente");
-			alert2.setHeaderText("Nessuna dipendente selezionato");
-			alert2.setContentText("Seleziona un dipendente nell'elenco per eliminarlo");
-			alert2.showAndWait();
+			Main.lanciaWarning("Nessun dipendente eliminato", "Seleziona un dipendente nell'elenco per eliminarlo");
+		}
+	}
+	
+	@FXML
+	private void premutoLogout()
+	{
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Logout");
+		alert.setHeaderText("Attenzione!");
+		alert.setContentText("Sei sicuro di voler effettuare il logout?");
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK)
+		{
+			mainApp.lanciaLogin();
 		}
 	}
 	

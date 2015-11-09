@@ -1,5 +1,6 @@
 package view;
 
+import application.AgenziaController;
 import application.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,7 +10,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Agenzia;
-import model.DAO;
 
 public class AggiungiAgenziaViewController {
 	
@@ -74,10 +74,10 @@ private Stage dialogStage;
 			 tempAgenzia.setCivico(civico);
 			 
 			 //Se i dati sono corretti
-			 if (tempAgenzia.verificaAgenzia().equals(""))
+			 if (AgenziaController.verificaAgenzia(tempAgenzia).equals(""))
 				{
-					 String comando = String.format("INSERT INTO `agenzia` (`PartitaIVA`, `Nome`, `Citta`, `Provincia`, `Via`, `Civico`) VALUES ('%s', '%s', '%s', '%s', '%s', '%s')", partitaIva,nome,citta,provincia,via,civico);
-					 if (DAO.esegui(comando))
+					 
+					 if (AgenziaController.aggiungiAgenzia(tempAgenzia))
 					 {
 						 Main.lanciaInfo("Nuova Agenzia", "Agenzia aggiunta!");
 						 listaAgenzie.add(tempAgenzia);
@@ -88,7 +88,7 @@ private Stage dialogStage;
 					 }
 				}else
 				{
-					Main.lanciaWarning("Impossibile aggiungere agenzia", tempAgenzia.verificaAgenzia());
+					Main.lanciaWarning("Impossibile aggiungere agenzia", AgenziaController.verificaAgenzia(tempAgenzia));
 				}
 		}
 

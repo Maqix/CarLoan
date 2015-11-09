@@ -3,6 +3,7 @@ package view;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import application.DipendenteController;
 import application.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -69,10 +70,9 @@ public class AggiungiDipendenteViewController
 				dipendente.setPassword(password);
 				dipendente.setAgenzia(agenzia);
 				//Se i dati sono corretti
-				if (dipendente.verificaDipendente().equals(""))
+				if (DipendenteController.verificaDipendente(dipendente).equals(""))
 				{
-					 String comando = String.format("INSERT INTO `dipendente` (`Agenzia`, `Nome`, `Cognome`, `Telefono`, `Password`, `Username`) VALUES ('%s', '%s', '%s', '%s', '%s', '%s')",agenzia,nome,cognome,telefono,password,username);
-					 if (DAO.esegui(comando))
+					 if (DipendenteController.aggiungiDipendente(dipendente))
 					 {
 						 Main.lanciaInfo("Nuovo Dipendente", "Dipendente aggiunto!");
 						 listaDipendenti.add(dipendente);
@@ -80,7 +80,7 @@ public class AggiungiDipendenteViewController
 					 }
 				}else
 				{
-					Main.lanciaWarning("Aggiungi Dipendente", dipendente.verificaDipendente());
+					Main.lanciaWarning("Aggiungi Dipendente", DipendenteController.verificaDipendente(dipendente));
 				}
 			}else
 			{
